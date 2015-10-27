@@ -1,0 +1,132 @@
+/**
+* @version $Id: admin_login.css,v 1.1 2005/07/22 01:54:30 eddieajau Exp $
+* @package Mambo
+* @copyright (C) 2000 - 2005 Miro International Pty Ltd
+* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+* Mambo is Free Software
+*/
+
+body {
+	margin: 0px;
+	padding: 0px;
+
+	font-size : 11px;
+	font-family : Arial, Helvetica, sans-serif;
+/*	background	: #DCDADD url(../images/bg.jpg) top center repeat; */
+	
+	 background: url(../images/bg.jpg) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  
+}
+a { 
+	color: #333333;
+	background-color: transparent;
+	text-decoration: none;
+}
+a:hover {
+	color: #3B5998;
+	background-color: transparent;
+	text-decoration: none;
+}
+
+
+#break {
+	height: 50px;
+}
+
+form {
+    margin: 0px;
+}
+
+.header {
+	top: 2em;
+	margin-left: auto;
+	margin-right: auto;
+	position: relative;
+	font-size: 3em;	
+	font-weight: bold;
+	color: white;
+	text-shadow: 1px 1px 1px #000;
+}
+
+.login {
+	margin-left: auto;
+	margin-right: auto;
+	position: relative;
+	padding: 15px;
+	border: 1px solid #cccccc;
+	width: 429px;
+	background: #F1F3F5;
+	top: 8em;
+	border-radius:1em;
+
+}
+.login p {
+    color: #000000;
+}
+	
+.form-block {
+	border: 1px solid #cccccc;
+
+	padding-top: 15px;
+	padding-left: 10px;
+	padding-bottom: 10px;
+	padding-right: 10px;
+}
+
+.login-form {
+	text-align: left;
+	float: right;
+	width: 60%;
+}
+
+.login-text {
+	text-align: left;
+	width: 40%;
+	float: left;
+}
+
+.inputlabel {
+	font-weight: bold;
+	text-align: left;
+	color:#777777;
+	}
+
+.inputbox {
+	width: 150px;
+	margin: 0 0 1em 0;
+	border: 1px solid #cccccc;
+	}
+
+.clr {
+    clear:both;
+    }
+
+.ctr {
+	text-align: center;
+}
+
+.version {
+	font-size: 0.8em;
+}
+
+.footer {
+margin-top: 10em;
+position: relative;
+color: white;
+}
+
+div.error {	
+	padding: 10px 10px 10px 36px; /*top right bottom left*/ 
+	background-position: 10px 50%;
+	background-color: #ffffdd;
+	border:1px solid #ff0000;
+	margin-bottom:5px;
+	margin-top: 6em;
+	text-align:left;
+	font-size:9px;
+	width: 412px;
+}

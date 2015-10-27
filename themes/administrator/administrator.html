@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Administrator &laquo; {judul_situs}</title>
+<meta name="Description" content="{meta_description}" />
+<meta name="Keywords" content="{meta_keywords}" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Distribution" content="Global">
+<meta name="Author" content="Teamworks Creative">
+<meta name="Robots" content="index,follow">
+<link rel="shortcut icon" href="favicon.ico">
+<link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="rss.php">
+<link rel="stylesheet" href="themes/administrator/css/administrator.css" type="text/css">
+<!-- <script type="text/javascript" src="themes/administrator/js/jquery.js"> </script> -->
+<!----------------------------------------->
+<link rel="stylesheet" href="includes/bootstrap/css/bootstrap.css" type="text/css">
+<!----------------------------------------->
+<link rel="stylesheet" media="screen" href="includes/media/css/jquery.dataTables.css" />
+<script language="javascript" type="text/javascript" src="includes/media/js/jquery.js"></script>
+<script language="javascript" type="text/javascript" src="includes/media/js/jquery.dataTables.js"></script>
+<!-------------------------------->
+<script src="themes/administrator/bxslider/jquery.bxslider.min.js"></script>
+<link href="themes/administrator/bxslider/jquery.bxslider.css" rel="stylesheet" />
+<!----------------------------------------->
+<link rel="stylesheet" href="themes/administrator/css/dropdown.css" type="text/css">
+<!----------------------------------------->
+<link rel="stylesheet" type="text/css" href="includes/countdown/jquery.countdown.css"> 
+<script type="text/javascript" src="includes/countdown/jquery.plugin.js"></script> 
+<script type="text/javascript" src="includes/countdown/jquery.countdown.js"></script>
+<!----------------------------------------->
+<link rel="stylesheet" href="themes/administrator/css/slimbox2.css" type="text/css" media="screen" /> 
+<script type="text/JavaScript" src="themes/administrator/js/slimbox2.js"></script> 
+<!----------------------------------------->
+<!---------------- JQUERY UI --------------------------------->
+<link href="js/combobox/jquery-ui.css" rel="stylesheet">
+<script src="js/combobox/jquery-ui.js"></script>
+<script src="js/combobox/jquery-combobox.js"></script>
+<script src="js/combobox/jquery-combobox2.js"></script>
+<style>
+  .custom-combobox {
+    position: relative;
+    display: inline-block;
+	padding-right: 30px;
+  }
+  .custom-combobox-toggle {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin-left: -1px;
+    padding: 0;
+  }
+  .custom-combobox-input {
+    margin: 0;
+    padding: 5px 10px;
+  }
+  </style>
+
+
+
+{style_include}
+{script_include}
+</head>
+
+<body>
+
+<div id="wrap">
+<div id="header">
+<img src="images/logo.png" width="auto" height="50" alt="security" /> {judul_situs}
+</div>   
+<div id="sidebar">  
+{leftside}
+</div>
+
+<div id="main"> 
+{ceklogin}
+{content}
+</div>  
+<!-- footer starts here --> 
+<div id="footer">
+<div class="footer-left">
+<p align="left">  
+Hak Cipta &copy; <script language="JavaScript" type="text/javascript">
+    now = new Date
+    theYear = now.getYear()
+    if (theYear < 1900)
+    theYear = theYear + 1900
+    document.write(theYear)
+</script> {judul_situs}
+</p>
+</div>
+</div>
+</div>
+</body>
+</html>
