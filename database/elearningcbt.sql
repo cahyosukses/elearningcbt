@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 27, 2015 at 04:46 AM
+-- Generation Time: Oct 27, 2015 at 04:52 AM
 -- Server version: 5.6.16
 -- PHP Version: 5.5.11
 
@@ -1243,15 +1243,6 @@ CREATE TABLE IF NOT EXISTS `kursus_setting` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=16 ;
 
---
--- Dumping data for table `kursus_setting`
---
-
-INSERT INTO `kursus_setting` (`id`, `guru`, `mapel`, `tahun`, `kelas`, `judul`) VALUES
-(14, 'hans', '4', '2015/2016', '16,17,18,19,20,21,22,23,24', 'TIK XI'),
-(5, 'muchid', '4', '2015/2016', '25,26,27,28,29,30,31,32,33,34,35', 'TIK XII'),
-(15, 'machrus', '4', '2015/2016', '36,37,38,39,40,41,42,43,44,45', 'TIK X');
-
 -- --------------------------------------------------------
 
 --
@@ -1316,19 +1307,6 @@ CREATE TABLE IF NOT EXISTS `materi` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
 
---
--- Dumping data for table `materi`
---
-
-INSERT INTO `materi` (`id`, `pertemuan`, `judul`, `materi`, `guru`, `idkursus`, `konten`, `kelas`) VALUES
-(1, 1, '1.1. Pengenalan WP', '', 'muchid', '5', '"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum', ''),
-(3, 1, '1.2. Pengenalan XAMPP', '', 'muchid', '5', '1.2. Pengenalan XAMPP', ''),
-(4, 9, 'PERTEMUAN 1 - Struktur Dasar C', 'PERTEMUAN 1 - Struktur Dasar C.pdf', 'hans', '14', '<p>PERTEMUAN 1 - Struktur Dasar C</p>', ''),
-(5, 2, 'Installasi XAMPP', '', 'muchid', '5', 'Installasi XAMPP', ''),
-(6, 8, 'Materi Corel Draw X4', 'Materi-Coreldraw-X4.pdf', 'machrus', '15', 'Materi-Coreldraw-X4 untuk Kelas X', ''),
-(7, 9, 'MODUL 2 Perulangan pada C', 'MODUL 2 Perulangan pada C.pdf', 'hans', '14', 'MODUL 2 Perulangan pada C', ''),
-(10, 8, 'kelas xa', '', 'machrus', '15', 'kelas xa', '36');
-
 -- --------------------------------------------------------
 
 --
@@ -1385,8 +1363,7 @@ INSERT INTO `menu_guru` (`id`, `menu`, `url`, `ordering`, `parent`, `icon`) VALU
 (26, 'Photo', 'admin.php?pilih=user&mod=yes&aksi=photo', 3, 1, ''),
 (25, 'Profil', 'admin.php?pilih=user&mod=yes&aksi=profil', 2, 1, ''),
 (23, 'E-Learning', '#', 1, 0, 'posts.png'),
-(24, 'Latihan Ujian', 'admin.php?pilih=ujian&mod=yes', 2, 23, ''),
-(22, 'Materi', 'admin.php?pilih=materi&mod=yes', 1, 23, '');
+(24, 'Latihan Ujian', 'admin.php?pilih=ujian&mod=yes', 2, 23, '');
 
 -- --------------------------------------------------------
 
@@ -1413,7 +1390,6 @@ INSERT INTO `menu_siswa` (`id`, `menu`, `url`, `ordering`, `parent`, `icon`) VAL
 (2, 'Change Password', 'admin.php?pilih=user&mod=yes&aksi=change', 1, 1, ''),
 (1, 'Account', '#', 1, 0, 'settings.png'),
 (18, 'Latihan Ujian', 'admin.php?pilih=ujian&mod=yes', 3, 19, ''),
-(17, 'Materi ELearning', 'admin.php?pilih=materi&mod=yes', 2, 19, ''),
 (19, 'E-Learning', '#', 1, 0, 'posts.png');
 
 -- --------------------------------------------------------
@@ -1798,14 +1774,14 @@ CREATE TABLE IF NOT EXISTS `useraura` (
   PRIMARY KEY (`UserId`),
   UNIQUE KEY `user` (`user`),
   UNIQUE KEY `user_2` (`user`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2409 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2410 ;
 
 --
 -- Dumping data for table `useraura`
 --
 
 INSERT INTO `useraura` (`UserId`, `user`, `password`, `level`, `tipe`, `is_online`, `last_ping`, `start`, `exp`, `nama`, `photo`, `statusemail`, `statustelp`, `email`, `telp`) VALUES
-(1, 'admin', '21232f297a57a5a743894a0e4a801fc3', 'Administrator', 'aktif', 1, '2015-10-27 08:57:00', '2010-08-27 00:00:00', '2034-08-27 00:00:00', 'Administrator', '', 'sembunyikan', 'sembunyikan', '', ''),
+(1, 'admin', '21232f297a57a5a743894a0e4a801fc3', 'Administrator', 'aktif', 0, '2015-10-27 08:57:00', '2010-08-27 00:00:00', '2034-08-27 00:00:00', 'Administrator', '', 'sembunyikan', 'sembunyikan', '', ''),
 (1764, '17041', '9426e9770a77cbcaefe1fb3a7e36327d', 'Siswa', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Felix Lonald', '', 'sembunyikan', 'sembunyikan', '', ''),
 (1763, '17029', 'c40ddeb230354b0371189e8e84b6a576', 'Siswa', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Evelin Melianawati Gunawan', '', 'sembunyikan', 'sembunyikan', '', ''),
 (1762, '17014', '373321f3ae1bebd3f6818359b0f8f6e6', 'Siswa', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Devi Kristianti Wijaya', '', 'sembunyikan', 'sembunyikan', '', ''),
@@ -1822,8 +1798,7 @@ INSERT INTO `useraura` (`UserId`, `user`, `password`, `level`, `tipe`, `is_onlin
 (1752, '16942', '74d3b2328adadbd5c9740b050d0a333c', 'Siswa', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Alexander Diga Simamora', '', 'sembunyikan', 'sembunyikan', '', ''),
 (1743, '17560', '97194d08565841c08a6d1ce3c82da0b3', 'Siswa', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Samuel Calvin Hasiando Sinaga', '', 'sembunyikan', 'sembunyikan', '', ''),
 (1742, '17553', 'd7c6beba6c2283f4ef1e8cc43783f320', 'Siswa', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Rizky Ryan Kurniawan', '', 'sembunyikan', 'sembunyikan', '', ''),
-(135, 'muchid', '1cdb7fba6d87a21fe06e462518536197', 'Guru', 'aktif', 0, '2015-10-27 08:12:53', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Muchid Hermanto, S.SI', 'muchid.jpg', 'sembunyikan', 'sembunyikan', 'asd@asd.com', ''),
-(1379, 'hans', 'f2a0ffe83ec8d44f2be4b624b0f47dde', 'Guru', 'aktif', 0, '2015-08-11 12:44:09', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Hans Kristian W., S.Kom', 'hans.jpg', 'sembunyikan', 'sembunyikan', '', ''),
+(2409, 'guru', '77e69c137812518e359196bb2f5e9bb9', 'Guru', 'aktif', 0, '2015-10-27 10:49:19', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'guru', '', 'sembunyikan', 'sembunyikan', '', ''),
 (1385, '17270', '1c95ee9c76a4fb9258cb07573752bef7', 'Siswa', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Alexander Krisnayodi', '', 'sembunyikan', 'sembunyikan', '', ''),
 (1386, '17276', 'f3a493fb0b6dc6357b9d89d6bdc1f2af', 'Siswa', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Alvin Christopher', '', 'sembunyikan', 'sembunyikan', '', ''),
 (1387, '17283', '062a781089e948d29ba79b89499a1120', 'Siswa', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Andi Livianto Halim', '', 'sembunyikan', 'sembunyikan', '', ''),
@@ -2064,16 +2039,15 @@ INSERT INTO `useraura` (`UserId`, `user`, `password`, `level`, `tipe`, `is_onlin
 (1912, '16980', 'c058d246d9705cc0524d7b25e1e36a6a', 'Siswa', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Bernadette Nicole Imaculatta', '', 'sembunyikan', 'sembunyikan', '', ''),
 (1911, '16976', '30c58a19dde41f4ecbe4fa148968a31f', 'Siswa', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Bella Priska Suritiono', '', 'sembunyikan', 'sembunyikan', '', ''),
 (1910, '16963', 'b6b216f2585250a7072b841a43a6c40e', 'Siswa', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Angelia Stephanie', '', 'sembunyikan', 'sembunyikan', '', ''),
-(1378, 'machrus', 'c810189334bd14013688c9e24d63479e', 'Guru', 'aktif', 0, '2015-10-19 13:09:40', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Machrus Ali, ST', 'machrus.jpg', 'sembunyikan', 'sembunyikan', '', ''),
 (1425, '17344', 'd1aa227de516e4617cc72ab9cf456380', 'Siswa', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Daniel Yoga Eka Putra', '', 'sembunyikan', 'sembunyikan', '', ''),
 (1426, '17372', '214f57783cac173e183096a607a408be', 'Siswa', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Erinne Natasha Yonanda Henoek', '', 'sembunyikan', 'sembunyikan', '', ''),
 (1719, '17340', '7295b8c846b35dfe7da45330e57d3f61', 'Siswa', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Cornelius Ardian', '', 'sembunyikan', 'sembunyikan', '', ''),
 (1718, '17339', '169ea72d893b7bfe6a36b531a78b48af', 'Siswa', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Cornelia Geraldine', '', 'sembunyikan', 'sembunyikan', '', ''),
 (1717, '17317', 'dbf32ab25d093aacdd59dd74587bc0b2', 'Siswa', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Brama Andika', '', 'sembunyikan', 'sembunyikan', '', ''),
-(1716, '17313', '3057aa0acb6d937295819f3d94f015e9', 'Siswa', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Billgay Flegon Patrobas Tambengi', '', 'sembunyikan', 'sembunyikan', '', '');
-INSERT INTO `useraura` (`UserId`, `user`, `password`, `level`, `tipe`, `is_online`, `last_ping`, `start`, `exp`, `nama`, `photo`, `statusemail`, `statustelp`, `email`, `telp`) VALUES
+(1716, '17313', '3057aa0acb6d937295819f3d94f015e9', 'Siswa', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Billgay Flegon Patrobas Tambengi', '', 'sembunyikan', 'sembunyikan', '', ''),
 (1715, '17299', '73b973e8cb788aaacc0d76892f85a877', 'Siswa', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Anthony Sanjaya', '', 'sembunyikan', 'sembunyikan', '', ''),
-(1714, '17271', '5cd8270fa6b6f7b7e7ee19ab22b8024a', 'Siswa', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Alexander Reynard Likawijaya', '', 'sembunyikan', 'sembunyikan', '', ''),
+(1714, '17271', '5cd8270fa6b6f7b7e7ee19ab22b8024a', 'Siswa', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Alexander Reynard Likawijaya', '', 'sembunyikan', 'sembunyikan', '', '');
+INSERT INTO `useraura` (`UserId`, `user`, `password`, `level`, `tipe`, `is_online`, `last_ping`, `start`, `exp`, `nama`, `photo`, `statusemail`, `statustelp`, `email`, `telp`) VALUES
 (1713, '17266', 'a0e9b39681f0f1db2510fa47eae2d056', 'Siswa', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Aldo Setyawan Jaya', '', 'sembunyikan', 'sembunyikan', '', ''),
 (1712, '17263', '4c40792e5998965f300247b4b43a879b', 'Siswa', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Albert Sukadi', '', 'sembunyikan', 'sembunyikan', '', ''),
 (1711, '17259', '72be476187889df5a41b67e8365203f5', 'Siswa', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Aicie Ogilvy', '', 'sembunyikan', 'sembunyikan', '', ''),
@@ -2337,10 +2311,10 @@ INSERT INTO `useraura` (`UserId`, `user`, `password`, `level`, `tipe`, `is_onlin
 (1453, '17325', 'b9f1a83c68c36088e57821bdb90f77f2', 'Siswa', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Caroline Chikita Kezia Sila', '', 'sembunyikan', 'sembunyikan', '', ''),
 (1452, '17297', 'b20ab15a36e8643d52041a1cbce997e5', 'Siswa', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Anthony Aurelius Tene', '', 'sembunyikan', 'sembunyikan', '', ''),
 (1451, '17285', 'cef21a66d373d6285f35519d5260c676', 'Siswa', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Andre Luciano F. Chaery', '', 'sembunyikan', 'sembunyikan', '', ''),
-(1450, '17281', '9abe545d4c2bedb37146f4ae4507db3e', 'Siswa', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Anastasya Sienny Citra Anggoro', '', 'sembunyikan', 'sembunyikan', '', '');
-INSERT INTO `useraura` (`UserId`, `user`, `password`, `level`, `tipe`, `is_online`, `last_ping`, `start`, `exp`, `nama`, `photo`, `statusemail`, `statustelp`, `email`, `telp`) VALUES
+(1450, '17281', '9abe545d4c2bedb37146f4ae4507db3e', 'Siswa', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Anastasya Sienny Citra Anggoro', '', 'sembunyikan', 'sembunyikan', '', ''),
 (1449, '17273', '01bd952c8d65168cca96db47d865cd89', 'Siswa', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Alexandro Glen Da Costa Rao', '', 'sembunyikan', 'sembunyikan', '', ''),
-(1448, '17264', 'f8aee2c37235d0f679aa23371280367e', 'Siswa', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Aldi Ongkojaya', '', 'sembunyikan', 'sembunyikan', '', ''),
+(1448, '17264', 'f8aee2c37235d0f679aa23371280367e', 'Siswa', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Aldi Ongkojaya', '', 'sembunyikan', 'sembunyikan', '', '');
+INSERT INTO `useraura` (`UserId`, `user`, `password`, `level`, `tipe`, `is_online`, `last_ping`, `start`, `exp`, `nama`, `photo`, `statusemail`, `statustelp`, `email`, `telp`) VALUES
 (1447, '17262', '0b823d8b45ee3eaf26e538b6cff6f451', 'Siswa', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Alber Tjan', '', 'sembunyikan', 'sembunyikan', '', ''),
 (1446, '17257', 'fada3d8ed2d4a4ace2863798fece05ac', 'Siswa', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Adi Setyo Nugroho', '', 'sembunyikan', 'sembunyikan', '', ''),
 (1445, '17638', '4ab35559cc92240547c18e228f234484', 'Siswa', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Yolanda Katharina Constantin S.', '', 'sembunyikan', 'sembunyikan', '', ''),
@@ -2362,7 +2336,7 @@ INSERT INTO `useraura` (`UserId`, `user`, `password`, `level`, `tipe`, `is_onlin
 (1429, '17408', '721cc4aaaf4e30504cb0ddcb4f756763', 'Siswa', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Gilbert Anthoni Axel', '', 'sembunyikan', 'sembunyikan', '', ''),
 (1428, '17396', '4493c8059fa48a771fc96fa18e05df8d', 'Siswa', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Florencia Elanie', '', 'sembunyikan', 'sembunyikan', '', ''),
 (1427, '17388', '2c78174142e326ca62fc0c16d828a2fe', 'Siswa', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Felix Tanjiro Sutanto', '', 'sembunyikan', 'sembunyikan', '', ''),
-(1383, 'kelas10', 'd2acb56139c31f419e5e926a31a9e492', 'Siswa', 'aktif', 0, '2015-10-19 13:09:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'kelas10A', '', 'sembunyikan', 'sembunyikan', '', ''),
+(1383, 'kelas10', 'd2acb56139c31f419e5e926a31a9e492', 'Siswa', 'aktif', 0, '2015-10-27 10:51:38', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'kelas10A', '', 'sembunyikan', 'sembunyikan', '', ''),
 (1384, 'kelas11', '602281938f02c5d897853e2d1d4d83a1', 'Siswa', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'kelas11', '', 'sembunyikan', 'sembunyikan', '', ''),
 (1381, 'siswa12', '380a0238d4eeb7ebbf6445d1541865c2', 'Siswa', 'aktif', 0, '2015-08-12 09:18:06', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'siswa12', '', 'sembunyikan', 'sembunyikan', '', ''),
 (1935, '17169', 'd7cbbc7d02fca8a32ac5a3b5161ee19c', 'Siswa', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Octhalia Zivana Iskandar', '', 'sembunyikan', 'sembunyikan', '', ''),
@@ -2605,10 +2579,10 @@ INSERT INTO `useraura` (`UserId`, `user`, `password`, `level`, `tipe`, `is_onlin
 (2172, '16707', '40d1075be60b9feb074947fb019cc6b4', 'Siswa', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'F.X. Adhika Wicaksana Putra Zihono', '', 'sembunyikan', 'sembunyikan', '', ''),
 (2173, '16751', 'a91f5b7694960ec78204af05f421a699', 'Siswa', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Irvan Ferdinand', '', 'sembunyikan', 'sembunyikan', '', ''),
 (2174, '16755', 'eefbed3864900fbf045a269dd8bd4c8e', 'Siswa', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Ivania Budi Cendika', '', 'sembunyikan', 'sembunyikan', '', ''),
-(2175, '16768', 'ead8e65817265dd1346c3d2b2ba251c5', 'Siswa', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Johan Witono', '', 'sembunyikan', 'sembunyikan', '', '');
-INSERT INTO `useraura` (`UserId`, `user`, `password`, `level`, `tipe`, `is_online`, `last_ping`, `start`, `exp`, `nama`, `photo`, `statusemail`, `statustelp`, `email`, `telp`) VALUES
+(2175, '16768', 'ead8e65817265dd1346c3d2b2ba251c5', 'Siswa', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Johan Witono', '', 'sembunyikan', 'sembunyikan', '', ''),
 (2176, '16779', '2caba685d55ef0854e19c297cf95df35', 'Siswa', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Kathryn Immanuel Wahyudi', '', 'sembunyikan', 'sembunyikan', '', ''),
-(2177, '16781', '18dabb99ce171ea5a317521425d5c206', 'Siswa', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Kelvin Christianto', '', 'sembunyikan', 'sembunyikan', '', ''),
+(2177, '16781', '18dabb99ce171ea5a317521425d5c206', 'Siswa', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Kelvin Christianto', '', 'sembunyikan', 'sembunyikan', '', '');
+INSERT INTO `useraura` (`UserId`, `user`, `password`, `level`, `tipe`, `is_online`, `last_ping`, `start`, `exp`, `nama`, `photo`, `statusemail`, `statustelp`, `email`, `telp`) VALUES
 (2178, '16791', 'e9d3e114b1cf19de5ae8d014512350c2', 'Siswa', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Kevin Susanto', '', 'sembunyikan', 'sembunyikan', '', ''),
 (2179, '16797', '703aea31975f2fa45fdb3e4a8e378ad1', 'Siswa', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Kristoforus Ryan', '', 'sembunyikan', 'sembunyikan', '', ''),
 (2180, '16804', 'c752a2fef40ec94d00999635f7599f25', 'Siswa', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Lia Indrawati', '', 'sembunyikan', 'sembunyikan', '', ''),
