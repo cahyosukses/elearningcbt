@@ -3,8 +3,8 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 27, 2015 at 04:52 AM
--- Server version: 5.6.16
+-- Generation Time: 27 Okt 2015 pada 13.25
+-- Versi Server: 5.6.16
 -- PHP Version: 5.5.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -23,7 +23,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `actions`
+-- Struktur dari tabel `actions`
 --
 
 DROP TABLE IF EXISTS `actions`;
@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS `actions` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=37 ;
 
 --
--- Dumping data for table `actions`
+-- Dumping data untuk tabel `actions`
 --
 
 INSERT INTO `actions` (`id`, `modul`, `posisi`, `order`, `modul_id`) VALUES
@@ -48,7 +48,7 @@ INSERT INTO `actions` (`id`, `modul`, `posisi`, `order`, `modul_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `admin`
+-- Struktur dari tabel `admin`
 --
 
 DROP TABLE IF EXISTS `admin`;
@@ -64,7 +64,7 @@ CREATE TABLE IF NOT EXISTS `admin` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=105 ;
 
 --
--- Dumping data for table `admin`
+-- Dumping data untuk tabel `admin`
 --
 
 INSERT INTO `admin` (`id`, `menu`, `url`, `mod`, `ordering`, `parent`, `icon`) VALUES
@@ -85,7 +85,7 @@ INSERT INTO `admin` (`id`, `menu`, `url`, `mod`, `ordering`, `parent`, `icon`) V
 -- --------------------------------------------------------
 
 --
--- Table structure for table `infoguru`
+-- Struktur dari tabel `infoguru`
 --
 
 DROP TABLE IF EXISTS `infoguru`;
@@ -102,7 +102,7 @@ CREATE TABLE IF NOT EXISTS `infoguru` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `intrusions`
+-- Struktur dari tabel `intrusions`
 --
 
 DROP TABLE IF EXISTS `intrusions`;
@@ -118,7 +118,7 @@ CREATE TABLE IF NOT EXISTS `intrusions` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 --
--- Dumping data for table `intrusions`
+-- Dumping data untuk tabel `intrusions`
 --
 
 INSERT INTO `intrusions` (`id`, `name`, `value`, `page`, `ip`, `impact`, `created`) VALUES
@@ -130,7 +130,7 @@ INSERT INTO `intrusions` (`id`, `name`, `value`, `page`, `ip`, `impact`, `create
 -- --------------------------------------------------------
 
 --
--- Table structure for table `kelas`
+-- Struktur dari tabel `kelas`
 --
 
 DROP TABLE IF EXISTS `kelas`;
@@ -141,7 +141,7 @@ CREATE TABLE IF NOT EXISTS `kelas` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=48 ;
 
 --
--- Dumping data for table `kelas`
+-- Dumping data untuk tabel `kelas`
 --
 
 INSERT INTO `kelas` (`id`, `kelas`) VALUES
@@ -181,7 +181,7 @@ INSERT INTO `kelas` (`id`, `kelas`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `kelas_isi`
+-- Struktur dari tabel `kelas_isi`
 --
 
 DROP TABLE IF EXISTS `kelas_isi`;
@@ -194,7 +194,7 @@ CREATE TABLE IF NOT EXISTS `kelas_isi` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1065 ;
 
 --
--- Dumping data for table `kelas_isi`
+-- Dumping data untuk tabel `kelas_isi`
 --
 
 INSERT INTO `kelas_isi` (`id`, `kelas`, `siswa`) VALUES
@@ -1229,7 +1229,7 @@ INSERT INTO `kelas_isi` (`id`, `kelas`, `siswa`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `kursus_setting`
+-- Struktur dari tabel `kursus_setting`
 --
 
 DROP TABLE IF EXISTS `kursus_setting`;
@@ -1246,7 +1246,7 @@ CREATE TABLE IF NOT EXISTS `kursus_setting` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `mapel`
+-- Struktur dari tabel `mapel`
 --
 
 DROP TABLE IF EXISTS `mapel`;
@@ -1255,19 +1255,20 @@ CREATE TABLE IF NOT EXISTS `mapel` (
   `mapel` varchar(255) NOT NULL,
   `icon` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 
 --
--- Dumping data for table `mapel`
+-- Dumping data untuk tabel `mapel`
 --
 
 INSERT INTO `mapel` (`id`, `mapel`, `icon`) VALUES
-(4, 'TIK', 'icon04.jpg');
+(4, 'TIK', 'icon04.jpg'),
+(5, 'Kimia', '98dce83da57b0395e163467c9dae521b.jpg');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `mapel_icon`
+-- Struktur dari tabel `mapel_icon`
 --
 
 DROP TABLE IF EXISTS `mapel_icon`;
@@ -1278,7 +1279,7 @@ CREATE TABLE IF NOT EXISTS `mapel_icon` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 
 --
--- Dumping data for table `mapel_icon`
+-- Dumping data untuk tabel `mapel_icon`
 --
 
 INSERT INTO `mapel_icon` (`id`, `icon`) VALUES
@@ -1291,7 +1292,7 @@ INSERT INTO `mapel_icon` (`id`, `icon`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `materi`
+-- Struktur dari tabel `materi`
 --
 
 DROP TABLE IF EXISTS `materi`;
@@ -1310,7 +1311,7 @@ CREATE TABLE IF NOT EXISTS `materi` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `menu`
+-- Struktur dari tabel `menu`
 --
 
 DROP TABLE IF EXISTS `menu`;
@@ -1324,7 +1325,7 @@ CREATE TABLE IF NOT EXISTS `menu` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=26 ;
 
 --
--- Dumping data for table `menu`
+-- Dumping data untuk tabel `menu`
 --
 
 INSERT INTO `menu` (`id`, `menu`, `url`, `published`, `ordering`) VALUES
@@ -1339,7 +1340,7 @@ INSERT INTO `menu` (`id`, `menu`, `url`, `published`, `ordering`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `menu_guru`
+-- Struktur dari tabel `menu_guru`
 --
 
 DROP TABLE IF EXISTS `menu_guru`;
@@ -1354,7 +1355,7 @@ CREATE TABLE IF NOT EXISTS `menu_guru` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=27 ;
 
 --
--- Dumping data for table `menu_guru`
+-- Dumping data untuk tabel `menu_guru`
 --
 
 INSERT INTO `menu_guru` (`id`, `menu`, `url`, `ordering`, `parent`, `icon`) VALUES
@@ -1368,7 +1369,7 @@ INSERT INTO `menu_guru` (`id`, `menu`, `url`, `ordering`, `parent`, `icon`) VALU
 -- --------------------------------------------------------
 
 --
--- Table structure for table `menu_siswa`
+-- Struktur dari tabel `menu_siswa`
 --
 
 DROP TABLE IF EXISTS `menu_siswa`;
@@ -1383,7 +1384,7 @@ CREATE TABLE IF NOT EXISTS `menu_siswa` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=20 ;
 
 --
--- Dumping data for table `menu_siswa`
+-- Dumping data untuk tabel `menu_siswa`
 --
 
 INSERT INTO `menu_siswa` (`id`, `menu`, `url`, `ordering`, `parent`, `icon`) VALUES
@@ -1395,7 +1396,7 @@ INSERT INTO `menu_siswa` (`id`, `menu`, `url`, `ordering`, `parent`, `icon`) VAL
 -- --------------------------------------------------------
 
 --
--- Table structure for table `modul`
+-- Struktur dari tabel `modul`
 --
 
 DROP TABLE IF EXISTS `modul`;
@@ -1412,7 +1413,7 @@ CREATE TABLE IF NOT EXISTS `modul` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=33 ;
 
 --
--- Dumping data for table `modul`
+-- Dumping data untuk tabel `modul`
 --
 
 INSERT INTO `modul` (`id`, `modul`, `isi`, `setup`, `posisi`, `published`, `ordering`, `type`) VALUES
@@ -1435,7 +1436,7 @@ INSERT INTO `modul` (`id`, `modul`, `isi`, `setup`, `posisi`, `published`, `orde
 -- --------------------------------------------------------
 
 --
--- Table structure for table `pengumuman_sekolah`
+-- Struktur dari tabel `pengumuman_sekolah`
 --
 
 DROP TABLE IF EXISTS `pengumuman_sekolah`;
@@ -1451,7 +1452,7 @@ CREATE TABLE IF NOT EXISTS `pengumuman_sekolah` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 --
--- Dumping data for table `pengumuman_sekolah`
+-- Dumping data untuk tabel `pengumuman_sekolah`
 --
 
 INSERT INTO `pengumuman_sekolah` (`id`, `judul`, `konten`, `user`, `tgl`, `hits`, `seftitle`) VALUES
@@ -1460,7 +1461,7 @@ INSERT INTO `pengumuman_sekolah` (`id`, `judul`, `konten`, `user`, `tgl`, `hits`
 -- --------------------------------------------------------
 
 --
--- Table structure for table `pertemuan`
+-- Struktur dari tabel `pertemuan`
 --
 
 DROP TABLE IF EXISTS `pertemuan`;
@@ -1472,7 +1473,7 @@ CREATE TABLE IF NOT EXISTS `pertemuan` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
 
 --
--- Dumping data for table `pertemuan`
+-- Dumping data untuk tabel `pertemuan`
 --
 
 INSERT INTO `pertemuan` (`id`, `pertemuan`, `idkursus`) VALUES
@@ -1487,7 +1488,7 @@ INSERT INTO `pertemuan` (`id`, `pertemuan`, `idkursus`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `sensor`
+-- Struktur dari tabel `sensor`
 --
 
 DROP TABLE IF EXISTS `sensor`;
@@ -1498,7 +1499,7 @@ CREATE TABLE IF NOT EXISTS `sensor` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
 
 --
--- Dumping data for table `sensor`
+-- Dumping data untuk tabel `sensor`
 --
 
 INSERT INTO `sensor` (`id`, `word`) VALUES
@@ -1515,7 +1516,7 @@ INSERT INTO `sensor` (`id`, `word`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `situs`
+-- Struktur dari tabel `situs`
 --
 
 DROP TABLE IF EXISTS `situs`;
@@ -1547,7 +1548,7 @@ CREATE TABLE IF NOT EXISTS `situs` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=2 ;
 
 --
--- Dumping data for table `situs`
+-- Dumping data untuk tabel `situs`
 --
 
 INSERT INTO `situs` (`id`, `email_master`, `judul_situs`, `url_situs`, `slogan`, `description`, `keywords`, `maxkonten`, `maxadmindata`, `maxdata`, `maxgalleri`, `widgetshare`, `theme`, `author`, `alamatkantor`, `publishwebsite`, `publishnews`, `maxgalleridata`, `widgetkomentar`, `widgetpenulis`, `semester`, `tahun ajaran`, `tampilan`) VALUES
@@ -1556,7 +1557,7 @@ INSERT INTO `situs` (`id`, `email_master`, `judul_situs`, `url_situs`, `slogan`,
 -- --------------------------------------------------------
 
 --
--- Table structure for table `soal`
+-- Struktur dari tabel `soal`
 --
 
 DROP TABLE IF EXISTS `soal`;
@@ -1568,19 +1569,20 @@ CREATE TABLE IF NOT EXISTS `soal` (
   `kunci` enum('a','b','c','d','e') NOT NULL,
   `files` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 --
--- Dumping data for table `soal`
+-- Dumping data untuk tabel `soal`
 --
 
 INSERT INTO `soal` (`id`, `ujian`, `soal`, `pilihan`, `kunci`, `files`) VALUES
-(1, 32, 'Corel jawaban A', 'benar#salah#salah#salah#salah', 'a', '');
+(2, 33, 'Dibawah ini diberikan teori tentang atom :<br />I. &nbsp; Atom adalah bola yang netral dengan muatan tersebar ke seluruh bagian <br />II. &nbsp;Dalam atom ada inti dan elektron bergerak mengelilingi inti pada tingkat energi yang dimiliki<br />III. Atom adalah bola yang sangat kecil, keras dan tidak dapat pecah<br />IV. Dalam atom terdapat inti dan elektron bergerak mengelilingi inti pada orbital-orbital tertentu<br />V. &nbsp;Dalam atom ada inti dan elektron mengelilingi inti<br />\r\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Pernyataan tentang atom tersebut merupakan teori atom paling akhir (Modern) adalah&hellip;</p>', 'I#II#III#IV#V', 'a', ''),
+(3, 33, 'HCl dan NH<sub>3</sub>', '<span lang="EN-US">HCl dan NH<sub>3</sub></span>#<span lang="EN-US">HCl dan NH<sub>3</sub></span>#<span lang="EN-US">HCl dan NH<sub>3</sub></span>#<span lang="EN-US">HCl dan NH<sub>3</sub></span>#<span lang="EN-US">HCl dan NH<sub>3</sub></span>', 'a', '');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tbl_kalender`
+-- Struktur dari tabel `tbl_kalender`
 --
 
 DROP TABLE IF EXISTS `tbl_kalender`;
@@ -1596,7 +1598,7 @@ CREATE TABLE IF NOT EXISTS `tbl_kalender` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 --
--- Dumping data for table `tbl_kalender`
+-- Dumping data untuk tabel `tbl_kalender`
 --
 
 INSERT INTO `tbl_kalender` (`judul`, `isi`, `waktu_mulai`, `waktu_akhir`, `background`, `color`, `id`) VALUES
@@ -1606,7 +1608,7 @@ INSERT INTO `tbl_kalender` (`judul`, `isi`, `waktu_mulai`, `waktu_akhir`, `backg
 -- --------------------------------------------------------
 
 --
--- Table structure for table `topik`
+-- Struktur dari tabel `topik`
 --
 
 DROP TABLE IF EXISTS `topik`;
@@ -1620,7 +1622,7 @@ CREATE TABLE IF NOT EXISTS `topik` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=48 ;
 
 --
--- Dumping data for table `topik`
+-- Dumping data untuk tabel `topik`
 --
 
 INSERT INTO `topik` (`id`, `topik`, `ket`, `parentid`, `seftitle`) VALUES
@@ -1632,7 +1634,7 @@ INSERT INTO `topik` (`id`, `topik`, `ket`, `parentid`, `seftitle`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tugas`
+-- Struktur dari tabel `tugas`
 --
 
 DROP TABLE IF EXISTS `tugas`;
@@ -1649,7 +1651,7 @@ CREATE TABLE IF NOT EXISTS `tugas` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tugaskomentar`
+-- Struktur dari tabel `tugaskomentar`
 --
 
 DROP TABLE IF EXISTS `tugaskomentar`;
@@ -1664,7 +1666,7 @@ CREATE TABLE IF NOT EXISTS `tugaskomentar` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
 --
--- Dumping data for table `tugaskomentar`
+-- Dumping data untuk tabel `tugaskomentar`
 --
 
 INSERT INTO `tugaskomentar` (`id`, `tgl`, `tugassiswa`, `nama`, `kelas`, `komentar`) VALUES
@@ -1676,7 +1678,7 @@ INSERT INTO `tugaskomentar` (`id`, `tgl`, `tugassiswa`, `nama`, `kelas`, `koment
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tugassiswa`
+-- Struktur dari tabel `tugassiswa`
 --
 
 DROP TABLE IF EXISTS `tugassiswa`;
@@ -1693,7 +1695,7 @@ CREATE TABLE IF NOT EXISTS `tugassiswa` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `ujian`
+-- Struktur dari tabel `ujian`
 --
 
 DROP TABLE IF EXISTS `ujian`;
@@ -1712,19 +1714,19 @@ CREATE TABLE IF NOT EXISTS `ujian` (
   `petunjuk` text NOT NULL,
   `tipeujian` enum('latihan','ujian') NOT NULL DEFAULT 'latihan',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=33 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=34 ;
 
 --
--- Dumping data for table `ujian`
+-- Dumping data untuk tabel `ujian`
 --
 
 INSERT INTO `ujian` (`id`, `tgl`, `judul`, `pointbenar`, `pointsalah`, `pointkosong`, `tipe`, `jumlahsoal`, `tipejawaban`, `status`, `idmapel`, `petunjuk`, `tipeujian`) VALUES
-(32, '2015-10-27', 'Corel 123', '100', '0', '0', 'urut', '1', 'a,b,c,d,e', 'enabled', '4', '', 'latihan');
+(33, '2015-10-27', 'Tipe 1', '10', '0', '0', 'random', '10', 'a,b,c,d,e', 'enabled', '5', '<p>- Pada bagian atas terdapat nomor soal ujian dimana peserta tes dapat berpindah-pindah ke soal yang lain.<br />- Untuk menjawab soal peserta harus melakukan klik pada combobox / pilihan yang ada.<br />- Untuk mengakhiri ujian klik tombol selesai, nantinya akan terdapat notifikasi mengakhiri tes.</p>', 'latihan');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `ujiannilai`
+-- Struktur dari tabel `ujiannilai`
 --
 
 DROP TABLE IF EXISTS `ujiannilai`;
@@ -1738,7 +1740,7 @@ CREATE TABLE IF NOT EXISTS `ujiannilai` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
 
 --
--- Dumping data for table `ujiannilai`
+-- Dumping data untuk tabel `ujiannilai`
 --
 
 INSERT INTO `ujiannilai` (`id`, `tgl`, `ujian`, `user`, `nilai`) VALUES
@@ -1751,7 +1753,7 @@ INSERT INTO `ujiannilai` (`id`, `tgl`, `ujian`, `user`, `nilai`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `useraura`
+-- Struktur dari tabel `useraura`
 --
 
 DROP TABLE IF EXISTS `useraura`;
@@ -1777,11 +1779,11 @@ CREATE TABLE IF NOT EXISTS `useraura` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2410 ;
 
 --
--- Dumping data for table `useraura`
+-- Dumping data untuk tabel `useraura`
 --
 
 INSERT INTO `useraura` (`UserId`, `user`, `password`, `level`, `tipe`, `is_online`, `last_ping`, `start`, `exp`, `nama`, `photo`, `statusemail`, `statustelp`, `email`, `telp`) VALUES
-(1, 'admin', '21232f297a57a5a743894a0e4a801fc3', 'Administrator', 'aktif', 0, '2015-10-27 08:57:00', '2010-08-27 00:00:00', '2034-08-27 00:00:00', 'Administrator', '', 'sembunyikan', 'sembunyikan', '', ''),
+(1, 'admin', '21232f297a57a5a743894a0e4a801fc3', 'Administrator', 'aktif', 1, '2015-10-27 11:47:11', '2010-08-27 00:00:00', '2034-08-27 00:00:00', 'Administrator', '', 'sembunyikan', 'sembunyikan', '', ''),
 (1764, '17041', '9426e9770a77cbcaefe1fb3a7e36327d', 'Siswa', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Felix Lonald', '', 'sembunyikan', 'sembunyikan', '', ''),
 (1763, '17029', 'c40ddeb230354b0371189e8e84b6a576', 'Siswa', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Evelin Melianawati Gunawan', '', 'sembunyikan', 'sembunyikan', '', ''),
 (1762, '17014', '373321f3ae1bebd3f6818359b0f8f6e6', 'Siswa', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Devi Kristianti Wijaya', '', 'sembunyikan', 'sembunyikan', '', ''),
@@ -2336,7 +2338,7 @@ INSERT INTO `useraura` (`UserId`, `user`, `password`, `level`, `tipe`, `is_onlin
 (1429, '17408', '721cc4aaaf4e30504cb0ddcb4f756763', 'Siswa', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Gilbert Anthoni Axel', '', 'sembunyikan', 'sembunyikan', '', ''),
 (1428, '17396', '4493c8059fa48a771fc96fa18e05df8d', 'Siswa', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Florencia Elanie', '', 'sembunyikan', 'sembunyikan', '', ''),
 (1427, '17388', '2c78174142e326ca62fc0c16d828a2fe', 'Siswa', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Felix Tanjiro Sutanto', '', 'sembunyikan', 'sembunyikan', '', ''),
-(1383, 'kelas10', 'd2acb56139c31f419e5e926a31a9e492', 'Siswa', 'aktif', 0, '2015-10-27 10:51:38', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'kelas10A', '', 'sembunyikan', 'sembunyikan', '', ''),
+(1383, 'kelas10', 'd2acb56139c31f419e5e926a31a9e492', 'Siswa', 'aktif', 0, '2015-10-27 11:46:24', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'kelas10A', '', 'sembunyikan', 'sembunyikan', '', ''),
 (1384, 'kelas11', '602281938f02c5d897853e2d1d4d83a1', 'Siswa', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'kelas11', '', 'sembunyikan', 'sembunyikan', '', ''),
 (1381, 'siswa12', '380a0238d4eeb7ebbf6445d1541865c2', 'Siswa', 'aktif', 0, '2015-08-12 09:18:06', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'siswa12', '', 'sembunyikan', 'sembunyikan', '', ''),
 (1935, '17169', 'd7cbbc7d02fca8a32ac5a3b5161ee19c', 'Siswa', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Octhalia Zivana Iskandar', '', 'sembunyikan', 'sembunyikan', '', ''),
@@ -2818,7 +2820,7 @@ INSERT INTO `useraura` (`UserId`, `user`, `password`, `level`, `tipe`, `is_onlin
 -- --------------------------------------------------------
 
 --
--- Table structure for table `usercounter`
+-- Struktur dari tabel `usercounter`
 --
 
 DROP TABLE IF EXISTS `usercounter`;
@@ -2831,7 +2833,7 @@ CREATE TABLE IF NOT EXISTS `usercounter` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 --
--- Dumping data for table `usercounter`
+-- Dumping data untuk tabel `usercounter`
 --
 
 INSERT INTO `usercounter` (`id`, `ip`, `counter`, `hits`) VALUES
@@ -2840,7 +2842,7 @@ INSERT INTO `usercounter` (`id`, `ip`, `counter`, `hits`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `useronline`
+-- Struktur dari tabel `useronline`
 --
 
 DROP TABLE IF EXISTS `useronline`;
@@ -2858,7 +2860,7 @@ CREATE TABLE IF NOT EXISTS `useronline` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=96 ;
 
 --
--- Dumping data for table `useronline`
+-- Dumping data untuk tabel `useronline`
 --
 
 INSERT INTO `useronline` (`id`, `ipproxy`, `host`, `ipanda`, `proxyserver`, `timevisit`) VALUES
@@ -2867,7 +2869,7 @@ INSERT INTO `useronline` (`id`, `ipproxy`, `host`, `ipanda`, `proxyserver`, `tim
 -- --------------------------------------------------------
 
 --
--- Table structure for table `useronlineday`
+-- Struktur dari tabel `useronlineday`
 --
 
 DROP TABLE IF EXISTS `useronlineday`;
@@ -2885,7 +2887,7 @@ CREATE TABLE IF NOT EXISTS `useronlineday` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5597 ;
 
 --
--- Dumping data for table `useronlineday`
+-- Dumping data untuk tabel `useronlineday`
 --
 
 INSERT INTO `useronlineday` (`id`, `ipproxy`, `host`, `ipanda`, `proxyserver`, `timevisit`) VALUES
@@ -2894,7 +2896,7 @@ INSERT INTO `useronlineday` (`id`, `ipproxy`, `host`, `ipanda`, `proxyserver`, `
 -- --------------------------------------------------------
 
 --
--- Table structure for table `useronlinemonth`
+-- Struktur dari tabel `useronlinemonth`
 --
 
 DROP TABLE IF EXISTS `useronlinemonth`;
@@ -2912,7 +2914,7 @@ CREATE TABLE IF NOT EXISTS `useronlinemonth` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3871 ;
 
 --
--- Dumping data for table `useronlinemonth`
+-- Dumping data untuk tabel `useronlinemonth`
 --
 
 INSERT INTO `useronlinemonth` (`id`, `ipproxy`, `host`, `ipanda`, `proxyserver`, `timevisit`) VALUES
