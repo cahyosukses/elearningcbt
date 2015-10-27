@@ -96,14 +96,6 @@ $admin .= '
 		<td><input type="text" name="mapel" value="'.$data['mapel'].'" size="25"class="form-control"></td>
 	</tr>
 	<tr>
-		<td>Icon</td>
-		<td>:</td>
-		<td><input type="hidden" name="icon_lama" value="'.$data['icon'].'"><input type="file" name="icon"><br>
-		<img src="'.$url_situs.'/mod/mapel/'.$data['icon'].'">
-		</td>
-	</tr>
-
-	<tr>
 		<td></td>
 		<td></td>
 		<td>
@@ -165,11 +157,6 @@ $admin .= '
 		<td><input type="text" name="mapel" value="'.$mapel.'" size="30" class="form-control" required></td>
 	</tr>
 	<tr>
-		<td>Icon</td>
-		<td>:</td>
-		<td><input type="file" name="icon"></td>
-	</tr>
-	<tr>
 		<td></td>
 		<td></td>
 		<td>
@@ -186,7 +173,6 @@ $admin .= '<table id="example" class="table table-striped table-hover">
 <thead><tr>
 <th>No</th>
 <th>Mata Pelajaran</th>
-<th>Icon</th>
 <th>Aksi</th>
 </tr></thead><tbody>';
 $no = 1;
@@ -199,7 +185,6 @@ $icon='default.jpg';
 $admin .='<tr>
 <td><b>'.$no.'</b></td>
 <td>'.$mapel.'</td>
-<td><img src="mod/mapel/'.$icon.'" height="50px"></td>
 <td><a href="?pilih=mapel&amp;mod=yes&amp;aksi=del&amp;id='.$data['id'].'" onclick="return confirm(\'Apakah Anda Yakin Ingin Menghapus Data Ini ?\')"><span class="btn btn-danger">Hapus</span></a> <a href="?pilih=mapel&amp;mod=yes&amp;aksi=edit&amp;id='.$data['id'].'"><span class="btn btn-warning">Edit</span></a></td>
 </tr>';
 $no++;

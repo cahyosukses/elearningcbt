@@ -17,10 +17,12 @@ $JS_SCRIPT = <<<js
 <script type="text/javascript" src="js/tinymce/tinymce.min.js"></script>
 <script type="text/javascript">
 tinymce.init({
+	statusbar: false,
+	resize: false,
         selector: "textarea",
         plugins: [
                 "advlist autolink autosave link image lists charmap print preview hr anchor pagebreak spellchecker",
-                "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
+                "searchreplace visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
                 "table contextmenu directionality emoticons template textcolor paste  textcolor filemanager"
         ],
 
@@ -572,7 +574,7 @@ $admin.="
 	<tr>
 		<td>Soal</td>
 		<td></td>
-		<td><textarea name='konten' id='textarea1'>$konten</textarea></td>
+		<td><textarea name='konten' id='textarea9'>$konten</textarea></td>
 	</tr>";
 $admin.="
 	<tr>
@@ -581,9 +583,11 @@ $admin.="
 		<td>";
 		$no=1;
 for ($i = 0; $i < $jml_jawaban; $i++) {
-$admin .="
+/*$admin .="
     <div class='input-group'>
       <div class='input-group-addon'>$jawaban[$i].</div><input type='text' name='pilihan$no' class='form-control'required /></div>";
+	  */
+$admin .="<div class='input-group'><div class='input-group-addon'>$jawaban[$i].</div><textarea name='pilihan$no' id='textarea$no'style='height: 2em;'></textarea></div>";
 $no++;
 }
 $admin .="
@@ -727,7 +731,7 @@ $admin.="
 	<tr>
 		<td>Soal</td>
 		<td></td>
-		<td><textarea name='konten' id='textarea1'>$konten</textarea></td>
+		<td><textarea name='konten' id='textarea9'>$konten</textarea></td>
 	</tr>";
 $admin.="
 	<tr>
@@ -736,9 +740,12 @@ $admin.="
 		<td>";
 		$no=1;
 for ($i = 0; $i < $jml_jawaban; $i++) {
+	/*
 $admin .="
     <div class='input-group'>
       <div class='input-group-addon'>$jawaban[$i].</div><input type='text' name='pilihan$no' class='form-control'required value='$pilihansoal[$i]' /></div>";
+	  */
+$admin .="<div class='input-group'><div class='input-group-addon'>$jawaban[$i].</div><textarea name='pilihan$no' id='textarea$no'style='height: 2em;'></textarea></div>";
 $no++;
 }
 $admin .="
