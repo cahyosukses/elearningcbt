@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 27, 2015 at 02:55 AM
+-- Generation Time: Oct 27, 2015 at 04:46 AM
 -- Server version: 5.6.16
 -- PHP Version: 5.5.11
 
@@ -80,10 +80,7 @@ INSERT INTO `admin` (`id`, `menu`, `url`, `mod`, `ordering`, `parent`, `icon`) V
 (101, 'Setting E-Learning', 'settingwebsite', 1, 2, 2, ''),
 (100, 'Latihan Ujian', 'ujian', 1, 4, 96, ''),
 (99, 'Pengumuman Sekolah', 'pengumuman', 1, 3, 96, ''),
-(98, 'Materi', 'materi', 1, 2, 96, ''),
-(97, 'Buat Kursus', 'kursus', 1, 1, 96, ''),
-(103, 'File Manager', 'filemanager', 1, 4, 5, ''),
-(104, 'Pertemuan', 'pertemuan', 1, 6, 96, '');
+(103, 'File Manager', 'filemanager', 1, 4, 5, '');
 
 -- --------------------------------------------------------
 
@@ -1595,57 +1592,14 @@ CREATE TABLE IF NOT EXISTS `soal` (
   `kunci` enum('a','b','c','d','e') NOT NULL,
   `files` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=70 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 --
 -- Dumping data for table `soal`
 --
 
 INSERT INTO `soal` (`id`, `ujian`, `soal`, `pilihan`, `kunci`, `files`) VALUES
-(26, 29, 'Jenis gambar yang dihasilkan oleh program Corel Draw X4 adalah', 'gambar bitmap #gambar vektor #gambar animasi #gambar pixel #gambar transparan', 'b', ''),
-(27, 29, '<span>Tool pada Corel Draw X4 untuk mewarnai dengan gradasi sebuah objek adalah</span>', 'pen tool#shape tool#interactive fill tool#fill tool #curve tool', 'd', ''),
-(28, 29, 'Shortcut dari perintah convert to curve adalah', 'CTRL + H #CTRL + Q #CTRL + ALT + Q #CTRL + Q #CTRL +W', 'b', ''),
-(29, 29, 'Pada Corel Draw X4, untuk membuat garis lurus menjadi melengkung, maka yang harus dilakukan adalah', 'Menggunakan pick tool >> klik kanan pada garis >> to curve#Menggunakan pick tool >> klik kiri pada garis >> to curve#Menggunakan shape tool >> klik kanan pada garis >> to curve#Menggunakan shape tool >> klik kiri pada garis  >> to curve#klik menu effect >> curve effect', 'c', ''),
-(30, 29, 'Tool pada Corel Draw X4 yang dipakai untuk membuat salib pada logo Frateran di samping ini adalah', 'Membuat 2 rectangular tool lalu pilih Weld#Membuat 2 rectangular tool lalu pilih intersect#Membuat 2 rectangular tool lalu pilih front minus back#Membuat 2 rectangular tool lalu pilih back minus front#Membuat 2 rectangular tool lalu pilih trim', 'a', 'cef7e6e588ca55a3e71dea23d07d02c1.jpg'),
-(31, 29, 'Nama tool pada nomer 1, 4, 10 dan 14 adalah', 'Pick Tool , Rectangle Tool, Text Tool dan Paint Bucket#Pick Tool, Zoom Tool, Basic Shape Tool dan Eyedroper Tool#Pick Tool, Zoom Tool, Eyedroper Tool dan Circle Tool#Pick Tool, Zool Tool, Shape Tool dan Table Tool#Pick Tool, Shape Tool, Basic Shape Tool dan Eyedroper', 'b', '0dfff582307b88a66157bc52f1d418e7.jpg'),
-(32, 29, 'Nama tool pada nomer 5 , 17 dan 15 adalah', 'Bezier Tool, Smart Fill Tool dan Freehand Tool#Freehand Tool, Circle Tool, Paint Bucket#Freehand Tool, Interactive Fill Tool, Pen Tool#Freehand Tool, Rectangle Tool, Bezier Tool#Bezier Tool, Interactive Fill Tool, Freehand Tool ', 'c', 'f1800887c82aca75dbf0c3c77c900642.jpg'),
-(33, 29, 'Nama tool pada nomer 8 dan 11 dan 5 adalah', 'Circle Tool dan Text Tool dan Pen Tool#Circle Tool dan Rectangle Tool dan Freehand Tool#Circle Tool dan Text Tool dan Bezier Tool#Circle Tool dan Smart Fill Tool dan Crop Tool#Circle Tool dan Text Tool dan Freehand Tool', 'e', '61fb70772b783a8c23655286c737b10f.jpg'),
-(34, 29, 'Nama tool pada nomer 9 dan 12 dan 3 adalah', 'Basic Shape dan Text Tool dan Zoom Tool#Polygon Tool dan Table Tool dan Crop Tool#Polygon Tool dan Table Tool dan Pen Tool#Polygon Tool dan Fill Tool dan Crop Tool#Polygon Tool dan Zoom Tool dan Crop Tool', 'b', 'd062d0501dad07c2e162b40e407e4b87.jpg'),
-(35, 29, 'Nama tool pada nomer 13 dan 2 dan 9 adalah', 'Interactive Blend Tool dan Text Tool dan Zoom Tool#Interactive Blend Tool dan Shape dan Polygon Tool#Interactive Blend Tool dan Pick Tool dan Crop Tool#Polygon Tool dan Table Tool dan Crop Tool#Polygon Tool dan Zoom Tool dan Crop Tool', 'b', '55cd75e16cb1e1b6939ca0e8d55bf5c8.jpg'),
-(36, 29, 'Tool pada Corel Draw X4 yang digunakan untuk membuat tulisan FRATERAN adalah', 'Font tool#pick tool#Text tool#blend tool#free hand tool', 'c', 'f2561b8f6611011b27e0b38d041710a9.jpg'),
-(37, 29, 'File extention dari <strong>corel draw</strong> adalah...', '.exe #.jpg #.bmp #.cdr #.psd', 'd', ''),
-(38, 29, 'Ekspansi atau menu tambahan dari beberapa perintah menu dan juga tool box yang sedang aktif adalah pengertian dari...', 'Color palettes#Tool bar#Menu bar#Transformation bar#Docker', 'e', ''),
-(39, 29, 'Pada Corel Draw X4, langkah yang harus dilakukan untuk mengekspor gambar menjadi tipe jpg atau psd adalah ...', 'klik kanan >> export#menu edit >> import#menu edit >> export#menu file >> import#menu file >> export', 'e', ''),
-(40, 29, 'Pada Corel Draw X4, tool yang digunakan untuk memberikan warna gradasi pada sebuah obyek kotak adalah.&hellip;', 'uniform fill#fountain fill#texture fill#pattern fill#postscript fill', 'b', ''),
-(41, 29, 'Efek shaping yang berfungsi untuk mengelas/menyambung objek.', 'Weld#Trim#Intersect#Font Minus Back#Jawaban A, B, C, D, Salah', 'a', ''),
-(42, 29, 'Berikut ini adalah langkah-langkah untuk membuat logo seperti gambar di bawah ini, <strong>KECUALI</strong> ...', 'Buat bentuk segitiga dengan Bezier tool dan di lengkungkan#Buat object tulisan dengan text tool#Duplicate#Intersect dan weld#Memberi warna dengan fountain fill', 'd', '1ab4ef56a837e4c3b88f165f697f52c4.jpg'),
-(43, 29, 'Pada Corel Draw X4, langkah klik kanan pada obyek &gt;&gt; klik order &gt;&gt; front of page digunakan untuk...', 'mengubah posisi obyek ke depan satu kali#mengubah posisi obyek ke belakang satu kali#mengubah posisi obyek ke paling depan#mengubah posisi obyek ke paling belakang#menghapus obyek', 'c', ''),
-(44, 29, 'Jika pilihan operation shaping tidak muncul pada proses pemotongan atau penggabungan 2 objek atau lebih, kemungkinan penyebabnya adalah ...', 'Objek merupakan vektor#Objek-objek belum dipilih#Objek merupakan basic shapes#Objek belum di convert to line#Objek belum di convert to curve', 'b', ''),
-(45, 29, 'Pada Corel Draw X4, cara membuat gambar obyek baru seperti yang diarsir pada gambar di bawah ini dari 2 buah obyek lingkaran, menggunakan fasilitas ...', 'Weld dan intersect#Intersect dan weld#back minus front dan Weld#Weld dan Trim#Weld dan front minus back', 'd', '13d8d5fd9d1dfdbdc43247559a9f0e9b.jpg'),
-(46, 29, 'Untuk membuat lingkaran yang bulat, kita menggunakan tool nomor 8 sambil menekan tombol ...', 'SHIFT #ALT + SHIFT #CTRL#Fn + SHIFT #Fn + CTRL + SHIFT', 'c', ''),
-(47, 29, 'Warning yang muncul disamping ini diakibatkan oleh...', 'Tidak ada objek yang dipilih untuk diwarnai#Warna yang digunakan bukan tipe CMYK#Tidak ada teks artistik yang dapat diwarna#Tulisan tidak dapat diwarnai menggunakan Uniform Fill#Objek yang dipilih harus diubah menjadi grafik', 'a', '18bc22798edae80673c1a113b0348fe7.jpg'),
-(48, 29, 'Tool yang berfungsi untuk menggambar kurva yang mempunyai handle untuk mengendalikan bentuk kurva adalah...', 'Freehand Tool#Bezier Tool#Shape Tool#Pick Tool#Rectangle Tool', 'b', ''),
-(49, 29, 'Ada berapa macam cara memberikan warna pada objek...', '4#5#6#7#8', 'c', ''),
-(50, 29, '<span>Jika dari gambar A menjadi gambar B maka diperlukan mengatur posisi letak objek gambar, jika objek kotak kita pilih, maka posisi letak yang diperlukan adalah ....</span>', 'To Front #Back one #Forward One #To Front Of Page #To Back ', 'b', 'd67a176d0b72467d2038653b34538621.jpg'),
-(51, 29, 'Shortcut untuk menggunakan text tool adalah ...', 'F5#F6#F7#F8#F9', 'd', ''),
-(52, 29, 'Shortcut untuk melakukan redo adalah ...', 'Ctrl+ Alt + Z #Ctrl + Y #Ctrl+ O #Ctrl+ Shift + Z #Ctrl+ S', 'd', ''),
-(53, 29, 'Efek shaping yang berfungsi untuk mengelas/menyambung objek...', 'Weld #Trim #Intersect #Front Minus Back #Back Minus Front', 'a', ''),
-(54, 29, 'Efek shaping yang berfungsi untuk memotong mengikuti bentuk objek pemotong, dan tidak menghilangkan objek pemotong...', 'Weld #Trim #Intersect #Front Minus Back #Back Minus Front', 'b', ''),
-(55, 29, 'Efek shaping yang berfungsi untuk memotong dan membuat objek baru sesuai dengan gambar perpotongannya.', 'Weld #Trim #Front Minus Back#Back Minus Front #Intersect', 'e', ''),
-(56, 29, 'PHP pertama kali dibuat oleh ...', 'Torvald#Rasmus Lerdorf#Steven Sinofsky#Charles Babbage#Charles Xavier', 'b', ''),
-(57, 29, 'Ada berapa macam jenis hosting menurut fungsinya...', '1#2#3#4#5', 'b', ''),
-(58, 29, 'Tugas utama Apache adalah &hellip; .', 'Menambahkan, mengubah, dan menghapus data yang berada dalam database#Mendukung kinerja web browser#Mengatur tampilan halaman web#Mengirimkan data ke web server#Menghasilkan halaman web yang benar kepada peminta berdasarkan kode PHP yang dituliskan oleh pembuat halaman web', 'e', ''),
-(59, 29, 'Salah satu hal yang tidak bisa dilakukan oleh Content Management System adalah &hellip; .', 'Mempermudah seseorang dalam perusahaan yang tidak bisa HTML untuk memodifikasi isi webnya#Mengupdate dan mengedit banyak bentuk media seperti flash, film-film, dan lain-lain#Mengedit background halaman webnya#Menambahkan widget#Mengepostkan sebuah artikel', 'b', ''),
-(60, 29, 'Pertama kali membuat wordpress, harus mengaktifkan bagian yang ada di XAMPP yaitu &hellip; .', 'Localhost dan MySQL#MySQL dan Filezilla#Filezilla dan Apache#Apache dan MySQL#MySQL dan Mercury', 'd', ''),
-(61, 29, 'Untuk membuat halaman web dengan Wordpress secara offline, Anda memerlukan software yang dinamakan ...', 'Windows Media Player#XAMPP#Adobe Dreamweaver#Joomla#Quick Time Player', 'b', ''),
-(62, 29, 'http://<strong>download</strong>.onlineshopsurabaya.com/file/baju.jpg <br />Tulisan yang dibold dan diperbesar adalah jenis...', 'Domain #Top Level Domain#Sub Domain#Folder Domain#File Domain', 'c', ''),
-(63, 29, 'http://download.<strong>onlineshopsurabaya</strong>.com/file/baju.jpg<br />Tulisan yang dibold dan diperbesar adalah jenis&hellip; .', 'Domain #Top Level Domain#Sub Domain#Folder Domain#File Domain', 'b', ''),
-(64, 29, 'http://download.onlineshopsurabaya<strong>.com</strong>/file/baju.jpg<br />Tulisan yang dibold dan diperbesar adalah jenis&hellip; .', 'Domain #Top Level Domain#Sub Domain#Folder Domain#File Domain', 'a', ''),
-(65, 29, 'Gambar diatas menandakan bahwa &hellip; .', 'Xampp belum diaktifkan#Folder nama frateran tidak ada#Data yang dimasukkan belum benar#Belum membuat database#Jawaban C dan D benar', 'e', '2a03ea696e8413709f2c5183ff048f80.jpg'),
-(66, 30, 'lambang apa ini ?', 'corel draw#photoshop#adobe reader#windows#semua salah', 'a', 'ff9e397b2a0985ed1275fb034f958529.jpg'),
-(67, 30, 'benar B', 'a#b#c#d#e', 'b', ''),
-(68, 30, 'benar A', 'a#b#c#d#e', 'a', ''),
-(69, 30, 'benar E', 'a#b#c#d#e', 'e', '');
+(1, 32, 'Corel jawaban A', 'benar#salah#salah#salah#salah', 'a', '');
 
 -- --------------------------------------------------------
 
@@ -1769,7 +1723,6 @@ CREATE TABLE IF NOT EXISTS `tugassiswa` (
 DROP TABLE IF EXISTS `ujian`;
 CREATE TABLE IF NOT EXISTS `ujian` (
   `id` int(4) NOT NULL AUTO_INCREMENT,
-  `pertemuan` varchar(5) NOT NULL,
   `tgl` date NOT NULL,
   `judul` varchar(255) NOT NULL,
   `pointbenar` varchar(5) NOT NULL DEFAULT '0',
@@ -1779,20 +1732,18 @@ CREATE TABLE IF NOT EXISTS `ujian` (
   `jumlahsoal` varchar(4) NOT NULL DEFAULT '10',
   `tipejawaban` varchar(255) NOT NULL DEFAULT '5',
   `status` enum('enabled','disabled') NOT NULL DEFAULT 'enabled',
-  `guru` varchar(255) NOT NULL,
-  `idkursus` varchar(5) NOT NULL,
+  `idmapel` varchar(5) NOT NULL,
   `petunjuk` text NOT NULL,
   `tipeujian` enum('latihan','ujian') NOT NULL DEFAULT 'latihan',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=31 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=33 ;
 
 --
 -- Dumping data for table `ujian`
 --
 
-INSERT INTO `ujian` (`id`, `pertemuan`, `tgl`, `judul`, `pointbenar`, `pointsalah`, `pointkosong`, `tipe`, `jumlahsoal`, `tipejawaban`, `status`, `guru`, `idkursus`, `petunjuk`, `tipeujian`) VALUES
-(29, '1', '2015-08-11', 'Latihan TIK UAS 1 2015', '2.5', '0', '0', 'random', '40', 'a,b,c,d,e', 'enabled', 'muchid', '5', '- Bobot penilaian soal pilihan ganda adalah 100 poin<br />- Soal-soal yang dibuat berdasar pada program aplikasi komputer Corel Draw X4 dan Wordpress', 'latihan'),
-(30, '1', '2015-08-11', 'ujian chapter 1', '25', '0', '0', 'urut', '4', 'a,b,c,d,e', 'enabled', 'muchid', '5', '- Bobot penilaian soal pilihan ganda adalah 100 poin<br />- Soal-soal yang dibuat berdasar pada program aplikasi komputer Corel Draw X4 dan Wordpress', 'latihan');
+INSERT INTO `ujian` (`id`, `tgl`, `judul`, `pointbenar`, `pointsalah`, `pointkosong`, `tipe`, `jumlahsoal`, `tipejawaban`, `status`, `idmapel`, `petunjuk`, `tipeujian`) VALUES
+(32, '2015-10-27', 'Corel 123', '100', '0', '0', 'urut', '1', 'a,b,c,d,e', 'enabled', '4', '', 'latihan');
 
 -- --------------------------------------------------------
 
@@ -1808,7 +1759,7 @@ CREATE TABLE IF NOT EXISTS `ujiannilai` (
   `user` varchar(50) NOT NULL,
   `nilai` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
 
 --
 -- Dumping data for table `ujiannilai`
@@ -1818,7 +1769,8 @@ INSERT INTO `ujiannilai` (`id`, `tgl`, `ujian`, `user`, `nilai`) VALUES
 (3, '2015-01-27', '26', 'admin', '0'),
 (7, '2015-10-27', '29', 'muchid', '0'),
 (9, '2015-02-05', '29', 'admin', '2.5'),
-(10, '2015-10-27', '30', 'admin', '0');
+(10, '2015-10-27', '30', 'admin', '0'),
+(11, '2015-10-27', '32', 'admin', '100');
 
 -- --------------------------------------------------------
 
@@ -1853,7 +1805,7 @@ CREATE TABLE IF NOT EXISTS `useraura` (
 --
 
 INSERT INTO `useraura` (`UserId`, `user`, `password`, `level`, `tipe`, `is_online`, `last_ping`, `start`, `exp`, `nama`, `photo`, `statusemail`, `statustelp`, `email`, `telp`) VALUES
-(1, 'admin', '21232f297a57a5a743894a0e4a801fc3', 'Administrator', 'aktif', 0, '2015-10-27 08:09:18', '2010-08-27 00:00:00', '2034-08-27 00:00:00', 'Administrator', '', 'sembunyikan', 'sembunyikan', '', ''),
+(1, 'admin', '21232f297a57a5a743894a0e4a801fc3', 'Administrator', 'aktif', 1, '2015-10-27 08:57:00', '2010-08-27 00:00:00', '2034-08-27 00:00:00', 'Administrator', '', 'sembunyikan', 'sembunyikan', '', ''),
 (1764, '17041', '9426e9770a77cbcaefe1fb3a7e36327d', 'Siswa', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Felix Lonald', '', 'sembunyikan', 'sembunyikan', '', ''),
 (1763, '17029', 'c40ddeb230354b0371189e8e84b6a576', 'Siswa', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Evelin Melianawati Gunawan', '', 'sembunyikan', 'sembunyikan', '', ''),
 (1762, '17014', '373321f3ae1bebd3f6818359b0f8f6e6', 'Siswa', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Devi Kristianti Wijaya', '', 'sembunyikan', 'sembunyikan', '', ''),
