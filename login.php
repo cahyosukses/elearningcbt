@@ -59,7 +59,7 @@ Hak Cipta &copy; <script language="JavaScript" type="text/javascript">
     if (theYear < 1900)
     theYear = theYear + 1900
     document.write(theYear)
-</script> <?php echo $judul_situs?>
+</script> Tim TIK SMAK Frateran Surabaya
 </div>
 <?php
 
