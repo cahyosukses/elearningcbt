@@ -39,7 +39,6 @@ $idkursus     = $data['id'];
 $hapus = $koneksi_db->sql_query("DELETE FROM `soal` WHERE `ujian`='$idkursus'"); 
 }
 $hapus = mysql_query ("DELETE FROM `ujian` WHERE `guru`='$user'");	
-$hapus = mysql_query ("DELETE FROM `materi` WHERE `guru`='$user'");	
 $hapus = mysql_query ("DELETE FROM `kursus_setting` WHERE `guru`='$user'");	
 $hapus = mysql_query ("DELETE FROM `useraura` WHERE `UserId`='$id' AND `user`!='admin'");	
 if ($hapus){
@@ -59,11 +58,12 @@ if (isset ($_POST['edit_users']) && is_numeric($_GET['id'])){
 $statusemail = $_POST['statusemail'];
 $statustelp = $_POST['statustelp'];
 $telp = $_POST['telp'];
-if (!is_valid_email($email)) $error .= "Error, E-Mail address invalid!<br />";
+$mapel = $_POST['mapel'];
+//if (!is_valid_email($email)) $error .= "Error, E-Mail address invalid!<br />";
 if ($error) {
 $admin.='<div class="error">'.$error.'</div>';
 } else {
-$up = mysql_query ("UPDATE `useraura` SET `level`='$level',`tipe`='$tipe',`email`='$email',`nama`='$nama',`statusemail`='$statusemail',`statustelp`='$statustelp',`telp`='$telp' WHERE `UserId`='$id' AND `user`!='admin'");	
+$up = mysql_query ("UPDATE `useraura` SET `level`='$level',`tipe`='$tipe',`email`='$email',`nama`='$nama',`statusemail`='$statusemail',`statustelp`='$statustelp',`telp`='$telp',`mapel`='$mapel' WHERE `UserId`='$id' AND `user`!='admin'");	
 $admin.='<div class="sukses">Data Berhasil Diupdate Dengan ID = '.$id.'</div>';	
 }
 }
@@ -82,6 +82,7 @@ $nama = cleantext($_POST['nama']);
 $statusemail = $_POST['statusemail'];
 $statustelp = $_POST['statustelp'];
 $telp = $_POST['telp'];
+$mapel = $_POST['mapel'];
 
 if (empty($_POST['nama']))  $error .= "Error: Formulir nama belum diisi , silahkan ulangi.<br />";
 if (empty($_POST['user']))  $error .= "Error: Formulir user belum diisi , silahkan ulangi.<br />";
@@ -96,7 +97,7 @@ if ($email and !is_valid_email($email)) $error .= "Error: E-Mail address invalid
 if ($error){
         $admin.='<div class="error">'.$error.'</div>';
 }else{
-$query = mysql_query ("INSERT INTO `useraura` (`user`,`password`,`level`,`tipe`,`email`,`nama`,`statusemail`,`statustelp`,`telp`) VALUES ('$user',md5('$password'),'$level','$tipe','$email','$nama','$statusemail','$statustelp','$telp')");	
+$query = mysql_query ("INSERT INTO `useraura` (`user`,`password`,`level`,`tipe`,`email`,`nama`,`statusemail`,`statustelp`,`telp`,`mapel`) VALUES ('$user',md5('$password'),'$level','$tipe','$email','$nama','$statusemail','$statustelp','$telp','$mapel')");	
 $admin .= '<div class="sukses">Data Berhasil Di add</div>';
 }
 	
@@ -187,6 +188,18 @@ $admin .= "<tr>
     <td width='1%' valign='top'>:</td>
     <td width='69%' valign='top'>$sel4&nbsp;<input type='text' name='telp' size='20'class='form-control' /></td>
   </tr>"; 
+  $admin .= '<tr>
+		<td>Mata Pelajaran</td>
+		<td>:</td>
+		<td>
+<select name="mapel" class="form-control">';
+$hasil = $koneksi_db->sql_query("SELECT * FROM mapel ORDER BY mapel");
+$admin .= '<option value="">== Semua ==</option>';
+while ($datas =  $koneksi_db->sql_fetchrow ($hasil)){
+$admin .= '<option value="'.$datas['id'].'" '.$pilihan.'>'.$datas['mapel'].'</option>';
+}
+$admin .='</select></td>
+	</tr>';
 $admin .= "<tr><td width='30%'>&nbsp;</td>
     <td width='1%'>&nbsp;</td>
     <td width='69%'><br /><input type='submit' value='Simpan' name='add_users' class='btn btn-success'/></td>
@@ -211,6 +224,7 @@ $nama = $data['nama'];
 $statusemail = $data['statusemail'];
 $statustelp = $data['statustelp'];
 $telp = $data['telp'];
+$mapel = $data['mapel'];
 $ss = mysql_query ("SHOW FIELDS FROM useraura");
 while ($as = mysql_fetch_array ($ss)){
 	 $arrs = $as['Type'];
@@ -305,7 +319,23 @@ $admin .= "<tr>
     <td width='1%' valign='top'>:</td>
     <td width='69%' valign='top'>$sel4&nbsp;<input type='text' name='telp' size='20'class='form-control'value='$telp' /></td>
   </tr>";  
-  
+  $admin .= '<tr>
+		<td>Mata Pelajaran</td>
+		<td>:</td>
+		<td>
+<select name="mapel" class="form-control">';
+$hasil = $koneksi_db->sql_query("SELECT * FROM mapel ORDER BY mapel");
+$admin .= '<option value="">== Semua ==</option>';
+while ($datas =  $koneksi_db->sql_fetchrow ($hasil)){
+		if ($datas['id'] == $mapel){
+			$pilihan ='selected';
+		}else{
+			$pilihan ='';
+}
+$admin .= '<option value="'.$datas['id'].'" '.$pilihan.'>'.$datas['mapel'].'</option>';
+}
+$admin .='</select></td>
+	</tr>';  
 
 $admin .= "<tr><td width='30%'>&nbsp;</td>
     <td width='1%'>&nbsp;</td>
@@ -326,7 +356,7 @@ $admin.='
     <td align="center"><b>User</b></td>
     <td align="center"><b>Nama</b></td>
     <td align="center"><b>Level</b></td>
-    <td align="center"><b>Status</b></td>
+    <td align="center"><b>Mapel</b></td>
     <td align="center" width="270px"><b>Actions</b></td>
   </tr></thead><tbody>';
 
@@ -342,7 +372,7 @@ $linkphoto = '<a href="?pilih=user&amp;mod=yes&amp;aksi=photo&amp;id='.$data['Us
     <td>'.$data['user'].'</td>
     <td>'.$data['nama'].'</td>
     <td>'.$data['level'].'</td>
-    <td>'.$data['tipe'].'</td>
+    <td>'.getmapel($data['mapel']).'</td>
     <td>
      <a href="?pilih=user&amp;mod=yes&amp;aksi=hapus&amp;id='.$data['UserId'].$qss.'" onclick="GP_popupConfirmMsg(\'Semua data Ujian,Materi akan di hapus.Apakah anda Ingin menghapus Users \n['.$data['user'].']\');return document.MM_returnValue;"><span class="btn btn-danger">Hapus</span></a>
 	 <a href="?pilih=user&amp;mod=yes&amp;aksi=edit&amp;id='.$data['UserId'].$qss.'"><span class="btn btn-warning">Edit</span></a>

@@ -103,6 +103,7 @@ $email	      = text_filter($_POST['email']);
 $statusemail = $_POST['statusemail'];
 $statustelp = $_POST['statustelp'];
 $telp = $_POST['telp'];
+$mapel = $_POST['mapel'];
 if (!is_valid_email($email)) $error .= "Error, E-Mail address invalid!<br />";
 if ($error) {
 $admin.='<div class="error">'.$error.'</div>';
@@ -121,6 +122,7 @@ $nama = $data['nama'];
 $statusemail = $data['statusemail'];
 $statustelp = $data['statustelp'];
 $telp = $data['telp'];
+$mapel = getmapel($data['mapel']);
 $admin .= "<form method='post'>
 <table style='width:100%;border:0' cellpadding='2' class='table table-striped table-hover'>
   <tr>
@@ -204,7 +206,11 @@ $admin .= "<tr>
     <td width='1%' valign='top'>:</td>
     <td width='69%' valign='top'>$sel4&nbsp;<input type='text' name='telp' size='20'class='form-control'value='$telp' /></td>
   </tr>";  
-  
+  $admin .= "    <tr>
+    <td width='30%' valign='top'>Mata Pelajaran </td>
+    <td width='1%' valign='top'>:</td>
+    <td width='69%' valign='top'>$mapel</td>
+  </tr>";  
 
 $admin .= "<tr><td width='30%'>&nbsp;</td>
     <td width='1%'>&nbsp;</td>

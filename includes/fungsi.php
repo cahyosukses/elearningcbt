@@ -1355,6 +1355,10 @@ $query = "SELECT * FROM mapel WHERE id = '$id'";
 $hasil = mysql_query($query);
 $data  = mysql_fetch_array($hasil);
 $mapel = $data['mapel'];
+if (!$mapel){
+	$mapel = 'Semua';
+	
+}
 return $mapel;
 }
 function getnamaguru($user){
@@ -1636,8 +1640,8 @@ echo '<div class="error"><b>ERROR :</b> Tipe Ujian bukan Latihan , Score / Nilai
 }
 }
 }
-function getnilaiujian ($idujian,$user){
-$query = "SELECT * FROM ujiannilai WHERE ujian = '$idujian' and user='$user'";
+function getnilaiujian ($idmapel,$user){
+$query = "SELECT * FROM ujiannilai WHERE mapel = '$idmapel' and user='$user' order by id desc";
 $hasil = mysql_query($query);
 $data=mysql_fetch_array($hasil);
 $nilai .= $data["nilai"];
@@ -1657,5 +1661,11 @@ $data=mysql_fetch_array($hasil);
 $pertemuan .= $data["pertemuan"];
 return $pertemuan;
 }
-
+function getmapeluser($username){
+$query = "SELECT mapel FROM useraura WHERE user = '$username'";
+$hasil = mysql_query($query);
+$data  = mysql_fetch_array($hasil);
+$mapel = $data['mapel'];
+return $mapel;
+}
 ?>
