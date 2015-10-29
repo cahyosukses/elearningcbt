@@ -18,13 +18,27 @@ $(document).ready(function() {
 </script>
 js;
 $script_include[] = $JS_SCRIPT;
-$admin .='<div class="bordermenu">Administrasi Pengumuman</div>';
-$admin .='<div class="panel panel-info">';
+$admin .= '<div class="row">
+				<div class="col-lg-12">
+					<h3 class="page-header"><i class="fa fa-list-alt"></i> Kelas</h3>
+					<ol class="breadcrumb">
+					<li><i class="fa fa-home"></i><a href="admin.php?pilih=kelas&mod=yes">Home</a></li>
+						<li><i class="icon_contacts_alt"></i>IPA</li>
+						<li><i class="fa fa-list-alt"></i>Tambah Kelas</li>
+					</ol>
+				</div>
+			</div>';
 
 if($_GET['aksi']== 'del'){    
 	global $koneksi_db;    
-	$id     = int_filter($_GET['id']);    
-	$hasil = $koneksi_db->sql_query("DELETE FROM `kelas` WHERE `id`='$id'");    
+	$id     = int_filter($_GET['id']); 
+	$hasil = $koneksi_db->sql_query("DELETE kelas_isi, useraura 
+FROM kelas_isi
+INNER JOIN useraura 
+      ON useraura.user = kelas_isi.siswa
+WHERE kelas_isi.kelas = '$id'";
+//	$hasil = $koneksi_db->sql_query("DELETE FROM `kelas_isi` WHERE `kelas`='$id'");  	
+//	$hasil = $koneksi_db->sql_query("DELETE FROM `kelas` WHERE `id`='$id'");    
 	if($hasil){    
 		$admin.='<div class="sukses">Kelas berhasil dihapus! .</div>';    
 		$style_include[] ='<meta http-equiv="refresh" content="1; url=admin.php?pilih=kelas&mod=yes" />';    

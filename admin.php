@@ -173,15 +173,20 @@ ob_start();
 include "content/ceklogin.php";
 $ceklogin = ob_get_contents();
 ob_end_clean(); 
-
+///// adminprofile /////////////////////
+ob_start();
+include "content/adminprofile.php";
+$adminprofile = ob_get_contents();
+ob_end_clean();
 echo $cek;
 $style_include_out = !isset($style_include) ? '' : implode("",$style_include);
 $script_include_out = !isset($script_include) ? '' : implode("",$script_include);
 $rightside = !isset($rightside) ? '' : $rightside;
 $leftside = !isset($leftside) ? '' : $leftside;
 $ceklogin = !isset($ceklogin) ? '' : $ceklogin;
-
-$define = array ('leftside'    => $leftside,
+$adminprofile = !isset($adminprofile) ? '' : $adminprofile;
+$define = array ('adminprofile'    => $adminprofile,
+'leftside'    => $leftside,
 				 'ceklogin'    => $ceklogin,
 				 'url'     => $url_situs,
 				 'content'     => $content,
@@ -196,7 +201,7 @@ $define = array ('leftside'    => $leftside,
                 
 //$tpl = new template ('themes/'.$theme.'/'.$theme.'.html');
 
-$tpl = new template ('themes/administrator/administrator.html');
+$tpl = new template ('themes/niceadmin/niceadmin.html');
 $tpl-> define_tag($define);
 
 $tpl-> cetak();

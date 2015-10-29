@@ -19,16 +19,17 @@ js;
 $script_include[] = $JS_SCRIPT;
 	
 //$index_hal=1;	
-	
-$admin .='<div class="panel panel-info">
-<div class="panel-heading"><b>Manage User</b></div>';
-$admin .= '<div class="bordermenu2"><a href="admin.php?pilih=user&amp;mod=yes">Home</a> | <a href="admin.php?pilih=user&amp;mod=yes&amp;aksi=add">Add User</a>';
-$admin .= '</div>';
-$admin .= '<script type="text/javascript" language="javascript">
-   function GP_popupConfirmMsg(msg) { //v1.0
-  document.MM_returnValue = confirm(msg);
-}
-</script>';
+$admin .= ' <div class="row">
+				<div class="col-lg-12">
+					<h3 class="page-header"><i class="icon_group"></i> Users Manager</h3>
+					<ol class="breadcrumb">
+						<li><i class="fa fa-home"></i><a href="admin.php?pilih=user&amp;mod=yes">Home</a></li>
+						<li><i class="icon_toolbox"></i>Settings</li>
+						<li><i class="fa fa-list-alt"></i><a href="admin.php?pilih=user&amp;mod=yes&amp;aksi=add">Tambah Users</a></li>
+					</ol>
+				</div>
+			</div>';	
+
 
 if ($_GET['aksi'] == 'hapus' && is_numeric($_GET['id'])){
 	$id = int_filter ($_GET['id']);
