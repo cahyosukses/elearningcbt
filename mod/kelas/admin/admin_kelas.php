@@ -36,9 +36,9 @@ if($_GET['aksi']== 'del'){
 FROM kelas_isi
 INNER JOIN useraura 
       ON useraura.user = kelas_isi.siswa
-WHERE kelas_isi.kelas = '$id'";
-//	$hasil = $koneksi_db->sql_query("DELETE FROM `kelas_isi` WHERE `kelas`='$id'");  	
-//	$hasil = $koneksi_db->sql_query("DELETE FROM `kelas` WHERE `id`='$id'");    
+WHERE kelas_isi.kelas = '$id'");
+	$hasil = $koneksi_db->sql_query("DELETE FROM `kelas_isi` WHERE `kelas`='$id'");  	
+	$hasil = $koneksi_db->sql_query("DELETE FROM `kelas` WHERE `id`='$id'");    
 	if($hasil){    
 		$admin.='<div class="sukses">Kelas berhasil dihapus! .</div>';    
 		$style_include[] ='<meta http-equiv="refresh" content="1; url=admin.php?pilih=kelas&mod=yes" />';    

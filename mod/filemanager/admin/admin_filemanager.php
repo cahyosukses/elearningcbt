@@ -22,8 +22,15 @@ $(document).ready(function() {
 </script>
 js;
 $script_include[] = $JS_SCRIPT;
-$admin .='<h4 class="bg">File Manager</h4>';
-$admin .='<div class="border"><a href="?pilih=filemanager&mod=yes"><b>Home</b></a> | <a href="admin.php?pilih=filemanager&mod=yes&aksi=add"><b>Upload File</b></a></div>';
+	$admin .= '<div class="row">
+				<div class="col-lg-12">
+					<h3 class="page-header"><i class="fa fa-list-alt"></i> File Manager</h3>
+					<ol class="breadcrumb">
+					<li><i class="fa fa-home"></i><a href="?pilih=filemanager&mod=yes">Home</a></li>
+					<li><i class="fa fa-home"></i><a href="admin.php?pilih=filemanager&mod=yes&aksi=add">Upload File</a></li>
+					</ol>
+				</div>
+			</div>';
 $admin .='<blockquote>
 <b>Catatan:</b><br />
 Gunakan url seperti dibawah ini untuk menyisipkan image di artikel atau halaman web : <br /><b>"files/nama_file.extension"</b><br /><b>contoh :</b> <br />&lt;img src="files/teamworks.jpg" alt="" border="0" /&gt;

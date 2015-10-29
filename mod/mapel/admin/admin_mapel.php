@@ -18,8 +18,16 @@ $(document).ready(function() {
 </script>
 js;
 $script_include[] = $JS_SCRIPT;
-$admin .='<div class="bordermenu">Administrasi Mata Pelajaran</div>';
-$admin .='<div class="panel panel-info">';
+	$admin .= '<div class="row">
+				<div class="col-lg-12">
+					<h3 class="page-header"><i class="fa fa-list-alt"></i> Mata Pelajaran</h3>
+					<ol class="breadcrumb">
+					<li><i class="fa fa-home"></i><a href="admin.php?pilih=mapel&amp;mod=yes">Home</a></li>
+					</ol>
+				</div>
+			</div>';
+			
+
 $temp = 'mod/mapel/temp/';
 $thumb = 'mod/mapel/';
 if($_GET['aksi']== 'del'){    

@@ -76,11 +76,16 @@ js;
 $script_include[] = $JS_SCRIPT;
 $total2 =  $koneksi_db->sql_query( "SELECT * FROM pengumuman_sekolah" );
 $jumlah2 = $koneksi_db->sql_numrows( $total2 );
-$admin .='<div class="bordermenu">Administrasi Pengumuman Sekolah</div>';
-$admin .='<div class="panel panel-info">';
-$admin .="<div class='border'><a href='admin.php?pilih=pengumuman&amp;mod=yes'>List Pengumuman ($jumlah2)</a> 
-| <a href='admin.php?pilih=pengumuman&amp;mod=yes&aksi=add'>Tambah Pengumuman</a>";
-$admin .='</div>';
+	$admin .= '<div class="row">
+				<div class="col-lg-12">
+					<h3 class="page-header"><i class="fa fa-list-alt"></i> Pengumuman</h3>
+					<ol class="breadcrumb">
+					<li><i class="fa fa-home"></i><a href="?pilih=pengumuman&mod=yes">Home</a></li>
+					<li><i class="fa fa-home"></i><a href="admin.php?pilih=pengumuman&mod=yes&aksi=add">Tambah Pengumuman</a></li>
+					</ol>
+				</div>
+			</div>';
+			
 
 if($_GET['aksi']=="add"){
 $admin .='<div class="panel-heading"><b>Pengumuman Sekolah</b></div>';

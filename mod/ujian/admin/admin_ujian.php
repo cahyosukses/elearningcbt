@@ -76,16 +76,21 @@ js;
 $script_include[] = $JS_SCRIPT;
 
     $temp 	= 'mod/ujian/download/';
-$admin .='<div class="bordermenu">Administrasi Ujian</div>';
-$admin .= '<div class="bordermenu2"><a href="admin.php?pilih=ujian&amp;mod=yes">Home</a> | <a href="admin.php?pilih=ujian&amp;mod=yes&amp;aksi=nilaiujian">Lihat Nilai</a>';
-$admin .= '</div>';
-
-$admin .='<div class="panel panel-info">';
+	$admin .= '<div class="row">
+				<div class="col-lg-12">
+					<h3 class="page-header"><i class="fa fa-list-alt"></i> Ujian</h3>
+					<ol class="breadcrumb">
+					<li><i class="fa fa-home"></i><a href="?pilih=ujian&mod=yes">Home</a></li>
+					<li><i class="fa fa-home"></i><a href="admin.php?pilih=ujian&mod=yes&aksi=nilaiujian">Lihat Nilai</a></li>
+					</ol>
+				</div>
+			</div>';
+			
 $user =  $_SESSION['UserName'];
 $levelakses=$_SESSION['LevelAkses'];
 if($_GET['aksi']==""){
 $hasil = $koneksi_db->sql_query( "SELECT * FROM mapel  order by mapel asc" );
-$admin .='<div class="panel-heading"><b>Daftar Mapel</b></div>';
+$admin .='<div class="panel-heading"><b>Pengumuman Sekolah</b></div>';
 $admin .= '<table id="example" class="table table-striped table-hover">
 <thead><tr>
 <th>No</th>

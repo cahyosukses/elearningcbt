@@ -21,10 +21,18 @@ if (!cek_login ()){
 	
 $admin .='<p class="judul">Access Denied !!!!!!</p>';
 }else{
-$admin .='<div class="bordermenu">Data Siswa</div>';
-$admin .= '<div class="bordermenu2"><a href="admin.php?pilih=importsiswa&amp;mod=yes">Import Siswa</a> | <a href="admin.php?pilih=importsiswa&amp;mod=yes&amp;aksi=delkelas">Hapus Siswa Per Kelas</a> | <a href="admin.php?pilih=importsiswa&amp;mod=yes&amp;aksi=inputsiswa">Input Siswa Satuan</a> | <a href="admin.php?pilih=importsiswa&amp;mod=yes&amp;aksi=daftarsiswa">Siswa tanpa Kelas</a>';
-$admin .= '</div>';
-$admin .='<div class="panel panel-info">';
+	$admin .= '<div class="row">
+				<div class="col-lg-12">
+					<h3 class="page-header"><i class="fa fa-list-alt"></i> Siswa</h3>
+					<ol class="breadcrumb">
+					<li><i class="fa fa-home"></i><a href="admin.php?pilih=importsiswa&amp;mod=yes">Home</a></li>
+					<li><i class="fa fa-list-alt"></i><a href="admin.php?pilih=importsiswa&amp;mod=yes&amp;aksi=delkelas">Hapus Siswa Per Kelas</a></li>
+					<li><i class="fa fa-list-alt"></i><a href="admin.php?pilih=importsiswa&amp;mod=yes&amp;aksi=inputsiswa">Input Siswa Satuan</a></li>
+					<li><i class="fa fa-list-alt"></i><a href="admin.php?pilih=importsiswa&amp;mod=yes&amp;aksi=daftarsiswa">Siswa tanpa Kelas</a></li>
+					</ol>
+				</div>
+			</div>';
+			
 
 if($_GET['aksi']==""){
 if(isset($_POST['submit'])){
