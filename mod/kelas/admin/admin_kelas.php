@@ -40,7 +40,7 @@ WHERE kelas_isi.kelas = '$id'");
 	$hasil = $koneksi_db->sql_query("DELETE FROM `kelas_isi` WHERE `kelas`='$id'");  	
 	$hasil = $koneksi_db->sql_query("DELETE FROM `kelas` WHERE `id`='$id'");    
 	if($hasil){    
-		$admin.='<div class="sukses">Kelas berhasil dihapus! .</div>';    
+		$admin.='<div class="alert alert-success fade in">Kelas berhasil dihapus! .</div>';    
 		$style_include[] ='<meta http-equiv="refresh" content="1; url=admin.php?pilih=kelas&mod=yes" />';    
 	}
 }
@@ -55,21 +55,24 @@ if(isset($_POST['submit'])){
 	if (!$tunjangan)  	$tunjangan ='0';	
 if ($koneksi_db->sql_numrows($koneksi_db->sql_query("SELECT kelas FROM kelas WHERE kelas='$kelas' and id<>'$id'")) > 0) $error .= "Error: Kelas ".$kelas." sudah terdaftar , silahkan ulangi.<br />";
 	if ($error){
-		$tengah .= '<div class="error">'.$error.'</div>';
+		$tengah .= '<div class="alert alert-block alert-danger fade in">'.$error.'</div>';
 	}else{
 		$hasil  = mysql_query( "UPDATE `kelas` SET `kelas`='$kelas' WHERE `id`='$id'" );
 		if($hasil){
 			$admin .= '<div class="sukses"><b>Berhasil di Update.</b></div>';
 			$style_include[] ='<meta http-equiv="refresh" content="1; url=admin.php?pilih=kelas&amp;mod=yes" />';	
 		}else{
-			$admin .= '<div class="error"><b>Gagal di Update.</b></div>';
+			$admin .= '<div class="alert alert-block alert-danger fade in"><b>Gagal di Update.</b></div>';
 		}
 	}
 
 }
 $query 		= mysql_query ("SELECT * FROM `kelas` WHERE `id`='$id'");
 $data 		= mysql_fetch_array($query);
-$admin .='<div class="panel-heading"><b>Edit Kelas</b></div>';
+$admin.='<section class="panel">
+                          <header class="panel-heading">
+                              Edit Kelas
+                          </header>';
 $admin .= '
 <form method="post" action=""class="form-inline">
 <table border="0" cellspacing="0" cellpadding="0"class="table table-striped table-hover">
@@ -95,23 +98,26 @@ if(isset($_POST['submit'])){
 	if (!$kelas)  	$error .= "Error: Silahkan Isi Kelas<br />";
 if ($koneksi_db->sql_numrows($koneksi_db->sql_query("SELECT kelas FROM kelas WHERE kelas='$kelas'")) > 0) $error .= "Error: Kelas ".$kelas." sudah terdaftar , silahkan ulangi.<br />";
 	if ($error){
-		$admin .= '<div class="error">'.$error.'</div>';
+		$admin .= '<div class="alert alert-block alert-danger fade in">'.$error.'</div>';
 	}else{
 		$hasil  = mysql_query( "INSERT INTO `kelas` (`kelas`) VALUES ('$kelas')" );
 		if($hasil){
-			$admin .= '<div class="sukses"><b>Berhasil di Buat.</b></div>';
+			$admin .= '<div class="alert alert-success fade in"><b>Berhasil di Buat.</b></div>';
 		}else{
-			$admin .= '<div class="error"><b> Gagal di Buat.</b></div>';
+			$admin .= '<div class="alert alert-block alert-danger fade in"><b> Gagal di Buat.</b></div>';
 		}
 		unset($kelas);
 	}
 
 }
 $kelas     		= !isset($kelas) ? '' : $kelas;
-$admin .='<div class="panel-heading"><b>Tambah Kelas</b></div>';
+$admin.='<section class="panel">
+                          <header class="panel-heading">
+                              Tambah Kelas
+                          </header>';
 $admin .= '
 <form method="post" action="" class="form-inline">
-<table class="table table-striped table-hover">
+<table class="table  table-hover">
 	<tr>
 		<td>Kelas</td>
 		<td>:</td>
@@ -129,8 +135,11 @@ $admin .= '
 
 /************************************/
 $hasil = $koneksi_db->sql_query( "SELECT * FROM kelas order by kelas asc" );
-$admin .='<div class="panel-heading"><b>Data Kelas</b></div>';
-$admin .= '<table id="example" class="table table-striped table-hover">
+$admin.='<section class="panel">
+                          <header class="panel-heading">
+                              Data Kelas
+                          </header>';
+$admin .= '<table id="example" class="table  table-hover">
 <thead><tr>
 <th>No</th>
 <th>Kelas</th>

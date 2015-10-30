@@ -90,8 +90,11 @@ $user =  $_SESSION['UserName'];
 $levelakses=$_SESSION['LevelAkses'];
 if($_GET['aksi']==""){
 $hasil = $koneksi_db->sql_query( "SELECT * FROM mapel  order by mapel asc" );
-$admin .='<div class="panel-heading"><b>Pengumuman Sekolah</b></div>';
-$admin .= '<table id="example" class="table table-striped table-hover">
+$admin.='<section class="panel">
+                          <header class="panel-heading">
+                              Pengumuman Sekolah
+                          </header>';
+$admin .= '<table id="example" class="table table-hover">
 <thead><tr>
 <th>No</th>
 <th>Mata Pelajaran</th>
@@ -124,8 +127,8 @@ $admin .= '</tbody></table>';
 if($_GET['aksi']== 'del'){    
 	global $koneksi_db;    
 	$id     = int_filter($_GET['id']);  
-	$idkursus     = int_filter($_GET['idkursus']);   	
-	$hasil = $koneksi_db->sql_query( "SELECT * FROM soal WHERE ujian='$idkursus'" );
+	$idmapel     = int_filter($_GET['idmapel']);   	
+	$hasil = $koneksi_db->sql_query( "SELECT * FROM soal WHERE ujian='$id'" );
 	while($data = mysql_fetch_array($hasil)){
     $namagambar =  $data['files'];
     $uploaddir = $temp . $namagambar; 
@@ -135,20 +138,23 @@ if($_GET['aksi']== 'del'){
 		$hasil = $koneksi_db->sql_query("DELETE FROM `soal` WHERE `ujian`='$id'");  
 	if($hasil){    
 		$admin.='<div class="sukses">Ujian berhasil dihapus! .</div>';    
-		$style_include[] ='<meta http-equiv="refresh" content="1; url=admin.php?pilih=ujian&mod=yes&aksi=listujian&id='.$idkursus.'" />';    
+		$style_include[] ='<meta http-equiv="refresh" content="1; url=admin.php?pilih=ujian&mod=yes&aksi=listujian&id='.$idmapel.'" />';    
 	}
 }
 
 if($_GET['aksi'] == 'edit'){
 $id = int_filter ($_GET['id']);
 $idmapel = int_filter ($_GET['idmapel']);
-$admin .='<div class="panel-heading"><b>Mata Pelajaran</b></div>';
+$admin.='<section class="panel">
+                          <header class="panel-heading">
+                              Mata Pelajaran
+                          </header>';
 $hasil =  $koneksi_db->sql_query( "SELECT * FROM mapel where id='$idmapel' " );
 $data = $koneksi_db->sql_fetchrow($hasil);
 $idmapel=$data['id'];
 $mapel =$data['mapel'];
 $admin .= '
-<table cellspacing="0" cellpadding="0"class="table table-striped table-hover">
+<table class="table">
 <tr>
 		<td>Mata Pelajaran</td>
 		<td>:</td>
@@ -246,10 +252,13 @@ foreach ($arr3 as $kk=>$vv){
 $sel3 .= '</select>'; 
 
 
-$admin .='<div class="panel-heading"><b>Edit Ujian</b></div>';
+$admin.='<section class="panel">
+                          <header class="panel-heading">
+                              Edit Ujian
+                          </header>';
 $admin .= '
 <form method="post" action="" class="form-inline" id="posts">
-<table class="table table-striped table-hover">';
+<table class="table">';
 $admin.='
 		<tr>
 		<td>Guru</td>
@@ -328,7 +337,7 @@ $admin.="<a href='?pilih=ujian&mod=yes&aksi=listujian&id=$idmapel'><span class='
 if($_GET['aksi']=="addujian"){
 $idmapel     = int_filter($_GET['id']);
 $admin .= '
-<table cellspacing="0" cellpadding="0"class="table table-striped table-hover">
+<table cellspacing="0" cellpadding="0"class="table">
 	<tr>
 		<td>Mata Pelajaran</td>
 		<td>:</td>
@@ -405,10 +414,13 @@ foreach ($arr3 as $kk=>$vv){
 
 }
 $sel3 .= '</select>';   
-$admin .='<div class="panel-heading"><b>Tambah Ujian</b></div>';
+$admin.='<section class="panel">
+                          <header class="panel-heading">
+                              Tambah Ujian
+                          </header>';
 $admin .= '
 <form method="post" action="" class="form-inline" id="posts">
-<table class="table table-striped table-hover">';
+<table class="table">';
 $admin.='
 		<tr>
 		<td>Guru</td>
@@ -493,7 +505,10 @@ if($_GET['aksi']=="addsoal"){
 $id     = int_filter($_GET['id']);
 //$admin .='<div class="panel-heading"><b>Daftar Kursus</b></div>';
 $idujian     = int_filter($_GET['idujian']);
-$admin .='<div class="panel-heading"><b>Daftar Ujian</b></div>';
+$admin.='<section class="panel">
+                          <header class="panel-heading">
+                              Daftar Ujian
+                          </header>';
 $hasil2 =  $koneksi_db->sql_query( "SELECT * FROM ujian where id='$idujian' " );
 $data2 = $koneksi_db->sql_fetchrow($hasil2);
 $judul=$data2['judul'];
@@ -502,7 +517,7 @@ $jumlahsoal =$data2['jumlahsoal'];
 $status =$data2['status'];
 $idmapel =$data2['idmapel'];
 $admin .= '
-<table cellspacing="0" cellpadding="0"class="table table-striped table-hover">
+<table class="table">
 	<tr>
 		<td>Judul</td>
 		<td>:</td>
@@ -562,6 +577,7 @@ if ($koneksi_db->sql_numrows($koneksi_db->sql_query("SELECT soal FROM soal WHERE
 		$hasil  = mysql_query( "INSERT INTO `soal` VALUES ('','$idujian','$konten','$ppil','$kunci','')" );
 		if($hasil){
 			$admin .= "<div class='sukses'><b>Soal Berhasil di Buat.</b></div>";
+			unset($konten);
 	//		header("location:?pilih=ujian&mod=yes&aksi=addsoal&idujian=$idujian&id=$idkursus");
 		}else{
 			$admin .= '<div class="error"><b>Soal Gagal di Buat.</b></div>';
@@ -583,10 +599,13 @@ $sel .= '<option value="'.$jawaban[$i].'">'.$jawaban[$i].'</option>';
 }
 $sel .= '</select>'; 
 /**/
-$admin .='<div class="panel-heading"><b>Tambah Soal</b></div>';
+$admin.='<section class="panel">
+                          <header class="panel-heading">
+                              Tambah Soal
+                          </header>';
 $admin .="
 <form method='post' action='' id='posts' enctype ='multipart/form-data'>
-<table class='table table-striped table-hover'>";
+<table class='table'>";
 $admin.="
 	<tr>
 		<td>Soal</td>
@@ -636,7 +655,10 @@ if($_GET['aksi']=="editsoal"){
 
 $idmapel     = int_filter($_GET['id']);
 $idujian     = int_filter($_GET['idujian']);
-$admin .='<div class="panel-heading"><b>Daftar Ujian</b></div>';
+$admin.='<section class="panel">
+                          <header class="panel-heading">
+                              Daftar Ujian
+                          </header>';
 $hasil2 =  $koneksi_db->sql_query( "SELECT * FROM ujian where id='$idujian' " );
 $data2 = $koneksi_db->sql_fetchrow($hasil2);
 $judul=$data2['judul'];
@@ -644,7 +666,7 @@ $tipe =$data2['tipe'];
 $jumlahsoal =$data2['jumlahsoal'];
 $status =$data2['status'];
 $admin .= '
-<table cellspacing="0" cellpadding="0"class="table table-striped table-hover">
+<table class="table">
 	<tr>
 		<td>Judul</td>
 		<td>:</td>
@@ -740,10 +762,13 @@ $selected ='';
 }
 $sel .= '</select>'; 
 /**/
-$admin .='<div class="panel-heading"><b>Edit Soal</b></div>';
+$admin.='<section class="panel">
+                          <header class="panel-heading">
+                              Edit Soal
+                          </header>';
 $admin .="
 <form method='post' action='' id='posts'  enctype ='multipart/form-data'>
-<table class='table table-striped table-hover'>";
+<table class='table'>";
 $admin.="
 	<tr>
 		<td>Soal</td>
@@ -825,7 +850,10 @@ while($data = mysql_fetch_array($hasil)){
 if (in_array($_GET['aksi'],array('listujian'))) {
 
 $id     = int_filter($_GET['id']);
-$admin .='<div class="panel-heading"><b>Mata Pelajaran</b></div>';
+$admin.='<section class="panel">
+                          <header class="panel-heading">
+                              Mata Pelajaran
+                          </header>';
 $hasil =  $koneksi_db->sql_query( "SELECT * FROM mapel where id='$id' " );
 $data = $koneksi_db->sql_fetchrow($hasil);
 $idmapel=$data['id'];
@@ -893,8 +921,11 @@ if (in_array($_GET['aksi'],array('addsoal'))) {
 $id     = int_filter($_GET['id']);
 /************************************/
 $hasil = $koneksi_db->sql_query( "SELECT * FROM soal where ujian='$idujian' order by id asc" );
-$admin .='<div class="panel-heading"><b>Daftar Soal</b></div>';
-$admin .= '<table id="example" class="table table-striped table-hover">
+$admin.='<section class="panel">
+                          <header class="panel-heading">
+                              Daftar Soal
+                          </header>';
+$admin .= '<table id="example" class="table table-hover">
 <thead><tr>
 <th width="10px">No</th>
 <th width="300px">Soal</th>
@@ -930,7 +961,10 @@ $idmapel     = int_filter($_GET['id']);
 $idujian     = int_filter($_GET['idujian']);
 
 $idujian     = int_filter($_GET['idujian']);
-$admin .='<div class="panel-heading"><b>Latihan Ujian</b></div>';
+$admin.='<section class="panel">
+                          <header class="panel-heading">
+                              Latihan Ujian
+                          </header>';
 $hasil2 =  $koneksi_db->sql_query( "SELECT * FROM ujian where id='$idujian' " );
 $data2 = $koneksi_db->sql_fetchrow($hasil2);
 $judul=$data2['judul'];
@@ -951,7 +985,7 @@ $petunjukumum = "
 ";
 }
 $admin .= '
-<table cellspacing="0" cellpadding="0"class="table table-striped table-hover">
+<table class="table">
 	<tr>
 		<td>Judul</td>
 		<td>:</td>
@@ -992,7 +1026,7 @@ $hasil = mysql_query("SELECT * FROM soal where ujian='$idujian'order by id asc")
 $total         = $koneksi_db->sql_numrows($hasil);
 $tombolsoal=1;
 $admin .='<table class="table">';
-$admin .='<tr><td><div id="buttons">  ';
+$admin .='<tr><td><div class="btn-group">';
 for ($j = 1; $j <= $total; $j++) {
 $admin .='
 <a  class="btnsoal" target="'.$j.'">Soal '.$j.'</a>&nbsp;';
@@ -1003,7 +1037,7 @@ $admin .='</table>';
 /******************/
 $admin .= '
 <form method="post"action="?pilih=ujian&mod=yes&aksi=hasiltest&id='.$idmapel.'">
-<table class="table table-striped table-hover">
+<table class="table table-hover">
 <thead ><tr class="info">
 <th>Soal</th>
 </tr></thead><tbody>';
@@ -1063,7 +1097,10 @@ $admin.="<br></form>";
 }
 
 if ($_GET['aksi']== 'hasiltest') {
-$admin .='<div class="panel-heading"><b>Hasil Test Latihan Ujian</b></div>';
+$admin.='<section class="panel">
+                          <header class="panel-heading">
+                              Nilai Test
+                          </header>';
 $kj2 = substr_replace($_POST['kuncijawaban'],"", -1, 1);	
 $kuncijawaban = explode("#", $kj2);
 $idmapel = $_POST['idmapel'];
@@ -1129,10 +1166,13 @@ while($data = mysql_fetch_array($hasil)){
 
 /* NILAI UJIAN */
 if($_GET['aksi']=="nilaiujian"){
-$admin .='<div class="panel-heading"><b>Nilai Ujian</b></div>';
+$admin.='<section class="panel">
+                          <header class="panel-heading">
+                              Nilai Ujian
+                          </header>';
 $admin .= '
 <form method="post" action=""class="form-inline">
-<table cellspacing="0" cellpadding="0"class="table table-striped table-hover">
+<table class="table table-hover">
 	<tr>
 		<td>Mata Pelajaran</td>
 		<td>:</td>
@@ -1174,7 +1214,7 @@ $namamapel = getmapel($idmapel);
 $hasil = $koneksi_db->sql_query( "SELECT * FROM `kelas_isi`where kelas ='$kelasid'" );
 $admin.='<div class="panel-heading"><b>Daftar Siswa Kelas '.$kelas.'</b></div>';
 $admin .="
-<form method='post' action='excellnilaiujian.php'><table class='table table-striped table-hover'>";
+<form method='post' action='excellnilaiujian.php'><table class='table table-hover'>";
   $admin .= "    <tr>
     <td width='30%' valign='top'>Kelas </td>
     <td width='1%' valign='top'>:</td>
@@ -1195,7 +1235,7 @@ $admin .="
   </tr>";
 $admin .="</table></form>";
 $admin.='
-<table id="example" class="table table-striped table-hover">
+<table id="example" class="table table-hover">
 <thead><tr>
     <td align="left" width="100px"><b>No.Induk</b></td>
     <td align="left"><b>Nama</b></td>
@@ -1217,6 +1257,10 @@ $admin.='</table>';
 if(isset($_POST['lihathistorynilai'])){
 $idmapel     		= $_POST['idmapel'];
 $namamapel = getmapel($idmapel);
+$admin.='<section class="panel">
+                          <header class="panel-heading">
+                              History Nilai
+                          </header>';
 $admin .="<table class='table table-striped table-hover'>";
    $admin .= "<tr>
     <td width='30%' valign='top'>Mata Pelajaran </td>

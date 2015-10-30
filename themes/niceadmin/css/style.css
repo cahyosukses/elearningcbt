@@ -4956,3 +4956,37 @@ span.customSelect.changed {
     color: #0E90D2;
 	    font-weight: bold;
 }
+.btnsoal{
+display: inline-block;
+  padding: 6px 12px;
+  margin-bottom: 5px;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 1.42857143;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  -ms-touch-action: manipulation;
+      touch-action: manipulation;
+  cursor: pointer;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  background: #428BCA;
+  border: 1px solid transparent;
+  border-radius: 4px;
+	color:white;
+}
+.btnsoal:hover,
+.btnsoal.focus {
+  color: white;
+  text-decoration: none;
+  background:black;
+}
+.btnsoal:active {
+  color: white;
+  text-decoration: none;
+  background:red;
+}
+

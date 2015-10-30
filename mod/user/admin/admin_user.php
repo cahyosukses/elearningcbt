@@ -54,18 +54,17 @@ if (isset ($_POST['edit_users']) && is_numeric($_GET['id'])){
 	$level = $_POST['level'];
 	$tipe = $_POST['tipe'];
 	$nama = $_POST['nama'];
-	$email	      = text_filter($_POST['email']);
-	$nama = $_POST['nama'];
-$statusemail = $_POST['statusemail'];
-$statustelp = $_POST['statustelp'];
-$telp = $_POST['telp'];
+//	$email	      = text_filter($_POST['email']);
+//$statusemail = $_POST['statusemail'];
+//$statustelp = $_POST['statustelp'];
+//$telp = $_POST['telp'];
 $mapel = $_POST['mapel'];
 //if (!is_valid_email($email)) $error .= "Error, E-Mail address invalid!<br />";
 if ($error) {
-$admin.='<div class="error">'.$error.'</div>';
+$admin.='<div class="alert alert-block alert-danger fade in">'.$error.'</div>';
 } else {
-$up = mysql_query ("UPDATE `useraura` SET `level`='$level',`tipe`='$tipe',`email`='$email',`nama`='$nama',`statusemail`='$statusemail',`statustelp`='$statustelp',`telp`='$telp',`mapel`='$mapel' WHERE `UserId`='$id' AND `user`!='admin'");	
-$admin.='<div class="sukses">Data Berhasil Diupdate Dengan ID = '.$id.'</div>';	
+$up = mysql_query ("UPDATE `useraura` SET `level`='$level',`tipe`='$tipe',`nama`='$nama',`mapel`='$mapel' WHERE `UserId`='$id'");	
+$admin.='<div class="alert alert-success fade in">Data Berhasil Diupdate Dengan ID = '.$id.'</div>';	
 }
 }
 
@@ -78,11 +77,11 @@ $user = cleantext($_POST['user']);
 $level = cleantext($_POST['level']);	
 $tipe = cleantext($_POST['tipe']);
 $password = cleantext($_POST['password']);
-$email = cleantext($_POST['email']);
+//$email = cleantext($_POST['email']);
 $nama = cleantext($_POST['nama']);
-$statusemail = $_POST['statusemail'];
-$statustelp = $_POST['statustelp'];
-$telp = $_POST['telp'];
+//$statusemail = $_POST['statusemail'];
+//$statustelp = $_POST['statustelp'];
+//$telp = $_POST['telp'];
 $mapel = $_POST['mapel'];
 
 if (empty($_POST['nama']))  $error .= "Error: Formulir nama belum diisi , silahkan ulangi.<br />";
@@ -94,12 +93,12 @@ if (strlen($user) > 10) $error .= "Username Terlalu Panjang Maksimal 10 Karakter
 if (strrpos($user, " ") > 0) $error .= "Username Tidak Boleh Menggunakan Spasi";
 if ($koneksi_db->sql_numrows($koneksi_db->sql_query("SELECT user FROM useraura WHERE user='$user'")) > 0) $error .= "Error: Username ".$user." sudah terdaftar , silahkan ulangi.<br />";
 //if ($koneksi_db->sql_numrows($koneksi_db->sql_query("SELECT email FROM useraura WHERE email='$email'")) > 0) $error .= "Error: Email ".$email." sudah terdaftar , silahkan ulangi.<br />";
-if ($email and !is_valid_email($email)) $error .= "Error: E-Mail address invalid!<br />";
+//if ($email and !is_valid_email($email)) $error .= "Error: E-Mail address invalid!<br />";
 if ($error){
-        $admin.='<div class="error">'.$error.'</div>';
+        $admin.='<div class="alert alert-block alert-danger fade in">'.$error.'</div>';
 }else{
-$query = mysql_query ("INSERT INTO `useraura` (`user`,`password`,`level`,`tipe`,`email`,`nama`,`statusemail`,`statustelp`,`telp`,`mapel`) VALUES ('$user',md5('$password'),'$level','$tipe','$email','$nama','$statusemail','$statustelp','$telp','$mapel')");	
-$admin .= '<div class="sukses">Data Berhasil Di add</div>';
+$query = mysql_query ("INSERT INTO `useraura` (`user`,`password`,`level`,`tipe`,`nama`,`mapel`) VALUES ('$user',md5('$password'),'$level','$tipe','$nama','$mapel')");	
+$admin .= '<div class="alert alert-success fade in">Data Berhasil Di add</div>';
 }
 	
 }	
@@ -116,10 +115,12 @@ while ($as = mysql_fetch_array ($ss)){
 if (isset ($_GET['offset']) && isset ($_GET['pg']) && isset ($_GET['stg'])) {
 $qss = "&pg=$pg&stg=$stg&offset=$offset";
 }	
-$admin.='<div class="panel-heading"><b>Tambah User</b></div>';
-$admin.='<div class="border">';
+$admin.='<section class="panel">
+                          <header class="panel-heading">
+                              Tambah User
+                          </header>';
 $admin.= "<form method='post' action='#'>
-<table cellspacing=\"3\" cellpadding=\"1\" style='width:100%' class='table table-striped table-hover'>
+<table  class='table table-condensed'>
   <tr>
     <td width='30%' valign='top'>User </td>
     <td width='1%' valign='top'>:</td>
@@ -154,19 +155,7 @@ foreach ($arr2 as $kk=>$vv){
 	$sel2 .= '<option value="'.$vv.'">'.$vv.'</option>';	
 }
 $sel2 .= '</select>'; 
-/**********************************************************/  
-$sel3 = '<select name="statusemail"class="form-control">';
-$arr3 = array ('sembunyikan','tampilkan');
-foreach ($arr3 as $kk=>$vv){
-	$sel3 .= '<option value="'.$vv.'">'.$vv.'</option>';	
-}
-$sel3 .= '</select>';      
-$sel4 = '<select name="statustelp"class="form-control">';
-$arr4 = array ('sembunyikan','tampilkan');
-foreach ($arr4 as $kk=>$vv){
-	$sel4 .= '<option value="'.$vv.'">'.$vv.'</option>';	
-}
-$sel4 .= '</select>';   
+/**********************************************************/   
 $admin .= "<tr>
     <td width='30%' valign='top'>Level </td>
     <td width='1%' valign='top'>:</td>
@@ -178,17 +167,6 @@ $admin .= "<tr>
     <td width='1%' valign='top'>:</td>
     <td width='69%' valign='top'>$sel2</td>
   </tr>";  
-  $admin .= "    <tr>
-    <td width='30%' valign='top'>Email </td>
-    <td width='1%' valign='top'>:</td>
-    <td width='69%' valign='top'>$sel3&nbsp;<input type='text' name='email' size='20' class='form-control'/></td>
-  </tr>";
-  
-  $admin .= "    <tr>
-    <td width='30%' valign='top'>Telepon </td>
-    <td width='1%' valign='top'>:</td>
-    <td width='69%' valign='top'>$sel4&nbsp;<input type='text' name='telp' size='20'class='form-control' /></td>
-  </tr>"; 
   $admin .= '<tr>
 		<td>Mata Pelajaran</td>
 		<td>:</td>
@@ -205,8 +183,7 @@ $admin .= "<tr><td width='30%'>&nbsp;</td>
     <td width='1%'>&nbsp;</td>
     <td width='69%'><br /><input type='submit' value='Simpan' name='add_users' class='btn btn-success'/></td>
   </tr>
-</table></form>";
-$admin .= '</div>';		
+</table></form>";	
 	
 	
 	
@@ -220,11 +197,11 @@ $data = mysql_fetch_array($s);
 $user = $data['user'];	
 $level = $data['level'];	
 $tipe = $data['tipe'];
-$email = $data['email'];
+//$email = $data['email'];
 $nama = $data['nama'];
-$statusemail = $data['statusemail'];
-$statustelp = $data['statustelp'];
-$telp = $data['telp'];
+//$statusemail = $data['statusemail'];
+//$statustelp = $data['statustelp'];
+//$telp = $data['telp'];
 $mapel = $data['mapel'];
 $ss = mysql_query ("SHOW FIELDS FROM useraura");
 while ($as = mysql_fetch_array ($ss)){
@@ -235,10 +212,12 @@ if (substr($arrs,0,4) == 'enum' && $as['Field'] == 'level') break;
 if (isset ($_GET['offset']) && isset ($_GET['pg']) && isset ($_GET['stg'])) {
 $qss = "&amp;pg=$pg&amp;stg=$stg&amp;offset=$offset";
 }	
-$admin.='<div class="panel-heading"><b>Edit User</b></div>';
-$admin.='<div class="border">';
+$admin.='<section class="panel">
+                          <header class="panel-heading">
+                              Edit User
+                          </header>';
 $admin .= "<form method='post' action='admin.php?pilih=user&amp;mod=yes&amp;id=$id$qss'>
-<table style='width:100%;border:0' cellpadding='2' class='table table-striped table-hover'>
+<table  class='table table-condensed'>
   <tr>
     <td width='30%' valign='top'>User </td>
     <td width='1%' valign='top'>:</td>
@@ -277,26 +256,6 @@ foreach ($arr2 as $kk=>$vv){
 
 $sel2 .= '</select>';    
 /**********************************************************/  
-$sel3 = '<select name="statusemail"class="form-control">';
-$arr3 = array ('sembunyikan','tampilkan');
-foreach ($arr3 as $k2=>$v2){
-	if ($statusemail == $v2){
-	$sel3 .= '<option value="'.$v2.'" selected="selected">'.$v2.'</option>';
-	}else {
-	$sel3 .= '<option value="'.$v2.'">'.$v2.'</option>';	
-	}
-}
-$sel3 .= '</select>';      
-$sel4 = '<select name="statustelp"class="form-control">';
-$arr4 = array ('sembunyikan','tampilkan');
-foreach ($arr4 as $k3=>$v3){
-	if ($statustelp == $v3){
-	$sel4 .= '<option value="'.$v3.'" selected="selected">'.$v3.'</option>';
-	}else {
-	$sel4 .= '<option value="'.$v3.'">'.$v3.'</option>';
-	}	
-}
-$sel4 .= '</select>';    
   
 $admin .= "<tr>
     <td width='30%' valign='top'>Level </td>
@@ -308,17 +267,6 @@ $admin .= "<tr>
     <td width='30%' valign='top'>Status</td>
     <td width='1%' valign='top'>:</td>
     <td width='69%' valign='top'>$sel2</td>
-  </tr>";  
-  $admin .= "    <tr>
-    <td width='30%' valign='top'>Email </td>
-    <td width='1%' valign='top'>:</td>
-    <td width='69%' valign='top'>$sel3&nbsp;<input type='text' name='email' size='20' class='form-control'value='$email'/></td>
-  </tr>";
-  
-  $admin .= "    <tr>
-    <td width='30%' valign='top'>Telepon </td>
-    <td width='1%' valign='top'>:</td>
-    <td width='69%' valign='top'>$sel4&nbsp;<input type='text' name='telp' size='20'class='form-control'value='$telp' /></td>
   </tr>";  
   $admin .= '<tr>
 		<td>Mata Pelajaran</td>
@@ -342,17 +290,19 @@ $admin .= "<tr><td width='30%'>&nbsp;</td>
     <td width='1%'>&nbsp;</td>
     <td width='69%'><br /><input type='submit' value='Simpan' name='edit_users' class='btn btn-success'/></td>
   </tr>
-</table></form>";
-$admin .= '</div>';		
+</table></form>";	
 }
 
 if (!in_array($_GET['aksi'],array('add','edit','hint','addhint','editpassword','photo'))){
 
 $hasil = $koneksi_db->sql_query( "SELECT * FROM `useraura`where level <>'Siswa' and user<>'superadmin'" );
-$admin.='<div class="panel-heading"><b>Daftar User</b></div>';
+$admin.='<section class="panel">
+                          <header class="panel-heading">
+                              Daftar User
+                          </header>';
 $admin .="<form method='post' action=''>";
 $admin.='
-<table id="example" class="table table-striped table-hover">
+<table id="example" class="table">
 <thead><tr>
     <td align="center"><b>User</b></td>
     <td align="center"><b>Nama</b></td>
@@ -375,7 +325,7 @@ $linkphoto = '<a href="?pilih=user&amp;mod=yes&amp;aksi=photo&amp;id='.$data['Us
     <td>'.$data['level'].'</td>
     <td>'.getmapel($data['mapel']).'</td>
     <td>
-     <a href="?pilih=user&amp;mod=yes&amp;aksi=hapus&amp;id='.$data['UserId'].$qss.'" onclick="GP_popupConfirmMsg(\'Semua data Ujian,Materi akan di hapus.Apakah anda Ingin menghapus Users \n['.$data['user'].']\');return document.MM_returnValue;"><span class="btn btn-danger">Hapus</span></a>
+     <a href="?pilih=user&amp;mod=yes&amp;aksi=hapus&amp;id='.$data['UserId'].$qss.'" onclick="return confirm(\'Apakah Anda Yakin Ingin Menghapus User Ini ?\')"><span class="btn btn-danger">Hapus</span></a>
 	 <a href="?pilih=user&amp;mod=yes&amp;aksi=edit&amp;id='.$data['UserId'].$qss.'"><span class="btn btn-warning">Edit</span></a>
 	 <a href="?pilih=user&amp;mod=yes&amp;aksi=editpassword&amp;id='.$data['UserId'].$qss.'"><span class="btn btn-primary">Password</span></a>
 	 '.$linkphoto.'
@@ -394,24 +344,27 @@ if(isset($_POST['submit'])){
 	$error 	= '';
 	if (!$password)  	$error .= "Error: Silahkan Isi password<br />";
 	if ($error){
-		$tengah .= '<div class="error">'.$error.'</div>';
+		$tengah .= '<div class="alert alert-block alert-danger fade in">'.$error.'</div>';
 	}else{
 		$hasil  = mysql_query( "UPDATE `useraura` SET `password`=md5('$password') WHERE `UserId`='$id'" );
 		if($hasil){
-			$admin .= '<div class="sukses"><b>Password Berhasil di Update.</b></div>';
+			$admin .= '<div class="alert alert-success fade in"><b>Password Berhasil di Update.</b></div>';
 			$style_include[] ='<meta http-equiv="refresh" content="1; url=admin.php?pilih=user&amp;mod=yes" />';	
 		}else{
-			$admin .= '<div class="error"><b>Gagal di Update.</b></div>';
+			$admin .= '<div class="alert alert-block alert-danger fade in"><b>Gagal di Update.</b></div>';
 		}
 	}
 
 }
 $query 		= mysql_query ("SELECT * FROM `useraura` WHERE `UserId`='$id'");
 $data 		= mysql_fetch_array($query);
-$admin .='<div class="panel-heading"><b>Edit Password User</b></div>';
+$admin.='<section class="panel">
+                          <header class="panel-heading">
+                              Edit Pasword User
+                          </header>';
 $admin .= '
 <form method="post" action=""class="form-inline">
-<table border="0" cellspacing="0" cellpadding="0"class="table table-striped table-hover">
+<table class="table table-condensed">
 	<tr>
 		<td>Nama</td>
 		<td>:</td>
@@ -447,7 +400,7 @@ $extension = end(explode('.', $_FILES['gambar']['name']));
 $error 	= '';
 if ($extension!='jpg')  	$error .= "Error: Format ekstensi jpg<br />";
 if ($error){
-$admin.='<div class="error">'.$error.'</div>';
+$admin.='<div class="alert alert-block alert-danger fade in">'.$error.'</div>';
 
 }else{
 
@@ -472,7 +425,7 @@ $seftitle = $seftitle.$jumlah;
     //$tgl= date('Y-m-d H:i:s');
     $hasil = $koneksi_db->sql_query( "update useraura set photo ='$namagambar'where user='$username'" );
     if($hasil){
-    $admin.='<div class="sukses">Berhasil Update Photo ...</div>';
+    $admin.='<div class="alert alert-success fade in">Berhasil Update Photo ...</div>';
 
 unlink($uploaddir);
 }
@@ -489,10 +442,13 @@ $photo = '<img src="mod/user/photo/'.$photo.'">';
 }else{
 $photo = '<img src="mod/user/photo/default-photo.jpg">';
 }
-$admin .='<div class="panel-heading"><b>Upload Photo Profil</b></div>';
+$admin.='<section class="panel">
+                          <header class="panel-heading">
+                              Profil Picture User
+                          </header>';
 $admin .= '
 <form method="post" action=""class="form-inline" enctype ="multipart/form-data">
-<table border="0" cellspacing="0" cellpadding="0"class="table table-striped table-hover">
+<table class="table table-striped table-hover">
 	<tr>
 		<td></td>
 		<td></td>
