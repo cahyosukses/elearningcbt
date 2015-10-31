@@ -269,49 +269,24 @@ $admin.='
 		<td><input type="text" name="pointbenar" value="'.$pointbenar.'" size="30" class="form-control" required></td>
 	</tr>
 		<tr>
-		<td>Point Salah</td>
-		<td>:</td>
-		<td><input type="text" name="pointsalah" value="'.$pointsalah.'" size="30" class="form-control" required></td>
-	</tr>
-		<tr>
-		<td>Point Kosong</td>
-		<td>:</td>
-		<td><input type="text" name="pointkosong" value="'.$pointkosong.'" size="30" class="form-control" required></td>
-	</tr>
-		<tr>
 		<td>Jumlah Soal</td>
 		<td>:</td>
 		<td><input type="text" name="jumlahsoal" value="'.$jumlahsoal.'" size="30" class="form-control" required></td>
 	</tr>
-	<tr>
-		<td>Tipe Soal</td>
-		<td>:</td>
-		<td>'.$sel.'</td>
-	</tr>
-	<tr>
-		<td>Status Ujian</td>
-		<td>:</td>
-		<td>'.$sel2.'</td>
-	</tr>
-	<tr>
-		<td>Tipe Ujian</td>
-		<td>:</td>
-		<td>'.$sel3.'</td>
-	</tr>	
 	
 	';
-$admin .='<tr>
-            <td valign="top">Petunjuk Ujian&nbsp;:</td>
-			<td>:</td>
-            <td><textarea class="form-control" name="petunjuk" cols="40">'.$petunjuk.'</textarea></td>
-        </tr>';	
-	
 $admin.='	<tr>
 		<td></td>
 		<td></td>
 		<td>';
 $admin .= "
 <input type='hidden' name='idmapel' value='$idmapel'>
+<input type='hidden' name='pointsalah' value='0'>
+<input type='hidden' name='pointkosong' value='0'>
+<input type='hidden' name='tipe' value='random'>
+<input type='hidden' name='tipeujian' value='latihan'>
+<input type='hidden' name='petunjuk' value='$petunjuk'>
+<input type='hidden' name='status' value='$status'>
 ";
 $admin .= '
 		<input type="submit" value="Simpan" name="submit"class="btn btn-success" >&nbsp;';
@@ -428,21 +403,6 @@ $admin.='
 		<td><input type="text" name="pointbenar" value="'.$pointbenar.'" size="30" class="form-control" required> </td>
 	</tr>
 	<tr>
-		<td>Point Salah</td>
-		<td>:</td>
-		<td><input type="text" name="pointsalah" value="'.$pointsalah.'" size="30" class="form-control" required> </td>
-	</tr>
-	<tr>
-		<td>Point Kosong</td>
-		<td>:</td>
-		<td><input type="text" name="pointkosong" value="'.$pointkosong.'" size="30" class="form-control" required> </td>
-	</tr>
-	<tr>
-		<td>Tipe Soal</td>
-		<td>:</td>
-		<td>'.$sel.'</td>
-	</tr>
-	<tr>
 		<td>Jumlah Soal</td>
 		<td>:</td>
 		<td><input type="text" name="jumlahsoal" value="'.$jumlahsoal.'" size="30" class="form-control" required> </td>
@@ -452,30 +412,20 @@ $admin.='
 		<td>:</td>
 <td><select name="tipejawaban" class="form-control" required>';
 $admin .= '<option value="a,b,c,d,e" selected> A - E </option>';
-$admin .= '<option value="a,b,c,d"> A - D </option>';
+//$admin .= '<option value="a,b,c,d"> A - D </option>';
 $admin .='</select></td>
-	</tr>
-	<tr>
-		<td>Status Ujian</td>
-		<td>:</td>
-		<td>'.$sel2.'</td>
 	</tr>';
-$admin .='
-	<tr>
-		<td>Tipe Ujian</td>
-		<td>:</td>
-		<td>'.$sel3.'</td>
-	</tr>';
-$admin .='<tr>
-            <td valign="top">Petunjuk Ujian&nbsp;:</td>
-			<td>:</td>
-            <td><textarea class="form-control" name="petunjuk" cols="40">'.$petunjuk.'</textarea></td>
-        </tr>';
 $admin .= "	<tr>
 		<td></td>
 		<td></td>
 		<td>
 <input type='hidden' name='idmapel' value='$idmapel'>
+<input type='hidden' name='pointsalah' value='0'>
+<input type='hidden' name='pointkosong' value='0'>
+<input type='hidden' name='tipe' value='random'>
+<input type='hidden' name='tipeujian' value='latihan'>
+<input type='hidden' name='petunjuk' value=''>
+<input type='hidden' name='status' value='disabled'>
 ";
 $admin .= '
 		<input type="submit" value="Simpan" name="submit"class="btn btn-success" > ';
