@@ -89,6 +89,7 @@ $admin .= '
 	</tr>
 </table>
 </form>';
+$admin.='</section>';
 }
 
 if($_GET['aksi']==""){
@@ -131,6 +132,7 @@ $admin .= '
 	</tr>
 </table>
 </form>';	
+$admin.='</section>';
 }
 
 /************************************/
@@ -157,8 +159,9 @@ $no++;
 }
 $admin .= '</tbody></table>';
 /************************************/
+$admin.='</section>';
 }
-$admin .='</div>';
+
 echo $admin;
 
 ?>

@@ -17,12 +17,10 @@ $JS_SCRIPT = <<<js
 <script type="text/javascript" src="js/tinymce/tinymce.min.js"></script>
 <script type="text/javascript">
 tinymce.init({
-	statusbar: false,
-	resize: false,
         selector: "textarea",
         plugins: [
                 "advlist autolink autosave link image lists charmap print preview hr anchor pagebreak spellchecker",
-                "searchreplace visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
+                "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
                 "table contextmenu directionality emoticons template textcolor paste  textcolor filemanager"
         ],
 
@@ -85,16 +83,14 @@ $script_include[] = $JS_SCRIPT;
 					</ol>
 				</div>
 			</div>';
-			
+$admin .='<div class="panel panel-info">';
 $user =  $_SESSION['UserName'];
 $levelakses=$_SESSION['LevelAkses'];
+$mapel=getmapeluser($_SESSION['UserName']);
 if($_GET['aksi']==""){
-$hasil = $koneksi_db->sql_query( "SELECT * FROM mapel  order by mapel asc" );
-$admin.='<section class="panel">
-                          <header class="panel-heading">
-                              Pengumuman Sekolah
-                          </header>';
-$admin .= '<table id="example" class="table table-hover">
+$hasil = $koneksi_db->sql_query( "SELECT * FROM mapel where id='$mapel'  order by mapel asc" );
+$admin .='<div class="panel-heading"><b>Daftar Mapel</b></div>';
+$admin .= '<table id="example" class="table table-striped table-hover">
 <thead><tr>
 <th>No</th>
 <th>Mata Pelajaran</th>
@@ -106,7 +102,6 @@ $idmapel     = $data['id'];
 $mapel     = $data['mapel'];  
 $cekjmlujian  = cekjmlujian2($idmapel); 
 $tambahujian = '<a href="?pilih=ujian&amp;mod=yes&amp;aksi=addujian&amp;id='.$data['id'].'"><span class="btn btn-warning">Tambah Ujian</span></a>&nbsp;';
-
 $admin .='<tr>
 <td><b>'.$no.'</b></td>
 <td>'.$data['mapel'].'</td>
@@ -127,8 +122,8 @@ $admin .= '</tbody></table>';
 if($_GET['aksi']== 'del'){    
 	global $koneksi_db;    
 	$id     = int_filter($_GET['id']);  
-	$idmapel     = int_filter($_GET['idmapel']);   	
-	$hasil = $koneksi_db->sql_query( "SELECT * FROM soal WHERE ujian='$id'" );
+	$idkursus     = int_filter($_GET['idkursus']);   	
+	$hasil = $koneksi_db->sql_query( "SELECT * FROM soal WHERE ujian='$idkursus'" );
 	while($data = mysql_fetch_array($hasil)){
     $namagambar =  $data['files'];
     $uploaddir = $temp . $namagambar; 
@@ -138,23 +133,20 @@ if($_GET['aksi']== 'del'){
 		$hasil = $koneksi_db->sql_query("DELETE FROM `soal` WHERE `ujian`='$id'");  
 	if($hasil){    
 		$admin.='<div class="sukses">Ujian berhasil dihapus! .</div>';    
-		$style_include[] ='<meta http-equiv="refresh" content="1; url=admin.php?pilih=ujian&mod=yes&aksi=listujian&id='.$idmapel.'" />';    
+		$style_include[] ='<meta http-equiv="refresh" content="1; url=admin.php?pilih=ujian&mod=yes&aksi=listujian&id='.$idkursus.'" />';    
 	}
 }
 
 if($_GET['aksi'] == 'edit'){
 $id = int_filter ($_GET['id']);
 $idmapel = int_filter ($_GET['idmapel']);
-$admin.='<section class="panel">
-                          <header class="panel-heading">
-                              Mata Pelajaran
-                          </header>';
+$admin .='<div class="panel-heading"><b>Mata Pelajaran</b></div>';
 $hasil =  $koneksi_db->sql_query( "SELECT * FROM mapel where id='$idmapel' " );
 $data = $koneksi_db->sql_fetchrow($hasil);
 $idmapel=$data['id'];
 $mapel =$data['mapel'];
 $admin .= '
-<table class="table">
+<table cellspacing="0" cellpadding="0"class="table table-striped table-hover">
 <tr>
 		<td>Mata Pelajaran</td>
 		<td>:</td>
@@ -216,7 +208,6 @@ $petunjuk=$data['petunjuk'];
 $tgl=$data['tgl'];
 $tglnow = date("Y-m-d");
 $tipeujian=$data['tipeujian'];
-$user=$data['user'];
 $tgl 		= !isset($tgl) ? $tglnow : $tgl;
 $sel = '<select name="tipe" class="form-control" required>';
 $arr = array ('random','urut');
@@ -252,20 +243,17 @@ foreach ($arr3 as $kk=>$vv){
 $sel3 .= '</select>'; 
 
 
-$admin.='<section class="panel">
-                          <header class="panel-heading">
-                              Edit Ujian
-                          </header>';
+$admin .='<div class="panel-heading"><b>Edit Ujian</b></div>';
 $admin .= '
 <form method="post" action="" class="form-inline" id="posts">
-<table class="table">';
+<table class="table table-striped table-hover">';
 $admin.='
 		<tr>
 		<td>Guru</td>
 		<td>:</td>
 		<td>'.getnamaguru($user).'</td>
 	</tr>
-	<tr>
+		<tr>
 		<td>Tanggal</td>
 		<td>:</td>
 		<td><input type="text" id="tgl" name="tgl" value="'.$tgl.'" size="30" class="form-control"></td>
@@ -285,29 +273,8 @@ $admin.='
 		<td>:</td>
 		<td><input type="text" name="jumlahsoal" value="'.$jumlahsoal.'" size="30" class="form-control" required></td>
 	</tr>
-	<tr>
-		<td>Tipe Soal</td>
-		<td>:</td>
-		<td>'.$sel.'</td>
-	</tr>
-	<tr>
-		<td>Status Ujian</td>
-		<td>:</td>
-		<td>'.$sel2.'</td>
-	</tr>
-	<tr>
-		<td>Tipe Ujian</td>
-		<td>:</td>
-		<td>'.$sel3.'</td>
-	</tr>	
 	
 	';
-$admin .='<tr>
-            <td valign="top">Petunjuk Ujian&nbsp;:</td>
-			<td>:</td>
-            <td><textarea class="form-control" name="petunjuk" cols="40">'.$petunjuk.'</textarea></td>
-        </tr>';	
-	
 $admin.='	<tr>
 		<td></td>
 		<td></td>
@@ -316,6 +283,10 @@ $admin .= "
 <input type='hidden' name='idmapel' value='$idmapel'>
 <input type='hidden' name='pointsalah' value='0'>
 <input type='hidden' name='pointkosong' value='0'>
+<input type='hidden' name='tipe' value='random'>
+<input type='hidden' name='tipeujian' value='latihan'>
+<input type='hidden' name='petunjuk' value='$petunjuk'>
+<input type='hidden' name='status' value='$status'>
 ";
 $admin .= '
 		<input type="submit" value="Simpan" name="submit"class="btn btn-success" >&nbsp;';
@@ -329,7 +300,7 @@ $admin.="<a href='?pilih=ujian&mod=yes&aksi=listujian&id=$idmapel'><span class='
 if($_GET['aksi']=="addujian"){
 $idmapel     = int_filter($_GET['id']);
 $admin .= '
-<table cellspacing="0" cellpadding="0"class="table">
+<table cellspacing="0" cellpadding="0"class="table table-striped table-hover">
 	<tr>
 		<td>Mata Pelajaran</td>
 		<td>:</td>
@@ -406,13 +377,10 @@ foreach ($arr3 as $kk=>$vv){
 
 }
 $sel3 .= '</select>';   
-$admin.='<section class="panel">
-                          <header class="panel-heading">
-                              Tambah Ujian
-                          </header>';
+$admin .='<div class="panel-heading"><b>Tambah Ujian</b></div>';
 $admin .= '
 <form method="post" action="" class="form-inline" id="posts">
-<table class="table">';
+<table class="table table-striped table-hover">';
 $admin.='
 		<tr>
 		<td>Guru</td>
@@ -435,11 +403,6 @@ $admin.='
 		<td><input type="text" name="pointbenar" value="'.$pointbenar.'" size="30" class="form-control" required> </td>
 	</tr>
 	<tr>
-		<td>Tipe Soal</td>
-		<td>:</td>
-		<td>'.$sel.'</td>
-	</tr>
-	<tr>
 		<td>Jumlah Soal</td>
 		<td>:</td>
 		<td><input type="text" name="jumlahsoal" value="'.$jumlahsoal.'" size="30" class="form-control" required> </td>
@@ -449,25 +412,9 @@ $admin.='
 		<td>:</td>
 <td><select name="tipejawaban" class="form-control" required>';
 $admin .= '<option value="a,b,c,d,e" selected> A - E </option>';
-$admin .= '<option value="a,b,c,d"> A - D </option>';
+//$admin .= '<option value="a,b,c,d"> A - D </option>';
 $admin .='</select></td>
-	</tr>
-	<tr>
-		<td>Status Ujian</td>
-		<td>:</td>
-		<td>'.$sel2.'</td>
 	</tr>';
-$admin .='
-	<tr>
-		<td>Tipe Ujian</td>
-		<td>:</td>
-		<td>'.$sel3.'</td>
-	</tr>';
-$admin .='<tr>
-            <td valign="top">Petunjuk Ujian&nbsp;:</td>
-			<td>:</td>
-            <td><textarea class="form-control" name="petunjuk" cols="40">'.$petunjuk.'</textarea></td>
-        </tr>';
 $admin .= "	<tr>
 		<td></td>
 		<td></td>
@@ -475,6 +422,10 @@ $admin .= "	<tr>
 <input type='hidden' name='idmapel' value='$idmapel'>
 <input type='hidden' name='pointsalah' value='0'>
 <input type='hidden' name='pointkosong' value='0'>
+<input type='hidden' name='tipe' value='random'>
+<input type='hidden' name='tipeujian' value='latihan'>
+<input type='hidden' name='petunjuk' value=''>
+<input type='hidden' name='status' value='disabled'>
 ";
 $admin .= '
 		<input type="submit" value="Simpan" name="submit"class="btn btn-success" > ';
@@ -489,10 +440,7 @@ if($_GET['aksi']=="addsoal"){
 $id     = int_filter($_GET['id']);
 //$admin .='<div class="panel-heading"><b>Daftar Kursus</b></div>';
 $idujian     = int_filter($_GET['idujian']);
-$admin.='<section class="panel">
-                          <header class="panel-heading">
-                              Daftar Ujian
-                          </header>';
+$admin .='<div class="panel-heading"><b>Daftar Ujian</b></div>';
 $hasil2 =  $koneksi_db->sql_query( "SELECT * FROM ujian where id='$idujian' " );
 $data2 = $koneksi_db->sql_fetchrow($hasil2);
 $judul=$data2['judul'];
@@ -501,7 +449,7 @@ $jumlahsoal =$data2['jumlahsoal'];
 $status =$data2['status'];
 $idmapel =$data2['idmapel'];
 $admin .= '
-<table class="table">
+<table cellspacing="0" cellpadding="0"class="table table-striped table-hover">
 	<tr>
 		<td>Judul</td>
 		<td>:</td>
@@ -561,7 +509,6 @@ if ($koneksi_db->sql_numrows($koneksi_db->sql_query("SELECT soal FROM soal WHERE
 		$hasil  = mysql_query( "INSERT INTO `soal` VALUES ('','$idujian','$konten','$ppil','$kunci','')" );
 		if($hasil){
 			$admin .= "<div class='sukses'><b>Soal Berhasil di Buat.</b></div>";
-			unset($konten);
 	//		header("location:?pilih=ujian&mod=yes&aksi=addsoal&idujian=$idujian&id=$idkursus");
 		}else{
 			$admin .= '<div class="error"><b>Soal Gagal di Buat.</b></div>';
@@ -583,18 +530,15 @@ $sel .= '<option value="'.$jawaban[$i].'">'.$jawaban[$i].'</option>';
 }
 $sel .= '</select>'; 
 /**/
-$admin.='<section class="panel">
-                          <header class="panel-heading">
-                              Tambah Soal
-                          </header>';
+$admin .='<div class="panel-heading"><b>Tambah Soal</b></div>';
 $admin .="
 <form method='post' action='' id='posts' enctype ='multipart/form-data'>
-<table class='table'>";
+<table class='table table-striped table-hover'>";
 $admin.="
 	<tr>
 		<td>Soal</td>
 		<td></td>
-		<td><textarea name='konten' id='textarea9'>$konten</textarea></td>
+		<td><textarea name='konten' id='textarea1'>$konten</textarea></td>
 	</tr>";
 $admin.="
 	<tr>
@@ -603,11 +547,9 @@ $admin.="
 		<td>";
 		$no=1;
 for ($i = 0; $i < $jml_jawaban; $i++) {
-/*$admin .="
+$admin .="
     <div class='input-group'>
       <div class='input-group-addon'>$jawaban[$i].</div><input type='text' name='pilihan$no' class='form-control'required /></div>";
-	  */
-$admin .="<div class='input-group'><div class='input-group-addon'>$jawaban[$i].</div><textarea name='pilihan$no' id='textarea$no'style='height: 2em;'></textarea></div>";
 $no++;
 }
 $admin .="
@@ -639,10 +581,7 @@ if($_GET['aksi']=="editsoal"){
 
 $idmapel     = int_filter($_GET['id']);
 $idujian     = int_filter($_GET['idujian']);
-$admin.='<section class="panel">
-                          <header class="panel-heading">
-                              Daftar Ujian
-                          </header>';
+$admin .='<div class="panel-heading"><b>Daftar Ujian</b></div>';
 $hasil2 =  $koneksi_db->sql_query( "SELECT * FROM ujian where id='$idujian' " );
 $data2 = $koneksi_db->sql_fetchrow($hasil2);
 $judul=$data2['judul'];
@@ -650,7 +589,7 @@ $tipe =$data2['tipe'];
 $jumlahsoal =$data2['jumlahsoal'];
 $status =$data2['status'];
 $admin .= '
-<table class="table">
+<table cellspacing="0" cellpadding="0"class="table table-striped table-hover">
 	<tr>
 		<td>Judul</td>
 		<td>:</td>
@@ -746,18 +685,15 @@ $selected ='';
 }
 $sel .= '</select>'; 
 /**/
-$admin.='<section class="panel">
-                          <header class="panel-heading">
-                              Edit Soal
-                          </header>';
+$admin .='<div class="panel-heading"><b>Edit Soal</b></div>';
 $admin .="
 <form method='post' action='' id='posts'  enctype ='multipart/form-data'>
-<table class='table'>";
+<table class='table table-striped table-hover'>";
 $admin.="
 	<tr>
 		<td>Soal</td>
 		<td></td>
-		<td><textarea name='konten' id='textarea9'>$konten</textarea></td>
+		<td><textarea name='konten' id='textarea1'>$konten</textarea></td>
 	</tr>";
 $admin.="
 	<tr>
@@ -766,12 +702,9 @@ $admin.="
 		<td>";
 		$no=1;
 for ($i = 0; $i < $jml_jawaban; $i++) {
-	/*
 $admin .="
     <div class='input-group'>
       <div class='input-group-addon'>$jawaban[$i].</div><input type='text' name='pilihan$no' class='form-control'required value='$pilihansoal[$i]' /></div>";
-	  */
-$admin .="<div class='input-group'><div class='input-group-addon'>$jawaban[$i].</div><textarea name='pilihan$no' id='textarea$no'style='height: 2em;'></textarea></div>";
 $no++;
 }
 $admin .="
@@ -834,10 +767,7 @@ while($data = mysql_fetch_array($hasil)){
 if (in_array($_GET['aksi'],array('listujian'))) {
 
 $id     = int_filter($_GET['id']);
-$admin.='<section class="panel">
-                          <header class="panel-heading">
-                              Mata Pelajaran
-                          </header>';
+$admin .='<div class="panel-heading"><b>Mata Pelajaran</b></div>';
 $hasil =  $koneksi_db->sql_query( "SELECT * FROM mapel where id='$id' " );
 $data = $koneksi_db->sql_fetchrow($hasil);
 $idmapel=$data['id'];
@@ -884,6 +814,11 @@ $admin .='<tr>
 <td>'.$tipe.'/'.$status.'</td>
 <td>'.getnamaguru($userujian).'</td>
 ';
+if($_SESSION['UserName']==$userujian){
+$editujian ='<a href="?pilih=ujian&amp;mod=yes&amp;aksi=del&amp;id='.$data['id'].'&amp;idmapel='.$idmapel.'" onclick="return confirm(\'Soal pada ujian tersebut akan ikut terhapus,Apakah Anda Yakin Ingin Menghapus Data Ini ?\')"><span class="btn btn-danger">Del</span></a>&nbsp;<a href="?pilih=ujian&amp;mod=yes&amp;aksi=edit&amp;id='.$data['id'].'&amp;idmapel='.$idmapel.'" onclick="return confirm(\'Edit Ujian hanya mengedit Tipe Soal Urut/Random dan Status Ujian, Apakah ingin melanjutkan ?\')"><span class="btn btn-warning">Edit</span></a>&nbsp;<a href="?pilih=ujian&amp;mod=yes&amp;aksi=addsoal&amp;idujian='.$data['id'].'&amp;id='.$idmapel.'"><span class="btn btn-success">Soal</span></a>';	
+}else{
+$editujian ='';	
+}
 if(getjumlahsoal($idujian)==$jumlahsoal){
 $test = '<a href="?pilih=ujian&amp;mod=yes&amp;aksi=testujian&amp;idujian='.$data['id'].'&amp;id='.$idmapel.'"><span class="btn btn-primary">Test</span></a>';
 //$test = '<a href="?pilih=ujiantest&amp;mod=yes&amp;idujian='.$data['id'].'&amp;id='.$idkursus.'"><span class="btn btn-primary">Test</span></a>';
@@ -891,7 +826,7 @@ $test = '<a href="?pilih=ujian&amp;mod=yes&amp;aksi=testujian&amp;idujian='.$dat
 $test = '';
 }
 $admin .='
-<td><a href="?pilih=ujian&amp;mod=yes&amp;aksi=del&amp;id='.$data['id'].'&amp;idmapel='.$idmapel.'" onclick="return confirm(\'Soal pada ujian tersebut akan ikut terhapus,Apakah Anda Yakin Ingin Menghapus Data Ini ?\')"><span class="btn btn-danger">Del</span></a>&nbsp;<a href="?pilih=ujian&amp;mod=yes&amp;aksi=edit&amp;id='.$data['id'].'&amp;idmapel='.$idmapel.'" onclick="return confirm(\'Edit Ujian hanya mengedit Tipe Soal Urut/Random dan Status Ujian, Apakah ingin melanjutkan ?\')"><span class="btn btn-warning">Edit</span></a>&nbsp;<a href="?pilih=ujian&amp;mod=yes&amp;aksi=addsoal&amp;idujian='.$data['id'].'&amp;id='.$idmapel.'"><span class="btn btn-success">Soal</span></a>&nbsp;'.$test.'</td>
+<td>'.$editujian.'&nbsp;'.$test.'</td>
 </tr>';
 $no++;
 }
@@ -905,11 +840,8 @@ if (in_array($_GET['aksi'],array('addsoal'))) {
 $id     = int_filter($_GET['id']);
 /************************************/
 $hasil = $koneksi_db->sql_query( "SELECT * FROM soal where ujian='$idujian' order by id asc" );
-$admin.='<section class="panel">
-                          <header class="panel-heading">
-                              Daftar Soal
-                          </header>';
-$admin .= '<table id="example" class="table table-hover">
+$admin .='<div class="panel-heading"><b>Daftar Soal</b></div>';
+$admin .= '<table id="example" class="table table-striped table-hover">
 <thead><tr>
 <th width="10px">No</th>
 <th width="300px">Soal</th>
@@ -945,10 +877,7 @@ $idmapel     = int_filter($_GET['id']);
 $idujian     = int_filter($_GET['idujian']);
 
 $idujian     = int_filter($_GET['idujian']);
-$admin.='<section class="panel">
-                          <header class="panel-heading">
-                              Latihan Ujian
-                          </header>';
+$admin .='<div class="panel-heading"><b>Latihan Ujian</b></div>';
 $hasil2 =  $koneksi_db->sql_query( "SELECT * FROM ujian where id='$idujian' " );
 $data2 = $koneksi_db->sql_fetchrow($hasil2);
 $judul=$data2['judul'];
@@ -969,7 +898,7 @@ $petunjukumum = "
 ";
 }
 $admin .= '
-<table class="table">
+<table cellspacing="0" cellpadding="0"class="table table-striped table-hover">
 	<tr>
 		<td>Judul</td>
 		<td>:</td>
@@ -1010,7 +939,7 @@ $hasil = mysql_query("SELECT * FROM soal where ujian='$idujian'order by id asc")
 $total         = $koneksi_db->sql_numrows($hasil);
 $tombolsoal=1;
 $admin .='<table class="table">';
-$admin .='<tr><td><div class="btn-group">';
+$admin .='<tr><td><div id="buttons">  ';
 for ($j = 1; $j <= $total; $j++) {
 $admin .='
 <a  class="btnsoal" target="'.$j.'">Soal '.$j.'</a>&nbsp;';
@@ -1021,7 +950,7 @@ $admin .='</table>';
 /******************/
 $admin .= '
 <form method="post"action="?pilih=ujian&mod=yes&aksi=hasiltest&id='.$idmapel.'">
-<table class="table table-hover">
+<table class="table table-striped table-hover">
 <thead ><tr class="info">
 <th>Soal</th>
 </tr></thead><tbody>';
@@ -1081,10 +1010,7 @@ $admin.="<br></form>";
 }
 
 if ($_GET['aksi']== 'hasiltest') {
-$admin.='<section class="panel">
-                          <header class="panel-heading">
-                              Nilai Test
-                          </header>';
+$admin .='<div class="panel-heading"><b>Hasil Test Latihan Ujian</b></div>';
 $kj2 = substr_replace($_POST['kuncijawaban'],"", -1, 1);	
 $kuncijawaban = explode("#", $kj2);
 $idmapel = $_POST['idmapel'];
@@ -1150,13 +1076,10 @@ while($data = mysql_fetch_array($hasil)){
 
 /* NILAI UJIAN */
 if($_GET['aksi']=="nilaiujian"){
-$admin.='<section class="panel">
-                          <header class="panel-heading">
-                              Nilai Ujian
-                          </header>';
+$admin .='<div class="panel-heading"><b>Nilai Ujian</b></div>';
 $admin .= '
 <form method="post" action=""class="form-inline">
-<table class="table table-hover">
+<table cellspacing="0" cellpadding="0"class="table table-striped table-hover">
 	<tr>
 		<td>Mata Pelajaran</td>
 		<td>:</td>
@@ -1198,7 +1121,7 @@ $namamapel = getmapel($idmapel);
 $hasil = $koneksi_db->sql_query( "SELECT * FROM `kelas_isi`where kelas ='$kelasid'" );
 $admin.='<div class="panel-heading"><b>Daftar Siswa Kelas '.$kelas.'</b></div>';
 $admin .="
-<form method='post' action='excellnilaiujian.php'><table class='table table-hover'>";
+<form method='post' action='excellnilaiujian.php'><table class='table table-striped table-hover'>";
   $admin .= "    <tr>
     <td width='30%' valign='top'>Kelas </td>
     <td width='1%' valign='top'>:</td>
@@ -1219,7 +1142,7 @@ $admin .="
   </tr>";
 $admin .="</table></form>";
 $admin.='
-<table id="example" class="table table-hover">
+<table id="example" class="table table-striped table-hover">
 <thead><tr>
     <td align="left" width="100px"><b>No.Induk</b></td>
     <td align="left"><b>Nama</b></td>
@@ -1241,10 +1164,6 @@ $admin.='</table>';
 if(isset($_POST['lihathistorynilai'])){
 $idmapel     		= $_POST['idmapel'];
 $namamapel = getmapel($idmapel);
-$admin.='<section class="panel">
-                          <header class="panel-heading">
-                              History Nilai
-                          </header>';
 $admin .="<table class='table table-striped table-hover'>";
    $admin .= "<tr>
     <td width='30%' valign='top'>Mata Pelajaran </td>
@@ -1252,7 +1171,7 @@ $admin .="<table class='table table-striped table-hover'>";
     <td width='69%' valign='top'>$namamapel</td>
   </tr>"; 
 $admin .="</table>";
-$hasil = $koneksi_db->sql_query( "SELECT * FROM ujiannilai where mapel = '$idmapel'   order by id desc" );
+$hasil = $koneksi_db->sql_query( "SELECT * FROM ujiannilai where mapel = '$idmapel' and user='$user'  order by id desc" );
 $admin .= '<table id="example" class="table table-striped table-hover">
 <thead><tr>
 <th>No</th>
@@ -1263,7 +1182,7 @@ $admin .= '<table id="example" class="table table-striped table-hover">
 $no = 1;
 while ($data = $koneksi_db->sql_fetchrow($hasil)) {
 $tgl     = $data['tgl'];  
-$nilai     = $data['nilai']; 
+$nilai     = $data['nilai'];  
 $nama     = getnamaguru($data['user']);  
 $admin .='<tr>
 <td><b>'.$no.'</b></td>

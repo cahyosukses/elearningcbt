@@ -477,8 +477,7 @@ $admin .= '
 }
 
 
-
-$admin .='</div>';
+$admin.='</section>';
 }
 echo $admin;
 ?>

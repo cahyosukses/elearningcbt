@@ -42,7 +42,7 @@ $menuadmin.='<ul class="sub">';
 while ($data2 = $koneksi_db->sql_fetchrow($hasil2)) {
 $mod = $data2['mod'] == 1 ? '&amp;mod=yes' : '';
 $adminmenu2 = $data2['mod'] == 1 ? $adminfile.".php?pilih=".$data2['url'].$mod : $adminfile.'.php?pilih='.basename($data2['url'],'.php');
-$menuadmin.='<li><a href="'.$adminmenu2.'">'.$data2['menu'].'</a></li>';              
+$menuadmin.='<li><a href="'.$data2['url'].'">'.$data2['menu'].'</a></li>';              
 }	
 $menuadmin.='</ul>';
 $menuadmin.='</li>';
@@ -62,7 +62,7 @@ $hasil2 = $koneksi_db->sql_query( "SELECT * FROM menu_users where parent = '$idm
 $menuadmin.='<ul class="sub">';
 while ($data2 = $koneksi_db->sql_fetchrow($hasil2)) {
 $adminmenu2 = $data2['mod'] == 1 ? $adminfile.".php?pilih=".$data2['url'].$mod : $adminfile.'.php?pilih='.basename($data2['url'],'.php');
-$menuadmin.='<li><a href="'.$adminmenu2.'">'.$data2['menu'].'</a></li>';              
+$menuadmin.='<li><a href="'.$data2['url'].'">'.$data2['menu'].'</a></li>';              
 }	
 $menuadmin.='</ul>';
 $menuadmin.='</li>';
