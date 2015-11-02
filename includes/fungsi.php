@@ -1668,4 +1668,10 @@ $data  = mysql_fetch_array($hasil);
 $mapel = $data['mapel'];
 return $mapel;
 }
+function removep($text){
+$text=str_ireplace('<p>','',$text);
+$text=str_ireplace('</p>','',$text); 
+return	$text;
+	
+}
 ?>

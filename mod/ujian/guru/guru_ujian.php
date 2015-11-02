@@ -500,7 +500,7 @@ $admin .= '
 /******************************/
 if(isset($_POST['submit'])){
 $namafile_name 	= $_FILES['gambar']['name'];
-	$konten 		= addslashes($_POST['konten']);
+	$konten 		= removep(addslashes($_POST['konten']));
 	$idujian 		= $_POST['idujian'];	
 	$kunci 		= $_POST['kunci'];	
 	$error 	= '';
@@ -508,7 +508,7 @@ $namafile_name 	= $_FILES['gambar']['name'];
 	$ppil ='';
 			for($i=1;$i<=$tot;$i++)
 			{
-				$pilihan = $_POST['pilihan'.$i] ;
+				$pilihan = removep($_POST['pilihan'.$i]) ;
 				if($pilihan <> "")
 				{
 					$ppil .= $pilihan . "#";
@@ -577,9 +577,15 @@ $admin.="
 		<td>";
 		$no=1;
 for ($i = 0; $i < $jml_jawaban; $i++) {
+/*
 $admin .="
     <div class='input-group'>
       <div class='input-group-addon'>$jawaban[$i].</div><input type='text' name='pilihan$no' class='form-control'required /></div>";
+	  */
+$admin .="
+    <div class='input-group'>
+      <div class='input-group-addon'>$jawaban[$i].</div>	  
+	  <textarea name='pilihan$no' id='textareas$no'>$pilihan$no</textarea></div>";
 $no++;
 }
 $admin .="
@@ -640,7 +646,7 @@ $admin .= '
 /******************************/
 /******************************/
 if(isset($_POST['submit'])){
-	$konten 		= addslashes($_POST['konten']);
+	$konten 		= removep(addslashes($_POST['konten']));
 	$idujian 		= $_POST['idujian'];
 	$idsoal 		= $_POST['idsoal'];	
 	$kunci 		= $_POST['kunci'];	
@@ -651,7 +657,7 @@ $namafile_name 	= $_FILES['gambar']['name'];
 	$ppil ='';
 			for($i=1;$i<=$tot;$i++)
 			{
-				$pilihan = $_POST['pilihan'.$i] ;
+				$pilihan = removep($_POST['pilihan'.$i]) ;
 				if($pilihan <> "")
 				{
 					$ppil .= $pilihan . "#";
@@ -732,9 +738,16 @@ $admin.="
 		<td>";
 		$no=1;
 for ($i = 0; $i < $jml_jawaban; $i++) {
+	
+	/*
 $admin .="
     <div class='input-group'>
       <div class='input-group-addon'>$jawaban[$i].</div><input type='text' name='pilihan$no' class='form-control'required value='$pilihansoal[$i]' /></div>";
+	  */
+	  $admin .="
+    <div class='input-group'>
+      <div class='input-group-addon'>$jawaban[$i].</div>	  
+	  <textarea name='pilihan$no' id='textareas$no'>$pilihansoal[$no]</textarea></div>";
 $no++;
 }
 $admin .="

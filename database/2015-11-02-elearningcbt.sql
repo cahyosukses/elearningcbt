@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 02 Nov 2015 pada 12.59
+-- Generation Time: 02 Nov 2015 pada 13.30
 -- Versi Server: 5.6.16
 -- PHP Version: 5.5.11
 
@@ -19,6 +19,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `elearningcbt`
 --
+CREATE DATABASE IF NOT EXISTS `elearningcbt` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `elearningcbt`;
 
 -- --------------------------------------------------------
 
@@ -833,7 +835,14 @@ CREATE TABLE IF NOT EXISTS `soal` (
   `kunci` enum('a','b','c','d','e') NOT NULL,
   `files` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
+
+--
+-- Dumping data untuk tabel `soal`
+--
+
+INSERT INTO `soal` (`id`, `ujian`, `soal`, `pilihan`, `kunci`, `files`) VALUES
+(8, 37, '<span>Diketahuireaksi : CaCO<sub>3</sub> (s)+ 2HCl (aq) &rarr;CaCl<sub>2</sub> (aq)+ H<sub>2</sub>O (l)+ CO<sub>2</sub> (g)</span>\r\n<span>Jika 5 gram batu</span><span>kapur</span><span>direaksikan</span><span>dengan</span><span>asam</span><span>klorida</span><span>encer, maka</span><span>pada</span><span>keadaan</span>R<span>TP akandiperoleh</span>gas CO<sub>2</sub><span>sebanyak &hellip; (Ar : Ca = 40 , Cl = 35,5 , O = 16 , C = 12 dan H = 1) </span>', '<span>1,</span>20<span> dm<sup>3</sup></span>#2,40&nbsp;dm<sup>3</sup>#4,80&nbsp;dm<sup>3</sup>#6,00 dm<sup>3</sup>#12,0&nbsp;dm<sup>3</sup>', 'a', '');
 
 -- --------------------------------------------------------
 
