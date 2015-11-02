@@ -1674,4 +1674,18 @@ $text=str_ireplace('</p>','',$text);
 return	$text;
 	
 }
+function getpetunjuk(){
+$query = "SELECT petunjuk FROM ujiansetting limit 1";
+$hasil = mysql_query($query);
+$data  = mysql_fetch_array($hasil);
+$petunjuk = $data['petunjuk'];
+return $petunjuk;
+}
+function getwaktu(){
+$query = "SELECT waktu FROM ujiansetting limit 1";
+$hasil = mysql_query($query);
+$data  = mysql_fetch_array($hasil);
+$waktu = $data['waktu'];
+return $waktu;
+}
 ?>

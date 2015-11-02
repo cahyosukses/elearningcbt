@@ -87,7 +87,8 @@ $admin .='<div class="panel panel-info">';
 $user =  $_SESSION['UserName'];
 $levelakses=$_SESSION['LevelAkses'];
 $mapel=getmapeluser($_SESSION['UserName']);
-
+$petunjuk=getpetunjuk();
+$waktu=getwaktu();
 if($_GET['aksi']==""){
 if($_SESSION['LevelAkses']=='Guru'){
 $hasil = $koneksi_db->sql_query( "SELECT * FROM mapel where id='$mapel'  order by mapel asc" );
@@ -539,6 +540,7 @@ if ($koneksi_db->sql_numrows($koneksi_db->sql_query("SELECT soal FROM soal WHERE
 		$hasil  = mysql_query( "INSERT INTO `soal` VALUES ('','$idujian','$konten','$ppil','$kunci','')" );
 		if($hasil){
 			$admin .= "<div class='sukses'><b>Soal Berhasil di Buat.</b></div>";
+			unset($konten);
 	//		header("location:?pilih=ujian&mod=yes&aksi=addsoal&idujian=$idujian&id=$idkursus");
 		}else{
 			$admin .= '<div class="error"><b>Soal Gagal di Buat.</b></div>';
@@ -585,7 +587,7 @@ $admin .="
 $admin .="
     <div class='input-group'>
       <div class='input-group-addon'>$jawaban[$i].</div>	  
-	  <textarea name='pilihan$no' id='textareas$no'>$pilihan$no</textarea></div>";
+	  <textarea name='pilihan$no' id='textareas$no'></textarea></div>";
 $no++;
 }
 $admin .="
@@ -747,7 +749,7 @@ $admin .="
 	  $admin .="
     <div class='input-group'>
       <div class='input-group-addon'>$jawaban[$i].</div>	  
-	  <textarea name='pilihan$no' id='textareas$no'>$pilihansoal[$no]</textarea></div>";
+	  <textarea name='pilihan$no' id='textareas$no'>$pilihansoal[$i]</textarea></div>";
 $no++;
 }
 $admin .="
@@ -932,7 +934,7 @@ $status =$data2['status'];
 $pointbenar =$data2['pointbenar'];
 $pointsalah =$data2['pointsalah'];
 $pointkosong =$data2['pointkosong'];
-$petunjuk =$data2['petunjuk'];
+
 if($petunjuk){
 $petunjukumum = "
 <tr><td colspan='6'>
@@ -966,7 +968,6 @@ $admin .= '
 		<td></td>
 		<td></td>
 		<td>';
-$admin .= '<a href="./downloaddoc.php?idujian='.$idujian.'&amp;id='.$idmapel.'"><span class="btn btn-primary">Download DOC</span></a>';
 $admin .= '</td>
 	</tr>
 	'.$petunjukumum.'

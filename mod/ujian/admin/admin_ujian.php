@@ -80,6 +80,7 @@ $script_include[] = $JS_SCRIPT;
 					<ol class="breadcrumb">
 					<li><i class="fa fa-home"></i><a href="?pilih=ujian&mod=yes">Home</a></li>
 					<li><i class="fa fa-home"></i><a href="admin.php?pilih=ujian&mod=yes&aksi=nilaiujian">Lihat Nilai</a></li>
+					<li><i class="fa fa-home"></i><a href="admin.php?pilih=ujian&mod=yes&aksi=setting">Setting</a></li>
 					</ol>
 				</div>
 			</div>';
@@ -87,7 +88,8 @@ $admin .='<div class="panel panel-info">';
 $user =  $_SESSION['UserName'];
 $levelakses=$_SESSION['LevelAkses'];
 $mapel=getmapeluser($_SESSION['UserName']);
-
+$petunjuk=getpetunjuk();
+$waktu=getwaktu();
 if($_GET['aksi']==""){
 if($_SESSION['LevelAkses']=='Guru'){
 $hasil = $koneksi_db->sql_query( "SELECT * FROM mapel where id='$mapel'  order by mapel asc" );
@@ -539,6 +541,7 @@ if ($koneksi_db->sql_numrows($koneksi_db->sql_query("SELECT soal FROM soal WHERE
 		$hasil  = mysql_query( "INSERT INTO `soal` VALUES ('','$idujian','$konten','$ppil','$kunci','')" );
 		if($hasil){
 			$admin .= "<div class='sukses'><b>Soal Berhasil di Buat.</b></div>";
+			unset($konten);
 	//		header("location:?pilih=ujian&mod=yes&aksi=addsoal&idujian=$idujian&id=$idkursus");
 		}else{
 			$admin .= '<div class="error"><b>Soal Gagal di Buat.</b></div>';
@@ -585,7 +588,7 @@ $admin .="
 $admin .="
     <div class='input-group'>
       <div class='input-group-addon'>$jawaban[$i].</div>	  
-	  <textarea name='pilihan$no' id='textareas$no'>$pilihan$no</textarea></div>";
+	  <textarea name='pilihan$no' id='textareas$no'></textarea></div>";
 $no++;
 }
 $admin .="
@@ -932,7 +935,6 @@ $status =$data2['status'];
 $pointbenar =$data2['pointbenar'];
 $pointsalah =$data2['pointsalah'];
 $pointkosong =$data2['pointkosong'];
-$petunjuk =$data2['petunjuk'];
 if($petunjuk){
 $petunjukumum = "
 <tr><td colspan='6'>
@@ -966,7 +968,6 @@ $admin .= '
 		<td></td>
 		<td></td>
 		<td>';
-$admin .= '<a href="./downloaddoc.php?idujian='.$idujian.'&amp;id='.$idmapel.'"><span class="btn btn-primary">Download DOC</span></a>';
 $admin .= '</td>
 	</tr>
 	'.$petunjukumum.'
@@ -1241,6 +1242,58 @@ $admin .= '</tbody></table>';
 }
 
 }
+
+if($_GET['aksi'] == 'setting'){
+$admin .='<div class="panel-heading"><b>Setting Ujian</b></div>';
+
+if(isset($_POST['submit'])){
+$petunjuk     		= addslashes($_POST['petunjuk']);
+$waktu     		= $_POST['waktu'];
+$error 	= '';
+if ($error){
+$admin .= '<div class="error">'.$error.'</div>';
+}else{
+$hasil  = mysql_query( "update `ujiansetting` set petunjuk = '$petunjuk',waktu = '$waktu'" );
+if($hasil){
+$admin .= "<div class='sukses'><b>Berhasil di Update.</b></div>";
+header("location:?pilih=ujian&mod=yes&aksi=setting");
+
+}else{
+$admin .= '<div class="error"><b> Gagal di Update.</b></div>';
+header("location:?pilih=ujian&mod=yes&aksi=setting");
+}
+}
+
+}
+/*************************************************/
+$hasil =  $koneksi_db->sql_query( "SELECT * FROM ujiansetting limit 1" );
+$data = $koneksi_db->sql_fetchrow($hasil);
+$petunjuk=$data['petunjuk'];
+$waktu=$data['waktu'];
+
+$admin .= '
+<form method="post" action="" class="form-inline" id="posts">
+<table class="table table-striped table-hover">';
+$admin.="
+	<tr>
+		<td>Petunjuk</td>
+		<td></td>
+		<td><textarea name='petunjuk' id='textareal1'>$petunjuk</textarea></td>
+	</tr>";
+$admin.='<tr>
+		<td>Waktu</td>
+		<td>:</td>
+		<td><input type="text" name="waktu" value="'.$waktu.'" size="30" class="form-control"></td></tr>';
+$admin.='<tr>
+		<td></td>
+		<td></td>
+		<td><input type="submit" value="Simpan" name="submit"class="btn btn-success" ></td></tr>';
+
+		$admin.='
+</table>
+</form>';	
+}
+
 
 $admin .='</div>';
 }

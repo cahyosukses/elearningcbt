@@ -47,9 +47,9 @@ $menuadmin.='<li><a href="'.$data2['url'].'">'.$data2['menu'].'</a></li>';
 $menuadmin.='</ul>';
 $menuadmin.='</li>';
 }
-}elseif (isset( $_SESSION['LevelAkses'] ) &&  $_SESSION['LevelAkses']=="User"){
+}else{
 /*******************************************/
-$hasil = $koneksi_db->sql_query( "SELECT * FROM `menu_users` where parent = 0 ORDER BY ordering ASC" );
+$hasil = $koneksi_db->sql_query( "SELECT * FROM `menu_siswa` where parent = 0 ORDER BY ordering ASC" );
 while ($data = $koneksi_db->sql_fetchrow($hasil)) {
 $idmaster = $data['id'];
 $menuadmin.='<li class="sub-menu">
@@ -58,7 +58,7 @@ $menuadmin.='<li class="sub-menu">
                           <span>'.$data['menu'].'</span>
 							<span class="menu-arrow arrow_carrot-right"></span>
                       </a>';
-$hasil2 = $koneksi_db->sql_query( "SELECT * FROM menu_users where parent = '$idmaster' ORDER BY ordering ASC" );
+$hasil2 = $koneksi_db->sql_query( "SELECT * FROM menu_siswa where parent = '$idmaster' ORDER BY ordering ASC" );
 $menuadmin.='<ul class="sub">';
 while ($data2 = $koneksi_db->sql_fetchrow($hasil2)) {
 $adminmenu2 = $data2['mod'] == 1 ? $adminfile.".php?pilih=".$data2['url'].$mod : $adminfile.'.php?pilih='.basename($data2['url'],'.php');
