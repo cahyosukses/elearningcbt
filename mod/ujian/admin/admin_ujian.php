@@ -87,8 +87,13 @@ $admin .='<div class="panel panel-info">';
 $user =  $_SESSION['UserName'];
 $levelakses=$_SESSION['LevelAkses'];
 $mapel=getmapeluser($_SESSION['UserName']);
+
 if($_GET['aksi']==""){
+if($_SESSION['LevelAkses']=='Guru'){
 $hasil = $koneksi_db->sql_query( "SELECT * FROM mapel where id='$mapel'  order by mapel asc" );
+}else{
+$hasil = $koneksi_db->sql_query( "SELECT * FROM mapel   order by mapel asc" );	
+}
 $admin .='<div class="panel-heading"><b>Daftar Mapel</b></div>';
 $admin .= '<table id="example" class="table table-striped table-hover">
 <thead><tr>
@@ -122,7 +127,8 @@ $admin .= '</tbody></table>';
 if($_GET['aksi']== 'del'){    
 	global $koneksi_db;    
 	$id     = int_filter($_GET['id']);  
-	$idkursus     = int_filter($_GET['idkursus']);   	
+	$idkursus     = int_filter($_GET['idkursus']);   
+	$idmapel     = int_filter($_GET['idmapel']);   	
 	$hasil = $koneksi_db->sql_query( "SELECT * FROM soal WHERE ujian='$idkursus'" );
 	while($data = mysql_fetch_array($hasil)){
     $namagambar =  $data['files'];
@@ -133,7 +139,7 @@ if($_GET['aksi']== 'del'){
 		$hasil = $koneksi_db->sql_query("DELETE FROM `soal` WHERE `ujian`='$id'");  
 	if($hasil){    
 		$admin.='<div class="sukses">Ujian berhasil dihapus! .</div>';    
-		$style_include[] ='<meta http-equiv="refresh" content="1; url=admin.php?pilih=ujian&mod=yes&aksi=listujian&id='.$idkursus.'" />';    
+		$style_include[] ='<meta http-equiv="refresh" content="1; url=admin.php?pilih=ujian&mod=yes&aksi=listujian&id='.$idmapel.'" />';    
 	}
 }
 
@@ -275,10 +281,33 @@ $admin.='
 	</tr>
 	
 	';
+if($levelakses=='Administrator'){
+$admin.='
+		<tr>
+		<td>Tipe Ujian</td>
+		<td>:</td>
+		<td>'.$sel.'</td>
+	</tr>
+		<tr>
+		<td>Status</td>
+		<td>:</td>
+		<td>'.$sel2.'</td>
+	</tr>';
+		
+}
 $admin.='	<tr>
 		<td></td>
 		<td></td>
 		<td>';
+if($levelakses=='Administrator'){
+$admin .= "
+<input type='hidden' name='idmapel' value='$idmapel'>
+<input type='hidden' name='pointsalah' value='0'>
+<input type='hidden' name='pointkosong' value='0'>
+<input type='hidden' name='tipe' value='random'>
+<input type='hidden' name='petunjuk' value='$petunjuk'>
+";		
+}else{
 $admin .= "
 <input type='hidden' name='idmapel' value='$idmapel'>
 <input type='hidden' name='pointsalah' value='0'>
@@ -288,6 +317,7 @@ $admin .= "
 <input type='hidden' name='petunjuk' value='$petunjuk'>
 <input type='hidden' name='status' value='$status'>
 ";
+}
 $admin .= '
 		<input type="submit" value="Simpan" name="submit"class="btn btn-success" >&nbsp;';
 $admin.="<a href='?pilih=ujian&mod=yes&aksi=listujian&id=$idmapel'><span class='btn btn-primary'>BACK</span></a>";		
@@ -814,10 +844,11 @@ $admin .='<tr>
 <td>'.$tipe.'/'.$status.'</td>
 <td>'.getnamaguru($userujian).'</td>
 ';
-if($_SESSION['UserName']==$userujian){
+if(($_SESSION['UserName']==$userujian)){
 $editujian ='<a href="?pilih=ujian&amp;mod=yes&amp;aksi=del&amp;id='.$data['id'].'&amp;idmapel='.$idmapel.'" onclick="return confirm(\'Soal pada ujian tersebut akan ikut terhapus,Apakah Anda Yakin Ingin Menghapus Data Ini ?\')"><span class="btn btn-danger">Del</span></a>&nbsp;<a href="?pilih=ujian&amp;mod=yes&amp;aksi=edit&amp;id='.$data['id'].'&amp;idmapel='.$idmapel.'" onclick="return confirm(\'Edit Ujian hanya mengedit Tipe Soal Urut/Random dan Status Ujian, Apakah ingin melanjutkan ?\')"><span class="btn btn-warning">Edit</span></a>&nbsp;<a href="?pilih=ujian&amp;mod=yes&amp;aksi=addsoal&amp;idujian='.$data['id'].'&amp;id='.$idmapel.'"><span class="btn btn-success">Soal</span></a>';	
-}else{
-$editujian ='';	
+}elseif($_SESSION['LevelAkses']=='Administrator'){
+$editujian ='<a href="?pilih=ujian&amp;mod=yes&amp;aksi=del&amp;id='.$data['id'].'&amp;idmapel='.$idmapel.'" onclick="return confirm(\'Soal pada ujian tersebut akan ikut terhapus,Apakah Anda Yakin Ingin Menghapus Data Ini ?\')"><span class="btn btn-danger">Del</span></a>&nbsp;<a href="?pilih=ujian&amp;mod=yes&amp;aksi=edit&amp;id='.$data['id'].'&amp;idmapel='.$idmapel.'" onclick="return confirm(\'Edit Ujian hanya mengedit Tipe Soal Urut/Random dan Status Ujian, Apakah ingin melanjutkan ?\')"><span class="btn btn-warning">Edit</span></a>&nbsp;<a href="?pilih=ujian&amp;mod=yes&amp;aksi=addsoal&amp;idujian='.$data['id'].'&amp;id='.$idmapel.'"><span class="btn btn-success">Soal</span></a>';	
+
 }
 if(getjumlahsoal($idujian)==$jumlahsoal){
 $test = '<a href="?pilih=ujian&amp;mod=yes&amp;aksi=testujian&amp;idujian='.$data['id'].'&amp;id='.$idmapel.'"><span class="btn btn-primary">Test</span></a>';
