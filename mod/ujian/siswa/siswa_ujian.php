@@ -151,7 +151,7 @@ $jumlahsoal=$data['jumlahsoal'];
 $tipe=$data['tipe'];
 $status=$data['status'];
 $tipeujian=$data['tipeujian'];
-$test = '<a href="?pilih=ujian&amp;mod=yes&amp;aksi=testujian&amp;idujian='.$idujian.'&amp;id='.$idmapel.'"><span class="btn btn-success">Mulai Ujian</span></a>';
+$test = '<a href="?pilih=ujian&amp;mod=yes&amp;aksi=testujian&amp;idujian='.$idujian.'&amp;id='.$idmapel.'"><span class="btn btn-success">Mulai</span></a>';
 $kembali ="<a href='?pilih=ujian&mod=yes'><span class='btn btn-primary'>KEMBALI</span></a>";
 $admin .= '<tr>
 		<td></td>
@@ -337,7 +337,7 @@ $admin .="
 $admin .="
 <input type='hidden' name='tipeujian' value='$tipeujian' />";
 $admin .="<a href='?pilih=ujian&mod=yes&aksi=listujian&id=$idmapel'><span class='btn btn-primary'>BACK</span></a>&nbsp;";
-$admin .='<input type="submit"class="btn btn-success" value="Submit" name="submit" onclick="return confirm(\'Apakah Anda Yakin Ingin Mengakhiri Ujian Ini ?\')">';
+$admin .='<input type="submit"class="btn btn-success" value="Selesai" name="submit" onclick="return confirm(\'Apakah Anda Yakin Ingin Mengakhiri Ujian Ini ?\')">';
 $admin.="</div>";
 $admin.="<br></form>";
 

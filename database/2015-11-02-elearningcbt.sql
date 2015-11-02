@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Inang: 127.0.0.1
--- Waktu pembuatan: 02 Nov 2015 pada 13.04
+-- Waktu pembuatan: 02 Nov 2015 pada 23.31
 -- Versi Server: 5.5.27
 -- Versi PHP: 5.4.7
 
@@ -1042,7 +1042,7 @@ INSERT INTO `ujiannilai` (`id`, `tgl`, `mapel`, `user`, `nilai`) VALUES
 DROP TABLE IF EXISTS `ujiansetting`;
 CREATE TABLE IF NOT EXISTS `ujiansetting` (
   `id` int(5) NOT NULL AUTO_INCREMENT,
-  `petunjuk` varchar(255) NOT NULL,
+  `petunjuk` text NOT NULL,
   `waktu` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
@@ -1052,7 +1052,7 @@ CREATE TABLE IF NOT EXISTS `ujiansetting` (
 --
 
 INSERT INTO `ujiansetting` (`id`, `petunjuk`, `waktu`) VALUES
-(1, 'pettunjuk A', '360');
+(1, '<p>- Waktu akan berjalan setelah peserta mengklik tombol Mulai<br />- Peserta Mengklik langsung Soal kemudian menjawab langsung dengan memilih pilihan jawaban yang terdapat pada Soal<br />- Apabila peserta melakukan refresh / menekan F5 maka semua jawaban akan hilang tetapi waktu masih tetap berjalan.<br />- Peserta masih dapat mengerjakan Soal yang sebelumnya telah terbuka dengan mengklik Soal yang dikehendaki.<br />- Peserta dinyatakan selesai mengerjakan soal apabila telah mengklik tombol Selesai atau otomatis selesai ketika Waktu/Timer telah habis.<br />- Selamat Mengerjakan</p>', '360');
 
 -- --------------------------------------------------------
 

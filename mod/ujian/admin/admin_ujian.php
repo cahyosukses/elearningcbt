@@ -71,6 +71,7 @@ jQuery(function(){
 });
 </script>
 js;
+
 $script_include[] = $JS_SCRIPT;
 
     $temp 	= 'mod/ujian/download/';
@@ -818,6 +819,14 @@ $hasil =  $koneksi_db->sql_query( "SELECT * FROM mapel where id='$id' " );
 $data = $koneksi_db->sql_fetchrow($hasil);
 $idmapel=$data['id'];
 $mapel =$data['mapel'];
+if($petunjuk){
+$petunjukumum = "
+<tr><td colspan='6'>
+<B>Petunjuk Umum :</b>
+<br>$petunjuk
+</td></tr>
+";
+}
 $admin .= '
 <table cellspacing="0" cellpadding="0"class="table table-striped table-hover">
 	<tr>
@@ -828,6 +837,7 @@ $admin .= '
 		<td></td>
 		<td></td>
 	</tr>';
+$admin .="$petunjukumum";
 $admin.='</table>';
 
 /************************************/
@@ -867,7 +877,7 @@ $editujian ='<a href="?pilih=ujian&amp;mod=yes&amp;aksi=del&amp;id='.$data['id']
 
 }
 if(getjumlahsoal($idujian)==$jumlahsoal){
-$test = '<a href="?pilih=ujian&amp;mod=yes&amp;aksi=testujian&amp;idujian='.$data['id'].'&amp;id='.$idmapel.'"><span class="btn btn-primary">Test</span></a>';
+$test = '<a href="?pilih=ujian&amp;mod=yes&amp;aksi=testujian&amp;idujian='.$data['id'].'&amp;id='.$idmapel.'"><span class="btn btn-primary">Mulai</span></a>';
 //$test = '<a href="?pilih=ujiantest&amp;mod=yes&amp;idujian='.$data['id'].'&amp;id='.$idkursus.'"><span class="btn btn-primary">Test</span></a>';
 }else{
 $test = '';
@@ -1048,9 +1058,10 @@ $admin .="
 $admin .="
 <input type='hidden' name='tipeujian' value='$tipeujian' />";
 $admin .="<a href='?pilih=ujian&mod=yes&aksi=listujian&id=$idmapel'><span class='btn btn-primary'>BACK</span></a>&nbsp;";
-$admin .='<input type="submit"class="btn btn-success" value="Submit" name="submit" onclick="return confirm(\'Apakah Anda Yakin Ingin Mengakhiri Ujian Ini ?\')">';
+$admin .='<input type="submit"class="btn btn-success" value="Selesai" name="submit" onclick="return confirm(\'Apakah Anda Yakin Ingin Mengakhiri Ujian Ini ?\')">';
 $admin.="</div>";
 $admin.="<br></form>";
+/*******************************/
 
 }
 

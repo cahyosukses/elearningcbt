@@ -4966,13 +4966,9 @@ display: inline-block;
   text-align: center;
   white-space: nowrap;
   vertical-align: middle;
-  -ms-touch-action: manipulation;
-      touch-action: manipulation;
+
   cursor: pointer;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+
   background: #428BCA;
   border: 1px solid transparent;
   border-radius: 4px;
@@ -4982,11 +4978,11 @@ display: inline-block;
 .btnsoal.focus {
   color: white;
   text-decoration: none;
-  background:black;
-}
-.btnsoal:active {
-  color: white;
-  text-decoration: none;
   background:red;
 }
-
+.btnsoal:active {
+    background: yellow;
+}
+.btnsoal:visited {
+    background: yellow;
+}
