@@ -1647,6 +1647,13 @@ $data=mysql_fetch_array($hasil);
 $nilai .= $data["nilai"];
 return $nilai;
 }
+function gettanggalujian ($idmapel,$user){
+$query = "SELECT * FROM ujiannilai WHERE mapel = '$idmapel' and user='$user' order by id desc";
+$hasil = mysql_query($query);
+$data=mysql_fetch_array($hasil);
+$tgl .= $data["tgl"];
+return $tgl;
+}
 function getnamaujian ($idujian){
 $query = "SELECT * FROM ujian WHERE id = '$idujian'";
 $hasil = mysql_query($query);
@@ -1688,4 +1695,9 @@ $data  = mysql_fetch_array($hasil);
 $waktu = $data['waktu'];
 return $waktu;
 }
+function konversi_detik($detik) {
+$dtk= $detik %60;
+$mnt= floor(($detik %3600) /60);
+$jam= floor(($detik %86400) /3600);
+return $jam.' Jam, '.$mnt.' Menit, '.$dtk.' Detik'; }
 ?>

@@ -71,6 +71,17 @@ jQuery(function(){
 });
 </script>
 js;
+$waktu=getwaktu();
+$style_include[] = '<link rel="stylesheet" media="screen" href="includes/countdown/jquery.countdown.css" />';
+$JS_SCRIPT .= <<<js
+<script src="includes/countdown/jquery.plugin.js"></script>
+<script src="includes/countdown/jquery.countdown.js"></script>
+<script>
+$(function () {
+	$('#defaultCountdown').countdown({until: +$waktu});
+});
+</script>
+js;
 $script_include[] = $JS_SCRIPT;
 
     $temp 	= 'mod/ujian/download/';
@@ -231,6 +242,7 @@ $petunjukumum = "
 </td></tr>
 ";
 }
+$timercountdown = '<tr><td colspan="6"><div id="defaultCountdown"></div></td></tr>';
 $admin .= '
 <table cellspacing="0" cellpadding="0"class="table table-striped table-hover">
 	<tr>
@@ -253,13 +265,11 @@ $admin .= '
 		<td>Nilai Sebelumnya</td>
 		<td>:</td>
 		<td>'.getnilaiujian($idmapel,$user).'</td>
-		<td></td>
-		<td></td>
-		<td>';
+		<td>Waktu</td>
+		<td>:</td>
+		<td>'.konversi_detik($waktu).'</td>';
 //$admin .= '<a href="./downloaddoc.php?idujian='.$idujian.'&amp;id='.$idmapel.'"><span class="btn btn-primary">Download DOC</span></a>';
-$admin .= '</td>
-	</tr>
-	'.$petunjukumum.'
+$admin .= '	'.$petunjukumum.''.$timercountdown.'
 </table>';
 $tipejawaban = getjumlahjawaban($idujian);
 $jawaban = explode(",", $tipejawaban);

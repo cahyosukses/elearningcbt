@@ -99,16 +99,16 @@ $admin .='<div class="panel panel-info">
 <div class="panel-heading"><b>Edit Profil</b></div>';
 if (isset($_POST["submit"])) {
 $nama = $_POST['nama'];
-$email	      = text_filter($_POST['email']);
-$statusemail = $_POST['statusemail'];
-$statustelp = $_POST['statustelp'];
-$telp = $_POST['telp'];
-$mapel = $_POST['mapel'];
+//$email	      = text_filter($_POST['email']);
+//$statusemail = $_POST['statusemail'];
+//$statustelp = $_POST['statustelp'];
+//$telp = $_POST['telp'];
+//$mapel = $_POST['mapel'];
 if (!is_valid_email($email)) $error .= "Error, E-Mail address invalid!<br />";
 if ($error) {
 $admin.='<div class="error">'.$error.'</div>';
 } else {
-$up = mysql_query ("UPDATE `useraura` SET `nama`='$nama',`email`='$email',`statusemail`='$statusemail',`statustelp`='$statustelp',`telp`='$telp' WHERE `user`='$user'");	
+$up = mysql_query ("UPDATE `useraura` SET `nama`='$nama' WHERE `user`='$user'");	
 $admin.='<div class="sukses">Data '.$user.'  Berhasil Diupdate</div>';	
 }
 }
@@ -187,25 +187,8 @@ $sel4 .= '</select>';
 $admin .= "<tr>
     <td width='30%' valign='top'>Level </td>
     <td width='1%' valign='top'>:</td>
-    <td width='69%' valign='top'>$sel</td>
+    <td width='69%' valign='top'>$level</td>
   </tr>";
-
-$admin .= "<tr>
-    <td width='30%' valign='top'>Status</td>
-    <td width='1%' valign='top'>:</td>
-    <td width='69%' valign='top'>$sel2</td>
-  </tr>";  
-  $admin .= "    <tr>
-    <td width='30%' valign='top'>Email </td>
-    <td width='1%' valign='top'>:</td>
-    <td width='69%' valign='top'>$sel3&nbsp;<input type='text' name='email' size='20' class='form-control'value='$email'/></td>
-  </tr>";
-  
-  $admin .= "    <tr>
-    <td width='30%' valign='top'>Telepon </td>
-    <td width='1%' valign='top'>:</td>
-    <td width='69%' valign='top'>$sel4&nbsp;<input type='text' name='telp' size='20'class='form-control'value='$telp' /></td>
-  </tr>";  
   $admin .= "    <tr>
     <td width='30%' valign='top'>Mata Pelajaran </td>
     <td width='1%' valign='top'>:</td>

@@ -10,8 +10,6 @@ if (!cek_login ()){
 $admin .='<p class="judul">Access Denied !!!!!!</p>';
 }else{
 
-$style_include[] = '<link rel="stylesheet" media="screen" href="mod/calendar/css/dynCalendar.css" />';
-
 $JS_SCRIPT = <<<js
 <!-- TinyMCE -->
 <script type="text/javascript" src="js/tinymce/tinymce.min.js"></script>
@@ -71,7 +69,22 @@ jQuery(function(){
 });
 </script>
 js;
+$waktu=getwaktu();
+$style_include[] = '<link rel="stylesheet" media="screen" href="includes/countdown/jquery.countdown.css" />';
+$JS_SCRIPT .= <<<js
+<script src="includes/countdown/jquery.plugin.js"></script>
+<script src="includes/countdown/jquery.countdown.js"></script>
+<script>
+$(function () {
+	$('#defaultCountdown').countdown({until: +$waktu});
+});
+</script>
+js;
 $script_include[] = $JS_SCRIPT;
+$user =  $_SESSION['UserName'];
+$levelakses=$_SESSION['LevelAkses'];
+$mapel=getmapeluser($_SESSION['UserName']);
+$petunjuk=getpetunjuk();
 
     $temp 	= 'mod/ujian/download/';
 	$admin .= '<div class="row">
@@ -79,17 +92,14 @@ $script_include[] = $JS_SCRIPT;
 					<h3 class="page-header"><i class="fa fa-list-alt"></i> Ujian</h3>
 					<ol class="breadcrumb">
 					<li><i class="fa fa-home"></i><a href="?pilih=ujian&mod=yes">Home</a></li>
-					<li><i class="fa fa-home"></i><a href="admin.php?pilih=ujian&mod=yes&aksi=nilaiujian">Lihat Nilai</a></li>
-					<li><i class="fa fa-home"></i><a href="admin.php?pilih=ujian&mod=yes&aksi=setting">Setting</a></li>
-					</ol>
-				</div>
-			</div>';
+					<li><i class="fa fa-home"></i><a href="admin.php?pilih=ujian&mod=yes&aksi=nilaiujian">Lihat Nilai</a></li>';
+if($_SESSION['LevelAkses']=='Administrator'){
+$admin .= '<li><i class="fa fa-home"></i><a href="admin.php?pilih=ujian&mod=yes&aksi=setting">Setting</a></li>';
+}
+$admin .= '</ol></div></div>';
+
 $admin .='<div class="panel panel-info">';
-$user =  $_SESSION['UserName'];
-$levelakses=$_SESSION['LevelAkses'];
-$mapel=getmapeluser($_SESSION['UserName']);
-$petunjuk=getpetunjuk();
-$waktu=getwaktu();
+
 if($_GET['aksi']==""){
 if($_SESSION['LevelAkses']=='Guru'){
 $hasil = $koneksi_db->sql_query( "SELECT * FROM mapel where id='$mapel'  order by mapel asc" );
@@ -952,6 +962,7 @@ $petunjukumum = "
 </td></tr>
 ";
 }
+$timercountdown = '<tr><td colspan="6"><div id="defaultCountdown"></div></td></tr>';
 $admin .= '
 <table cellspacing="0" cellpadding="0"class="table table-striped table-hover">
 	<tr>
@@ -974,12 +985,12 @@ $admin .= '
 		<td>Nilai Sebelumnya</td>
 		<td>:</td>
 		<td>'.getnilaiujian($idujian,$user).'</td>
-		<td></td>
-		<td></td>
-		<td>';
-$admin .= '</td>
-	</tr>
-	'.$petunjukumum.'
+		<td>Waktu</td>
+		<td>:</td>
+		<td>'.konversi_detik($waktu).'</td>
+	</tr>';
+$admin .= '
+	'.$petunjukumum.''.$timercountdown.'
 </table>';
 $tipejawaban = getjumlahjawaban($idujian);
 $jawaban = explode(",", $tipejawaban);
@@ -1060,6 +1071,7 @@ $admin .="<a href='?pilih=ujian&mod=yes&aksi=listujian&id=$idmapel'><span class=
 $admin .='<input type="submit"class="btn btn-success" value="Selesai" name="submit" onclick="return confirm(\'Apakah Anda Yakin Ingin Mengakhiri Ujian Ini ?\')">';
 $admin.="</div>";
 $admin.="<br></form>";
+/*******************************/
 
 }
 
@@ -1200,15 +1212,18 @@ $admin.='
 <thead><tr>
     <td align="left" width="100px"><b>No.Induk</b></td>
     <td align="left"><b>Nama</b></td>
+    <td align="left"><b>Tanggal</b></td>
     <td align="left" width="100px"><b>Nilai</b></td>
   </tr></thead><tbody>';
 while ($data = $koneksi_db->sql_fetchrow($hasil)) {
 $namasiswa = getnamasiswa($data['siswa']);
 $nilaiujian = getnilaiujian ($idmapel,$data['siswa']);
+$tanggalujian = gettanggalujian ($idmapel,$data['siswa']);
 $admin.='
   <tr>
     <td>'.$data['siswa'].'</td>
     <td>'.$namasiswa.'</td>
+    <td>'.$tanggalujian.'</td>
     <td>'.$nilaiujian.'</td>
    </tr>';
 }
@@ -1290,7 +1305,7 @@ $admin.="
 		<td><textarea name='petunjuk' id='textareal1'>$petunjuk</textarea></td>
 	</tr>";
 $admin.='<tr>
-		<td>Waktu</td>
+		<td>Waktu (dalam detik)</td>
 		<td>:</td>
 		<td><input type="text" name="waktu" value="'.$waktu.'" size="30" class="form-control"></td></tr>';
 $admin.='<tr>
