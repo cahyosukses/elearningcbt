@@ -71,17 +71,40 @@ jQuery(function(){
 });
 </script>
 js;
-$waktu=getwaktu();
-$style_include[] = '<link rel="stylesheet" media="screen" href="includes/countdown/jquery.countdown.css" />';
-$JS_SCRIPT .= <<<js
-<script src="includes/countdown/jquery.plugin.js"></script>
-<script src="includes/countdown/jquery.countdown.js"></script>
+if ($_GET['aksi']== 'testujian') {
+date_default_timezone_set('Asia/Jakarta');
+$detik=getwaktu();
+$waktuselesai=tambahwaktu($detik);
+$waktumulai1=time();
+$waktumulai = date("M j, Y H:i:s",$waktumulai1);
+$waktuakhir1 = $waktumulai1+$detik;
+$waktuakhir = date("M j, Y H:i:s",$waktuakhir1);
+if (isset ($_SESSION['waktumulai'])){
+$waktumulai = $_SESSION['waktumulai'];
+}else{
+$_SESSION['waktumulai']= $waktumulai;	
+}	
+if (isset ($_SESSION['waktuakhir'])){
+$waktuakhir = $_SESSION['waktuakhir'];
+}else{
+$_SESSION['waktuakhir']= $waktuakhir;	
+}
+
+$JS_SCRIPT.= <<<js
+<script type="text/javascript" src="includes/countdown2/jquery.countdownTimer.js"></script>
 <script>
-$(function () {
-	$('#defaultCountdown').countdown({until: +$waktu});
-});
+  $(function(){
+    $('#future_date').countdowntimer({
+       dateAndTime : "<?php $_SESSION[waktuakhir] ?>",
+       size : "lg",
+       regexpMatchFormat: "([0-9]{1,2}):([0-9]{1,2}):([0-9]{1,2}):([0-9]{1,2})",
+       regexpReplaceWith: "<div align='center'><div class='btn btn-danger btn-lg'>$2</div>:<div class='btn btn-danger btn-lg'>$3</div>:<div class='btn btn-danger btn-lg'>$4</div></div>"
+    });
+  });
 </script>
 js;
+}
+
 $script_include[] = $JS_SCRIPT;
 
     $temp 	= 'mod/ujian/download/';
@@ -242,7 +265,7 @@ $petunjukumum = "
 </td></tr>
 ";
 }
-$timercountdown = '<tr><td colspan="6"><div id="defaultCountdown"></div></td></tr>';
+$timercountdown = '<tr><td colspan="6"><div id="future_date"></div></td></tr>';
 $admin .= '
 <table cellspacing="0" cellpadding="0"class="table table-striped table-hover">
 	<tr>

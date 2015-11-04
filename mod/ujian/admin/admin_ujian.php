@@ -69,28 +69,79 @@ jQuery(function(){
 });
 </script>
 js;
+if ($_GET['aksi']== 'testujian') {
 date_default_timezone_set('Asia/Jakarta');
 $detik=getwaktu();
 $waktuselesai=tambahwaktu($detik);
 $waktumulai1=time();
-$waktumulai = date("H:i:s",$waktumulai1);
+$waktumulai = date("M j, Y H:i:s",$waktumulai1);
 $waktuakhir1 = $waktumulai1+$detik;
-$waktuakhir = date("H:i:s",$waktuakhir1);
-$style_include[] = '<link rel="stylesheet" media="screen" href="includes/countdown/jquery.countdown.css" />';
-$detik = 360;
-$telah_berlalu = time() - $_SESSION["waktumulai"];
-$JS_SCRIPT .= <<<js
-<script src="includes/countdown/jquery.plugin.js"></script>
-<script src="includes/countdown/jquery.countdown.js"></script>
+$waktuakhir = date("M j, Y H:i:s",$waktuakhir1);
+if (isset ($_SESSION['waktumulai'])){
+$waktumulai = $_SESSION['waktumulai'];
+}else{
+$_SESSION['waktumulai']= $waktumulai;	
+}	
+if (isset ($_SESSION['waktuakhir'])){
+$waktuakhir = $_SESSION['waktuakhir'];
+}else{
+$_SESSION['waktuakhir']= $waktuakhir;	
+}
+/*
+$JS_SCRIPT.= <<<js
+<script type="text/javascript" src="includes/countdown2/jquery.countdownTimer.js"></script>
 <script>
-$(function () {
-	var waktu = <?php echo $detik ?>;
-	var sisa_waktu = waktu - <?php echo $telah_berlalu ?>;
-    var longWayOff = sisa_waktu;
-	$('#defaultCountdown').countdown({until: liftoffTime, format: 'HMS'});
-});
+  $(function(){
+    $('#future_date').countdowntimer({
+       dateAndTime : "<?php $_SESSION[waktuakhir] ?>",
+       size : "lg",
+       regexpMatchFormat: "([0-9]{1,2}):([0-9]{1,2}):([0-9]{1,2}):([0-9]{1,2})",
+       regexpReplaceWith: "<div align='center'><div class='btn btn-danger btn-lg'>$2</div>:<div class='btn btn-danger btn-lg'>$3</div>:<div class='btn btn-danger btn-lg'>$4</div></div>"
+    });
+  });
 </script>
 js;
+*/
+?>
+<script>
+  settab();
+
+  var t=<?php
+  /* 
+  kalo tanda // di bawah dihapus, 
+  biarpun di refresh, sisa waktu kagak bakal balik ke asal 20 detik
+  */
+  //if(!isset($_SESSION['timer']))
+$_SESSION['timer']=date('U');
+  /* waktu cuma di set 20 detik */
+  echo 20-(date('U')-$_SESSION['timer']); ?>;
+  var t1=0;
+  var t2=0;
+  var d=document.getElementById("timer");
+
+  function timer() {
+    if(t<=0) {
+      clearInterval(vtimer);
+      document.getElementById("timeout").style.display="block";
+      document.getElementById("submit").click();
+    }
+    t1=t;
+    t2=t1%60;
+    t1=(t1-t2)/60;
+    t1=(t1<10?"0":"")+t1;
+    t2=(t2<10?"0":"")+t2;
+    d.innerHTML=t1+":"+t2;
+    t-=1;
+  }
+  timer();
+
+  var vtimer=setInterval(function(){timer()},1000);
+</script>
+<?php
+$time6 = time();
+$dateu = date('U');
+echo '$time6 : '.$time6.'dateu : '.$dateu.', session :'.$_SESSION['timer'];
+}
 
 $script_include[] = $JS_SCRIPT;
 $user =  $_SESSION['UserName'];
@@ -954,16 +1005,7 @@ $admin .= '</tbody></table>';
 
 if ($_GET['aksi']== 'testujian') {
 
-if (isset ($_SESSION['waktumulai'])){
-$waktumulai = $_SESSION['waktumulai'];
-}else{
-$_SESSION['waktumulai']= $waktumulai;	
-}	
-if (isset ($_SESSION['waktuakhir'])){
-$waktuakhir = $_SESSION['waktuakhir'];
-}else{
-$_SESSION['waktuakhir']= $waktuakhir;	
-}
+
 $idmapel     = int_filter($_GET['id']);
 $idujian     = int_filter($_GET['idujian']);
 $admin .='<div class="panel-heading"><b>Latihan Ujian</b></div>';
@@ -985,8 +1027,9 @@ $petunjukumum = "
 </td></tr>
 ";
 }
-$timercountdown = '<tr><td colspan="6"><div id="defaultCountdown"></div></td></tr>';
 
+//$timercountdown = '<tr><td colspan="6"><div id="future_date"></div></td></tr>';
+$timercountdown = '<tr><td colspan="6"><div id="timeout">Time Out !!!</div>';
 $admin .= '
 <table cellspacing="0" cellpadding="0"class="table table-striped table-hover">
 	<tr>
@@ -1011,7 +1054,7 @@ $admin .= '
 		<td>'.getnilaiujian($idujian,$user).'</td>
 		<td>Waktu</td>
 		<td>:</td>
-		<td>'.konversi_detik($detik).',waktu Mulai:('.$waktumulai.'),Waktu Akhir:('.$waktuakhir.')</td>
+		<td>'.konversi_detik($detik).'</td>
 	</tr>';
 $admin .= '
 	'.$petunjukumum.''.$timercountdown.'

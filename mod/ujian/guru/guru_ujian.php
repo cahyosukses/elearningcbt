@@ -69,17 +69,40 @@ jQuery(function(){
 });
 </script>
 js;
-$waktu=getwaktu();
-$style_include[] = '<link rel="stylesheet" media="screen" href="includes/countdown/jquery.countdown.css" />';
-$JS_SCRIPT .= <<<js
-<script src="includes/countdown/jquery.plugin.js"></script>
-<script src="includes/countdown/jquery.countdown.js"></script>
+if ($_GET['aksi']== 'testujian') {
+date_default_timezone_set('Asia/Jakarta');
+$detik=getwaktu();
+$waktuselesai=tambahwaktu($detik);
+$waktumulai1=time();
+$waktumulai = date("M j, Y H:i:s",$waktumulai1);
+$waktuakhir1 = $waktumulai1+$detik;
+$waktuakhir = date("M j, Y H:i:s",$waktuakhir1);
+if (isset ($_SESSION['waktumulai'])){
+$waktumulai = $_SESSION['waktumulai'];
+}else{
+$_SESSION['waktumulai']= $waktumulai;	
+}	
+if (isset ($_SESSION['waktuakhir'])){
+$waktuakhir = $_SESSION['waktuakhir'];
+}else{
+$_SESSION['waktuakhir']= $waktuakhir;	
+}
+
+$JS_SCRIPT.= <<<js
+<script type="text/javascript" src="includes/countdown2/jquery.countdownTimer.js"></script>
 <script>
-$(function () {
-	$('#defaultCountdown').countdown({until: +$waktu});
-});
+  $(function(){
+    $('#future_date').countdowntimer({
+       dateAndTime : "<?php $_SESSION[waktuakhir] ?>",
+       size : "lg",
+       regexpMatchFormat: "([0-9]{1,2}):([0-9]{1,2}):([0-9]{1,2}):([0-9]{1,2})",
+       regexpReplaceWith: "<div align='center'><div class='btn btn-danger btn-lg'>$2</div>:<div class='btn btn-danger btn-lg'>$3</div>:<div class='btn btn-danger btn-lg'>$4</div></div>"
+    });
+  });
 </script>
 js;
+}
+
 $script_include[] = $JS_SCRIPT;
 $user =  $_SESSION['UserName'];
 $levelakses=$_SESSION['LevelAkses'];
@@ -821,7 +844,8 @@ while($data = mysql_fetch_array($hasil)){
 }
 
 if (in_array($_GET['aksi'],array('listujian'))) {
-
+unset($_SESSION['waktumulai']);
+unset($_SESSION['waktuakhir']);
 $id     = int_filter($_GET['id']);
 $admin .='<div class="panel-heading"><b>Mata Pelajaran</b></div>';
 $hasil =  $koneksi_db->sql_query( "SELECT * FROM mapel where id='$id' " );
@@ -885,9 +909,10 @@ $editujian ='<a href="?pilih=ujian&amp;mod=yes&amp;aksi=del&amp;id='.$data['id']
 $editujian ='<a href="?pilih=ujian&amp;mod=yes&amp;aksi=del&amp;id='.$data['id'].'&amp;idmapel='.$idmapel.'" onclick="return confirm(\'Soal pada ujian tersebut akan ikut terhapus,Apakah Anda Yakin Ingin Menghapus Data Ini ?\')"><span class="btn btn-danger">Del</span></a>&nbsp;<a href="?pilih=ujian&amp;mod=yes&amp;aksi=edit&amp;id='.$data['id'].'&amp;idmapel='.$idmapel.'" onclick="return confirm(\'Edit Ujian hanya mengedit Tipe Soal Urut/Random dan Status Ujian, Apakah ingin melanjutkan ?\')"><span class="btn btn-warning">Edit</span></a>&nbsp;<a href="?pilih=ujian&amp;mod=yes&amp;aksi=addsoal&amp;idujian='.$data['id'].'&amp;id='.$idmapel.'"><span class="btn btn-success">Soal</span></a>';	
 
 }
+
 if(getjumlahsoal($idujian)==$jumlahsoal){
 $test = '<a href="?pilih=ujian&amp;mod=yes&amp;aksi=testujian&amp;idujian='.$data['id'].'&amp;id='.$idmapel.'"><span class="btn btn-primary">Mulai</span></a>';
-//$test = '<a href="?pilih=ujiantest&amp;mod=yes&amp;idujian='.$data['id'].'&amp;id='.$idkursus.'"><span class="btn btn-primary">Test</span></a>';
+
 }else{
 $test = '';
 }
@@ -939,9 +964,9 @@ $admin .= '</tbody></table>';
 }
 
 if ($_GET['aksi']== 'testujian') {
-$idmapel     = int_filter($_GET['id']);
-$idujian     = int_filter($_GET['idujian']);
 
+
+$idmapel     = int_filter($_GET['id']);
 $idujian     = int_filter($_GET['idujian']);
 $admin .='<div class="panel-heading"><b>Latihan Ujian</b></div>';
 $hasil2 =  $koneksi_db->sql_query( "SELECT * FROM ujian where id='$idujian' " );
@@ -962,7 +987,9 @@ $petunjukumum = "
 </td></tr>
 ";
 }
-$timercountdown = '<tr><td colspan="6"><div id="defaultCountdown"></div></td></tr>';
+
+$timercountdown = '<tr><td colspan="6"><div id="future_date"></div></td></tr>';
+
 $admin .= '
 <table cellspacing="0" cellpadding="0"class="table table-striped table-hover">
 	<tr>
@@ -987,7 +1014,7 @@ $admin .= '
 		<td>'.getnilaiujian($idujian,$user).'</td>
 		<td>Waktu</td>
 		<td>:</td>
-		<td>'.konversi_detik($waktu).'</td>
+		<td>'.konversi_detik($detik).'</td>
 	</tr>';
 $admin .= '
 	'.$petunjukumum.''.$timercountdown.'
@@ -1000,7 +1027,7 @@ $hasil = mysql_query("SELECT * FROM soal where ujian='$idujian' ORDER BY RAND()"
 }else{
 $hasil = mysql_query("SELECT * FROM soal where ujian='$idujian'order by id asc");
 }
-/*****************/
+
 $total         = $koneksi_db->sql_numrows($hasil);
 $tombolsoal=1;
 $admin .='<table class="table">';
@@ -1012,7 +1039,7 @@ $admin .='
 
 $admin .='</div></td></tr>';
 $admin .='</table>';
-/******************/
+
 $admin .= '
 <form method="post"action="?pilih=ujian&mod=yes&aksi=hasiltest&id='.$idmapel.'">
 <table class="table table-striped table-hover">
@@ -1033,7 +1060,7 @@ $gambar = "<img src='mod/ujian/download/$filesgambar'><br>";
 }else{
 $gambar = '';
 }
-/***************************************/
+
 $admin .='<div id="div'.$nosoal.'" class="targetDiv"style="display:none">
 <b>'.$nosoal.'</b>. 
 '.$gambar.''.$soal.'<br>';
@@ -1049,7 +1076,7 @@ $kuncijawaban.=$kunci."#";
 }
 $admin .= '</td></tr>';
 $admin .= '</tbody></table>';
-/*******************************************/
+
 $admin.="<div align='center'>";
 $admin .="
 <input type='hidden' name='pointbenar' value='$pointbenar' />";
