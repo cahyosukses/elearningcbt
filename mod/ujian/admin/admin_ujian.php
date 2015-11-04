@@ -75,6 +75,7 @@ $waktuselesai=tambahwaktu($detik);
 $waktusekarang=time();
 $waktusekarang = date("H:i:s",$waktusekarang);
 $style_include[] = '<link rel="stylesheet" media="screen" href="includes/countdown/jquery.countdown.css" />';
+/*
 $JS_SCRIPT .= <<<js
 <script src="includes/countdown/jquery.plugin.js"></script>
 <script src="includes/countdown/jquery.countdown.js"></script>
@@ -82,6 +83,33 @@ $JS_SCRIPT .= <<<js
 $(function () {
 	$('#defaultCountdown').countdown({until: +$detik});
 });
+</script>
+js;
+*/
+
+$JS_SCRIPT.= <<<js
+<script src="includes/countdown/jquery.plugin.js"></script>
+<script src="includes/countdown/jquery.countdown.js"></script>
+<script type="text/javascript">
+function waktuHabis(){
+	alert("selesai dikerjakan ......");
+	}		
+function hampirHabis(periods){
+	if($.countdown.periodsToSeconds(periods) == 60){
+		$(this).css({color:"red"});
+		}
+	}
+$(function(){
+	var waktu = 180;
+	var sisa_waktu = waktu - $telah_berlalu;
+	var longWayOff = sisa_waktu;
+	$("#timer").countdown({
+		until: longWayOff,
+		compact:true,
+		onExpiry:waktuHabis,
+		onTick: hampirHabis
+		});	
+	})
 </script>
 js;
 $script_include[] = $JS_SCRIPT;
@@ -825,7 +853,7 @@ while($data = mysql_fetch_array($hasil)){
 }
 
 if (in_array($_GET['aksi'],array('listujian'))) {
-
+unset($_SESSION["mulai_waktu"]);
 $id     = int_filter($_GET['id']);
 $admin .='<div class="panel-heading"><b>Mata Pelajaran</b></div>';
 $hasil =  $koneksi_db->sql_query( "SELECT * FROM mapel where id='$id' " );
@@ -944,6 +972,15 @@ $admin .= '</tbody></table>';
 }
 
 if ($_GET['aksi']== 'testujian') {
+if(isset($_SESSION["mulai_waktu"])){
+$telah_berlalu = time() - $_SESSION["mulai_waktu"];
+}
+else {
+$_SESSION["mulai_waktu"] = time();
+$telah_berlalu = 0;
+}
+
+	
 $idmapel     = int_filter($_GET['id']);
 $idujian     = int_filter($_GET['idujian']);
 
@@ -969,7 +1006,10 @@ $petunjukumum = "
 </td></tr>
 ";
 }
-$timercountdown = '<tr><td colspan="6"><div id="defaultCountdown"></div></td></tr>';
+//$timercountdown = '<tr><td colspan="6"><div id="defaultCountdown"></div></td></tr>';
+$timercountdown = '<tr><td colspan="6"><div id="tempat_timer">
+<span id="timer">00 : 00 : 00</span>
+</div></td></tr>';
 $admin .= '
 <table cellspacing="0" cellpadding="0"class="table table-striped table-hover">
 	<tr>
