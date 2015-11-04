@@ -72,46 +72,26 @@ js;
 date_default_timezone_set('Asia/Jakarta');
 $detik=getwaktu();
 $waktuselesai=tambahwaktu($detik);
-$waktusekarang=time();
-$waktusekarang = date("H:i:s",$waktusekarang);
+$waktumulai1=time();
+$waktumulai = date("H:i:s",$waktumulai1);
+$waktuakhir1 = $waktumulai1+$detik;
+$waktuakhir = date("H:i:s",$waktuakhir1);
 $style_include[] = '<link rel="stylesheet" media="screen" href="includes/countdown/jquery.countdown.css" />';
-/*
+$detik = 360;
+$telah_berlalu = time() - $_SESSION["waktumulai"];
 $JS_SCRIPT .= <<<js
 <script src="includes/countdown/jquery.plugin.js"></script>
 <script src="includes/countdown/jquery.countdown.js"></script>
 <script>
 $(function () {
-	$('#defaultCountdown').countdown({until: +$detik});
+	var waktu = <?php echo $detik ?>;
+	var sisa_waktu = waktu - <?php echo $telah_berlalu ?>;
+    var longWayOff = sisa_waktu;
+	$('#defaultCountdown').countdown({until: liftoffTime, format: 'HMS'});
 });
 </script>
 js;
-*/
 
-$JS_SCRIPT.= <<<js
-<script src="includes/countdown/jquery.plugin.js"></script>
-<script src="includes/countdown/jquery.countdown.js"></script>
-<script type="text/javascript">
-function waktuHabis(){
-	alert("selesai dikerjakan ......");
-	}		
-function hampirHabis(periods){
-	if($.countdown.periodsToSeconds(periods) == 60){
-		$(this).css({color:"red"});
-		}
-	}
-$(function(){
-	var waktu = 180;
-	var sisa_waktu = waktu - $telah_berlalu;
-	var longWayOff = sisa_waktu;
-	$("#timer").countdown({
-		until: longWayOff,
-		compact:true,
-		onExpiry:waktuHabis,
-		onTick: hampirHabis
-		});	
-	})
-</script>
-js;
 $script_include[] = $JS_SCRIPT;
 $user =  $_SESSION['UserName'];
 $levelakses=$_SESSION['LevelAkses'];
@@ -853,7 +833,8 @@ while($data = mysql_fetch_array($hasil)){
 }
 
 if (in_array($_GET['aksi'],array('listujian'))) {
-unset($_SESSION["mulai_waktu"]);
+unset($_SESSION['waktumulai']);
+unset($_SESSION['waktuakhir']);
 $id     = int_filter($_GET['id']);
 $admin .='<div class="panel-heading"><b>Mata Pelajaran</b></div>';
 $hasil =  $koneksi_db->sql_query( "SELECT * FROM mapel where id='$id' " );
@@ -972,21 +953,19 @@ $admin .= '</tbody></table>';
 }
 
 if ($_GET['aksi']== 'testujian') {
-if(isset($_SESSION["mulai_waktu"])){
-$telah_berlalu = time() - $_SESSION["mulai_waktu"];
-}
-else {
-$_SESSION["mulai_waktu"] = time();
-$telah_berlalu = 0;
-}
 
-	
+if (isset ($_SESSION['waktumulai'])){
+$waktumulai = $_SESSION['waktumulai'];
+}else{
+$_SESSION['waktumulai']= $waktumulai;	
+}	
+if (isset ($_SESSION['waktuakhir'])){
+$waktuakhir = $_SESSION['waktuakhir'];
+}else{
+$_SESSION['waktuakhir']= $waktuakhir;	
+}
 $idmapel     = int_filter($_GET['id']);
 $idujian     = int_filter($_GET['idujian']);
-
-$idujian     = int_filter($_GET['idujian']);
-
-
 $admin .='<div class="panel-heading"><b>Latihan Ujian</b></div>';
 $hasil2 =  $koneksi_db->sql_query( "SELECT * FROM ujian where id='$idujian' " );
 $data2 = $koneksi_db->sql_fetchrow($hasil2);
@@ -1006,10 +985,8 @@ $petunjukumum = "
 </td></tr>
 ";
 }
-//$timercountdown = '<tr><td colspan="6"><div id="defaultCountdown"></div></td></tr>';
-$timercountdown = '<tr><td colspan="6"><div id="tempat_timer">
-<span id="timer">00 : 00 : 00</span>
-</div></td></tr>';
+$timercountdown = '<tr><td colspan="6"><div id="defaultCountdown"></div></td></tr>';
+
 $admin .= '
 <table cellspacing="0" cellpadding="0"class="table table-striped table-hover">
 	<tr>
@@ -1034,7 +1011,7 @@ $admin .= '
 		<td>'.getnilaiujian($idujian,$user).'</td>
 		<td>Waktu</td>
 		<td>:</td>
-		<td>'.konversi_detik($detik).',waktu sekarang:('.$waktusekarang.')tambahanwaktu ('.$waktu.')</td>
+		<td>'.konversi_detik($detik).',waktu Mulai:('.$waktumulai.'),Waktu Akhir:('.$waktuakhir.')</td>
 	</tr>';
 $admin .= '
 	'.$petunjukumum.''.$timercountdown.'
