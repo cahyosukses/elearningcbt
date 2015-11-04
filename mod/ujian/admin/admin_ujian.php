@@ -100,6 +100,7 @@ $JS_SCRIPT.= <<<js
     });
   });
 </script>
+<script type='text/javascript'>setInterval( "autosubmit()", 5 );function autosubmit(){ document.ujian.submit;}</script>
 js;
 }
 $script_include[] = $JS_SCRIPT;
@@ -1039,7 +1040,7 @@ $admin .='</div></td></tr>';
 $admin .='</table>';
 
 $admin .= '
-<form method="post"action="?pilih=ujian&mod=yes&aksi=hasiltest&id='.$idmapel.'">
+<form name"ujian" method="post"action="?pilih=ujian&mod=yes&aksi=hasiltest&id='.$idmapel.'">
 <table class="table table-striped table-hover">
 <thead ><tr class="info">
 <th>Soal</th>
