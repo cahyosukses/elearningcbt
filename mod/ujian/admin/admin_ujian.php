@@ -69,14 +69,18 @@ jQuery(function(){
 });
 </script>
 js;
-$waktu=getwaktu();
+date_default_timezone_set('Asia/Jakarta');
+$detik=getwaktu();
+$waktuselesai=tambahwaktu($detik);
+$waktusekarang=time();
+$waktusekarang = date("H:i:s",$waktusekarang);
 $style_include[] = '<link rel="stylesheet" media="screen" href="includes/countdown/jquery.countdown.css" />';
 $JS_SCRIPT .= <<<js
 <script src="includes/countdown/jquery.plugin.js"></script>
 <script src="includes/countdown/jquery.countdown.js"></script>
 <script>
 $(function () {
-	$('#defaultCountdown').countdown({until: +$waktu});
+	$('#defaultCountdown').countdown({until: +$detik});
 });
 </script>
 js;
@@ -512,7 +516,7 @@ $admin .= '
 /******************************/
 if(isset($_POST['submit'])){
 $namafile_name 	= $_FILES['gambar']['name'];
-	$konten 		= removep(addslashes($_POST['konten']));
+	$konten 		= (addslashes($_POST['konten']));
 	$idujian 		= $_POST['idujian'];	
 	$kunci 		= $_POST['kunci'];	
 	$error 	= '';
@@ -659,7 +663,7 @@ $admin .= '
 /******************************/
 /******************************/
 if(isset($_POST['submit'])){
-	$konten 		= removep(addslashes($_POST['konten']));
+	$konten 		= (addslashes($_POST['konten']));
 	$idujian 		= $_POST['idujian'];
 	$idsoal 		= $_POST['idsoal'];	
 	$kunci 		= $_POST['kunci'];	
@@ -885,9 +889,10 @@ $editujian ='<a href="?pilih=ujian&amp;mod=yes&amp;aksi=del&amp;id='.$data['id']
 $editujian ='<a href="?pilih=ujian&amp;mod=yes&amp;aksi=del&amp;id='.$data['id'].'&amp;idmapel='.$idmapel.'" onclick="return confirm(\'Soal pada ujian tersebut akan ikut terhapus,Apakah Anda Yakin Ingin Menghapus Data Ini ?\')"><span class="btn btn-danger">Del</span></a>&nbsp;<a href="?pilih=ujian&amp;mod=yes&amp;aksi=edit&amp;id='.$data['id'].'&amp;idmapel='.$idmapel.'" onclick="return confirm(\'Edit Ujian hanya mengedit Tipe Soal Urut/Random dan Status Ujian, Apakah ingin melanjutkan ?\')"><span class="btn btn-warning">Edit</span></a>&nbsp;<a href="?pilih=ujian&amp;mod=yes&amp;aksi=addsoal&amp;idujian='.$data['id'].'&amp;id='.$idmapel.'"><span class="btn btn-success">Soal</span></a>';	
 
 }
+
 if(getjumlahsoal($idujian)==$jumlahsoal){
 $test = '<a href="?pilih=ujian&amp;mod=yes&amp;aksi=testujian&amp;idujian='.$data['id'].'&amp;id='.$idmapel.'"><span class="btn btn-primary">Mulai</span></a>';
-//$test = '<a href="?pilih=ujiantest&amp;mod=yes&amp;idujian='.$data['id'].'&amp;id='.$idkursus.'"><span class="btn btn-primary">Test</span></a>';
+
 }else{
 $test = '';
 }
@@ -943,6 +948,8 @@ $idmapel     = int_filter($_GET['id']);
 $idujian     = int_filter($_GET['idujian']);
 
 $idujian     = int_filter($_GET['idujian']);
+
+
 $admin .='<div class="panel-heading"><b>Latihan Ujian</b></div>';
 $hasil2 =  $koneksi_db->sql_query( "SELECT * FROM ujian where id='$idujian' " );
 $data2 = $koneksi_db->sql_fetchrow($hasil2);
@@ -987,7 +994,7 @@ $admin .= '
 		<td>'.getnilaiujian($idujian,$user).'</td>
 		<td>Waktu</td>
 		<td>:</td>
-		<td>'.konversi_detik($waktu).'</td>
+		<td>'.konversi_detik($detik).',waktu sekarang:('.$waktusekarang.')tambahanwaktu ('.$waktu.')</td>
 	</tr>';
 $admin .= '
 	'.$petunjukumum.''.$timercountdown.'
@@ -1000,7 +1007,7 @@ $hasil = mysql_query("SELECT * FROM soal where ujian='$idujian' ORDER BY RAND()"
 }else{
 $hasil = mysql_query("SELECT * FROM soal where ujian='$idujian'order by id asc");
 }
-/*****************/
+
 $total         = $koneksi_db->sql_numrows($hasil);
 $tombolsoal=1;
 $admin .='<table class="table">';
@@ -1012,7 +1019,7 @@ $admin .='
 
 $admin .='</div></td></tr>';
 $admin .='</table>';
-/******************/
+
 $admin .= '
 <form method="post"action="?pilih=ujian&mod=yes&aksi=hasiltest&id='.$idmapel.'">
 <table class="table table-striped table-hover">
@@ -1033,7 +1040,7 @@ $gambar = "<img src='mod/ujian/download/$filesgambar'><br>";
 }else{
 $gambar = '';
 }
-/***************************************/
+
 $admin .='<div id="div'.$nosoal.'" class="targetDiv"style="display:none">
 <b>'.$nosoal.'</b>. 
 '.$gambar.''.$soal.'<br>';
@@ -1049,7 +1056,7 @@ $kuncijawaban.=$kunci."#";
 }
 $admin .= '</td></tr>';
 $admin .= '</tbody></table>';
-/*******************************************/
+
 $admin.="<div align='center'>";
 $admin .="
 <input type='hidden' name='pointbenar' value='$pointbenar' />";
@@ -1067,7 +1074,7 @@ $admin .="
 <input type='hidden' name='idujian' value='$idujian' />";
 $admin .="
 <input type='hidden' name='tipeujian' value='$tipeujian' />";
-$admin .="<a href='?pilih=ujian&mod=yes&aksi=listujian&id=$idmapel'><span class='btn btn-primary'>BACK</span></a>&nbsp;";
+//$admin .="<a href='?pilih=ujian&mod=yes&aksi=listujian&id=$idmapel'><span class='btn btn-primary'>BACK</span></a>&nbsp;";
 $admin .='<input type="submit"class="btn btn-success" value="Selesai" name="submit" onclick="return confirm(\'Apakah Anda Yakin Ingin Mengakhiri Ujian Ini ?\')">';
 $admin.="</div>";
 $admin.="<br></form>";

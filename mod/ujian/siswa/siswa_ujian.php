@@ -346,7 +346,7 @@ $admin .="
 <input type='hidden' name='idujian' value='$idujian' />";
 $admin .="
 <input type='hidden' name='tipeujian' value='$tipeujian' />";
-$admin .="<a href='?pilih=ujian&mod=yes&aksi=listujian&id=$idmapel'><span class='btn btn-primary'>BACK</span></a>&nbsp;";
+//$admin .="<a href='?pilih=ujian&mod=yes&aksi=listujian&id=$idmapel'><span class='btn btn-primary'>BACK</span></a>&nbsp;";
 $admin .='<input type="submit"class="btn btn-success" value="Selesai" name="submit" onclick="return confirm(\'Apakah Anda Yakin Ingin Mengakhiri Ujian Ini ?\')">';
 $admin.="</div>";
 $admin.="<br></form>";

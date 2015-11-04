@@ -512,7 +512,7 @@ $admin .= '
 /******************************/
 if(isset($_POST['submit'])){
 $namafile_name 	= $_FILES['gambar']['name'];
-	$konten 		= removep(addslashes($_POST['konten']));
+	$konten 		= (addslashes($_POST['konten']));
 	$idujian 		= $_POST['idujian'];	
 	$kunci 		= $_POST['kunci'];	
 	$error 	= '';
@@ -659,7 +659,7 @@ $admin .= '
 /******************************/
 /******************************/
 if(isset($_POST['submit'])){
-	$konten 		= removep(addslashes($_POST['konten']));
+	$konten 		= (addslashes($_POST['konten']));
 	$idujian 		= $_POST['idujian'];
 	$idsoal 		= $_POST['idsoal'];	
 	$kunci 		= $_POST['kunci'];	
@@ -1067,7 +1067,7 @@ $admin .="
 <input type='hidden' name='idujian' value='$idujian' />";
 $admin .="
 <input type='hidden' name='tipeujian' value='$tipeujian' />";
-$admin .="<a href='?pilih=ujian&mod=yes&aksi=listujian&id=$idmapel'><span class='btn btn-primary'>BACK</span></a>&nbsp;";
+//$admin .="<a href='?pilih=ujian&mod=yes&aksi=listujian&id=$idmapel'><span class='btn btn-primary'>BACK</span></a>&nbsp;";
 $admin .='<input type="submit"class="btn btn-success" value="Selesai" name="submit" onclick="return confirm(\'Apakah Anda Yakin Ingin Mengakhiri Ujian Ini ?\')">';
 $admin.="</div>";
 $admin.="<br></form>";

@@ -1700,4 +1700,13 @@ $dtk= $detik %60;
 $mnt= floor(($detik %3600) /60);
 $jam= floor(($detik %86400) /3600);
 return $jam.' Jam, '.$mnt.' Menit, '.$dtk.' Detik'; }
+
+function tambahwaktu($detik){
+//$date = date("H:i:s");
+$waktusekarang=time();
+$waktuujian=$detik;
+$waktuselesai=$waktusekarang+$waktuujian;
+$waktuselesai = date("H:i:s",$waktuselesai);
+return $waktuselesai;
+}
 ?>
