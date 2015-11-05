@@ -101,8 +101,14 @@ $JS_SCRIPT.= <<<js
   });
 </script>
 js;
+$JS_SCRIPT.= <<<js
+<script type="text/javascript">
+setTimeout(function(){
+  alert("Boom!");
+}, 2000);
+</script>
+js;
 }
-
 $script_include[] = $JS_SCRIPT;
 $user =  $_SESSION['UserName'];
 $levelakses=$_SESSION['LevelAkses'];
@@ -989,7 +995,6 @@ $petunjukumum = "
 }
 
 $timercountdown = '<tr><td colspan="6"><div id="future_date"></div></td></tr>';
-
 $admin .= '
 <table cellspacing="0" cellpadding="0"class="table table-striped table-hover">
 	<tr>
@@ -1041,7 +1046,7 @@ $admin .='</div></td></tr>';
 $admin .='</table>';
 
 $admin .= '
-<form method="post"action="?pilih=ujian&mod=yes&aksi=hasiltest&id='.$idmapel.'">
+<form  id="formujian" name="formujian" method="post"action="?pilih=ujian&mod=yes&aksi=hasiltest&id='.$idmapel.'">
 <table class="table table-striped table-hover">
 <thead ><tr class="info">
 <th>Soal</th>
