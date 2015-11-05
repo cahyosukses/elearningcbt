@@ -4986,3 +4986,17 @@ display: inline-block;
 .btnsoal:visited {
     background: yellow;
 }
+.sukses{
+padding : 5px;
+  background: #DFF8E3;
+  color: #4CD987;
+  border-color: #79c447;
+  border-radius: 4px;  
+}
+.error{
+padding : 5px;
+  background: #FFE0E6;
+  color: #FF3D59;
+  border-color: #FF3D59;
+  border-radius: 4px;  
+}

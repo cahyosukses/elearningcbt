@@ -134,7 +134,7 @@ $admin .= '<li><i class="fa fa-home"></i><a href="admin.php?pilih=ujian&mod=yes&
 }
 $admin .= '</ol></div></div>';
 
-$admin .='<div class="panel panel-info">';
+$admin .='<div class="panel">';
 
 if($_GET['aksi']==""){
 if($_SESSION['LevelAkses']=='Guru'){
@@ -1286,6 +1286,7 @@ $admin .= '<table id="example" class="table table-striped table-hover">
 <th>Tanggal</th>
 <th>Nama</th>
 <th>Nilai</th>
+<th>Aksi</th>
 </tr></thead><tbody>';
 $no = 1;
 while ($data = $koneksi_db->sql_fetchrow($hasil)) {
@@ -1296,7 +1297,9 @@ $admin .='<tr>
 <td><b>'.$no.'</b></td>
 <td>'.datetimes($data['tgl']).'</td>
 <td>'.$nama.'</td>
-<td>'.$data['nilai'].'</td>';
+<td>'.$data['nilai'].'</td>
+<td>
+<a href="?pilih=ujian&amp;mod=yes&amp;aksi=delnilai&amp;id='.$data['id'].'&amp;idmapel='.$idmapel.'" onclick="return confirm(\'Nilai pada ujian tersebut akan ikut terhapus,Apakah Anda Yakin Ingin Menghapus Data Ini ?\')"><span class="btn btn-danger">Del</span></a>';
 $admin .='
 </tr>';
 $no++;
@@ -1305,7 +1308,18 @@ $admin .= '</tbody></table>';
 }
 
 }
-
+if($_GET['aksi']== 'delnilai'){    
+	global $koneksi_db;    
+	$id     = int_filter($_GET['id']);  
+	$hasil = $koneksi_db->sql_query("DELETE FROM `ujiannilai` WHERE `id`='$id'");    
+	if($hasil){    
+		$admin.='<div class="sukses">Nilai History berhasil dihapus! .</div>';    
+		$style_include[] ='<meta http-equiv="refresh" content="1; url=admin.php?pilih=ujian&mod=yes&aksi=nilaiujian" />';    
+	}else{
+		$admin.='<div class="error">Nilai History gagal dihapus! .</div>';		
+	}
+}
+/************************/
 if($_GET['aksi'] == 'setting'){
 $admin .='<div class="panel-heading"><b>Setting Ujian</b></div>';
 
