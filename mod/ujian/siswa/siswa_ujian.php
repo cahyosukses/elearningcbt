@@ -156,7 +156,8 @@ $admin .= '</tbody></table>';
 }
 
 if (in_array($_GET['aksi'],array('listujian'))) {
-
+unset($_SESSION['waktumulai']);
+unset($_SESSION['waktuakhir']);
 $id     = int_filter($_GET['id']);
 $admin .='<div class="panel-heading"><b>Mata Pelajaran</b></div>';
 $hasil =  $koneksi_db->sql_query( "SELECT * FROM mapel where id='$id' " );
