@@ -14,9 +14,9 @@ $mysql_password = '';
 $mysql_database = 'elearningcbt';
 $mysql_host = 'localhost';
 /*
-$mysql_user = 'frateran_cbt';
-$mysql_password = 'cbt2015';
-$mysql_database = 'frateran_cbt';
+$mysql_user = 'psbfrate_cbt';
+$mysql_password = 'elearningcbt';
+$mysql_database = 'psbfrate_cbt';
 $mysql_host = 'localhost';
 */
 /*---------------------------------------------------------------------------------
