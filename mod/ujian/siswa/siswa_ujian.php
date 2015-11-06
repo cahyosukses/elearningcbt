@@ -127,12 +127,12 @@ $script_include[] = $JS_SCRIPT;
 					<h3 class="page-header"><i class="fa fa-list-alt"></i> Ujian</h3>
 					<ol class="breadcrumb">
 					<li><i class="fa fa-home"></i><a href="?pilih=ujian&mod=yes">Home</a></li>
-					<li><i class="fa fa-home"></i><a href="admin.php?pilih=ujian&mod=yes&aksi=nilaiujian">Lihat Nilai</a></li>
+					<li><i class="fa fa-home"></i><a href="admin.php?pilih=ujian&mod=yes&aksi=nilaiujian">Lihat History Nilai</a></li>
 					</ol>
 				</div>
 			</div>';
 			
-$admin .='<div class="panel panel-info">';
+$admin .='<div class="panel panel">';
 $user =  $_SESSION['UserName'];
 $levelakses=$_SESSION['LevelAkses'];
 $petunjuk=getpetunjuk();
@@ -178,6 +178,14 @@ $hasil =  $koneksi_db->sql_query( "SELECT * FROM mapel where id='$id' " );
 $data = $koneksi_db->sql_fetchrow($hasil);
 $idmapel=$data['id'];
 $mapel =$data['mapel'];
+if($petunjuk){
+$petunjukumum = "
+<tr><td colspan='6'>
+<B>Petunjuk Umum :</b>
+<br>$petunjuk
+</td></tr>
+";
+}
 $admin .= '
 <table cellspacing="0" cellpadding="0"class="table table-striped table-hover">
 	<tr>
@@ -188,7 +196,7 @@ $admin .= '
 		<td></td>
 		<td></td>
 	</tr>';
-
+$admin .="$petunjukumum";
 
 /************************************/
 $hasil = $koneksi_db->sql_query( "SELECT * FROM ujian where  idmapel='$idmapel' ORDER BY RAND()" );
@@ -331,7 +339,7 @@ $admin .='</div></td></tr>';
 $admin .='</table>';
 /******************/
 $admin .= '
-<form method="post"action="?pilih=ujian&mod=yes&aksi=hasiltest&id='.$idmapel.'">
+<form id="formujian" name="formujian" method="post"action="?pilih=ujian&mod=yes&aksi=hasiltest&id='.$idmapel.'">
 <table class="table table-striped table-hover">
 <thead ><tr class="info">
 <th>Soal</th>
@@ -452,7 +460,8 @@ $admin .= '
 $hasil = $koneksi_db->sql_query("SELECT * FROM mapel  ORDER BY mapel asc");
 $admin .= '<option value="">== Pilih Mata Pelajaran ==</option>';
 while ($datas =  $koneksi_db->sql_fetchrow ($hasil)){
-$admin .= '<option value="'.$datas['id'].'"'.$pilihan.'>'.$datas['mapel'].'</option>';
+$jumlah = getjumlahnilaihistory($datas['id'],$user);
+$admin .= '<option value="'.$datas['id'].'"'.$pilihan.'>'.$datas['mapel'].' ('.$jumlah.')</option>';
 }
 $admin .='</select></td>
 	</tr>
@@ -479,6 +488,7 @@ $admin .= '<table id="example" class="table table-striped table-hover">
 <thead><tr>
 <th>No</th>
 <th>Tanggal</th>
+<th>Jam</th>
 <th>Nama</th>
 <th>Nilai</th>
 </tr></thead><tbody>';
@@ -490,6 +500,7 @@ $nama     = getnamaguru($data['user']);
 $admin .='<tr>
 <td><b>'.$no.'</b></td>
 <td>'.datetimes($data['tgl']).'</td>
+<td>'.$data['jam'].'</td>
 <td>'.$nama.'</td>
 <td>'.$data['nilai'].'</td>';
 $admin .='

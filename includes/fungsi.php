@@ -1623,14 +1623,16 @@ function gethariterlambat ($tglAwal,$tglAkhir){
 	return $selisih;
 }
 function simpannilai($idujian,$user,$score,$tipeujian,$levelakses){
+	date_default_timezone_set('Asia/Jakarta');
 $tgl=date('Y-m-d');
+$jam=date('H:i:s');
 $query = "SELECT * FROM ujiannilai WHERE user = '$user' and ujian = '$idujian'";
 $hasil = mysql_query($query);
 $data=mysql_fetch_array($hasil);
 $ujiannilai = $data["id"];
 $total  = mysql_num_rows($hasil);
 if($total < 1){
-$simpannilai = mysql_query ("INSERT INTO `ujiannilai`VALUES ('','$tgl','$idujian','$user','$score')");
+$simpannilai = mysql_query ("INSERT INTO `ujiannilai`VALUES ('','$tgl','$jam','$idujian','$user','$score')");
 }else{
 if($tipeujian =='latihan' or $levelakses=='Administrator' or $levelakses=='Guru'){
 $simpannilai = mysql_query ("update `ujiannilai` set tgl='$tgl',nilai='$score' where id='$ujiannilai'");
@@ -1708,5 +1710,11 @@ $waktuujian=$detik;
 $waktuselesai=$waktusekarang+$waktuujian;
 $waktuselesai = date("H:i:s",$waktuselesai);
 return $waktuselesai;
+}
+function getjumlahnilaihistory($idmapel,$user){
+$query = "SELECT id FROM ujiannilai where mapel='$idmapel' and user='$user'";
+$hasil = mysql_query($query);
+$total  = mysql_num_rows($hasil);
+return $total;
 }
 ?>

@@ -128,7 +128,8 @@ $petunjuk=getpetunjuk();
 					<h3 class="page-header"><i class="fa fa-list-alt"></i> Ujian</h3>
 					<ol class="breadcrumb">
 					<li><i class="fa fa-home"></i><a href="?pilih=ujian&mod=yes">Home</a></li>
-					<li><i class="fa fa-home"></i><a href="admin.php?pilih=ujian&mod=yes&aksi=nilaiujian">Lihat Nilai</a></li>';
+					<li><i class="fa fa-home"></i><a href="admin.php?pilih=ujian&mod=yes&aksi=nilaiujian">Lihat Nilai</a></li>
+				    <li><i class="fa fa-home"></i><a href="admin.php?pilih=ujian&mod=yes&aksi=nilaihistoryujian">Lihat History Nilai</a></li>';
 if($_SESSION['LevelAkses']=='Administrator'){
 $admin .= '<li><i class="fa fa-home"></i><a href="admin.php?pilih=ujian&mod=yes&aksi=setting">Setting</a></li>';
 }
@@ -1184,7 +1185,7 @@ if($_GET['aksi']=="nilaiujian"){
 $admin .='<div class="panel-heading"><b>Nilai Ujian</b></div>';
 $admin .= '
 <form method="post" action=""class="form-inline">
-<table cellspacing="0" cellpadding="0"class="table table-striped table-hover">
+<table cellspacing="0" cellpadding="0"class="table">
 	<tr>
 		<td>Mata Pelajaran</td>
 		<td>:</td>
@@ -1201,7 +1202,7 @@ $admin .='</select></td>
 		<td>Kelas</td>
 		<td>:</td>
 		<td>
-<select name="kelas" class="form-control">';
+<select name="kelas" class="form-control" required>';
 $hasil = $koneksi_db->sql_query("SELECT * FROM kelas  ORDER BY kelas asc");
 $admin .= '<option value="">== Pilih Kelas ==</option>';
 while ($datas =  $koneksi_db->sql_fetchrow ($hasil)){
@@ -1213,7 +1214,7 @@ $admin .='</select></td>
 		<td></td>
 		<td></td>
 		<td>
-		<input type="submit" value="Lihat Nilai" name="lihatnilaiujian"class="btn btn-success">&nbsp;<input type="submit" value="Lihat History Nilai" name="lihathistorynilai"class="btn btn-primary"></td>
+		<input type="submit" value="Lihat Nilai" name="lihatnilaiujian"class="btn btn-success">&nbsp;</td>
 	</tr>
 </table>
 </form>
@@ -1269,10 +1270,41 @@ $admin.='
 $admin.='</table>';
 }
 
+}
+
+if($_GET['aksi']=="nilaihistoryujian"){
+$admin .='<div class="panel-heading"><b>Nilai History Ujian</b></div>';
+$admin .= '
+<form method="post" action=""class="form-inline">
+<table cellspacing="0" cellpadding="0"class="table">
+	<tr>
+		<td>Mata Pelajaran</td>
+		<td>:</td>
+		<td>
+<select name="idmapel" class="form-control" required>';
+$hasil = $koneksi_db->sql_query("SELECT * FROM mapel  ORDER BY mapel asc");
+$admin .= '<option value="">== Pilih Mata Pelajaran ==</option>';
+while ($datas =  $koneksi_db->sql_fetchrow ($hasil)){
+$jumlah = getjumlahnilaihistory($datas['id'],$user);
+$admin .= '<option value="'.$datas['id'].'"'.$pilihan.'>'.$datas['mapel'].' ('.$jumlah.')</option>';
+}
+$admin .='</select></td>
+	</tr>
+		<tr>
+		<td></td>
+		<td></td>
+		<td>
+		<input type="submit" value="Lihat History Nilai" name="lihathistorynilai"class="btn btn-primary"></td>
+	</tr>
+</table>
+</form>
+';
+
 if(isset($_POST['lihathistorynilai'])){
 $idmapel     		= $_POST['idmapel'];
 $namamapel = getmapel($idmapel);
-$admin .="<table class='table table-striped table-hover'>";
+$admin .='<div class="panel-heading"><b>Nilai History Ujian</b></div>';
+$admin .="<table class='table'>";
    $admin .= "<tr>
     <td width='30%' valign='top'>Mata Pelajaran </td>
     <td width='1%' valign='top'>:</td>
@@ -1284,6 +1316,7 @@ $admin .= '<table id="example" class="table table-striped table-hover">
 <thead><tr>
 <th>No</th>
 <th>Tanggal</th>
+<th>Jam</th>
 <th>Nama</th>
 <th>Nilai</th>
 <th>Aksi</th>
@@ -1291,23 +1324,31 @@ $admin .= '<table id="example" class="table table-striped table-hover">
 $no = 1;
 while ($data = $koneksi_db->sql_fetchrow($hasil)) {
 $tgl     = $data['tgl'];  
+$jam     = $data['jam'];  
 $nilai     = $data['nilai'];  
 $nama     = getnamaguru($data['user']);  
 $admin .='<tr>
 <td><b>'.$no.'</b></td>
 <td>'.datetimes($data['tgl']).'</td>
+<td>'.$data['jam'].'</td>
 <td>'.$nama.'</td>
 <td>'.$data['nilai'].'</td>
 <td>
-<a href="?pilih=ujian&amp;mod=yes&amp;aksi=delnilai&amp;id='.$data['id'].'&amp;idmapel='.$idmapel.'" onclick="return confirm(\'Nilai pada ujian tersebut akan ikut terhapus,Apakah Anda Yakin Ingin Menghapus Data Ini ?\')"><span class="btn btn-danger">Del</span></a>';
+<a href="?pilih=ujian&amp;mod=yes&amp;aksi=delnilai&amp;id='.$data['id'].'&amp;idmapel='.$idmapel.'" onclick="return confirm(\'Nilai pada ujian tersebut akan ikut terhapus,Apakah Anda Yakin Ingin Menghapus Data Ini ?\')"><span class="btn btn-danger">Hapus</span></a>';
 $admin .='
 </tr>';
 $no++;
 }
 $admin .= '</tbody></table>';
+$admin .="<table class='table'>";
+$admin .= '<tr>
+    <td>Hapus Semua History Nilai : <a href="?pilih=ujian&amp;mod=yes&amp;aksi=delhistorynilai&amp;id='.$data['id'].'&amp;idmapel='.$idmapel.'" onclick="return confirm(\'Nilai History pada ujian tersebut akan ikut terhapus,Apakah Anda Yakin Ingin Menghapus Data Ini ?\')"><span class="btn btn-danger">Hapus</span></a></td>
+  </tr>'; 
+$admin .="</table>";
 }
 
 }
+
 if($_GET['aksi']== 'delnilai'){    
 	global $koneksi_db;    
 	$id     = int_filter($_GET['id']);  
@@ -1319,6 +1360,20 @@ if($_GET['aksi']== 'delnilai'){
 		$admin.='<div class="error">Nilai History gagal dihapus! .</div>';		
 	}
 }
+
+if($_GET['aksi']== 'delhistorynilai'){    
+	global $koneksi_db;    
+	$id     = int_filter($_GET['id']);  
+	$idmapel     = int_filter($_GET['idmapel']);  
+	$hasil = $koneksi_db->sql_query("DELETE FROM `ujiannilai` WHERE `mapel`='$idmapel' and `user` ='$user'");    
+	if($hasil){    
+		$admin.='<div class="sukses">Semua Nilai History berhasil dihapus! .</div>';    
+		$style_include[] ='<meta http-equiv="refresh" content="1; url=admin.php?pilih=ujian&mod=yes&aksi=nilaiujian" />';    
+	}else{
+		$admin.='<div class="error">Nilai History gagal dihapus! .</div>';		
+	}
+}
+
 /************************/
 if($_GET['aksi'] == 'setting'){
 $admin .='<div class="panel-heading"><b>Setting Ujian</b></div>';
