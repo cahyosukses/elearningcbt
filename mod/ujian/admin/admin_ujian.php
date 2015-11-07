@@ -52,7 +52,7 @@ js;
 $JS_SCRIPT.= <<<js
 <script language="JavaScript" type="text/javascript">
 $(document).ready(function() {
-    $('#example').dataTable();
+    $('#example').dataTable( "pageLength": 50);
 } );
 </script>
 js;
@@ -128,11 +128,11 @@ $petunjuk=getpetunjuk();
 					<h3 class="page-header"><i class="fa fa-list-alt"></i> Ujian</h3>
 					<ol class="breadcrumb">
 					<li><i class="fa fa-home"></i><a href="?pilih=ujian&mod=yes">Home</a></li>
-					<li><i class="fa fa-home"></i><a href="admin.php?pilih=ujian&mod=yes&aksi=nilaiujian">Lihat Nilai</a></li>
-				    <li><i class="fa fa-home"></i><a href="admin.php?pilih=ujian&mod=yes&aksi=nilaihistoryujian">Lihat History Nilai</a></li>';
+					<li><i class="icon icon_document_alt"></i><a href="admin.php?pilih=ujian&mod=yes&aksi=nilaiujian">Lihat Nilai</a></li>';
 if($_SESSION['LevelAkses']=='Administrator'){
-$admin .= '<li><i class="fa fa-home"></i><a href="admin.php?pilih=ujian&mod=yes&aksi=setting">Setting</a></li>';
+$admin .= '<li><i class="icon  icon_cog"></i><a href="admin.php?pilih=ujian&mod=yes&aksi=setting">Setting</a></li>';
 }
+$admin .= '<li><i class="icon  icon_documents_alt"></i><a href="admin.php?pilih=ujian&mod=yes&aksi=nilaihistoryujian">Lihat Nilai Sendiri</a></li>';
 $admin .= '</ol></div></div>';
 
 $admin .='<div class="panel">';
@@ -1224,7 +1224,7 @@ $idmapel     		= $_POST['idmapel'];
 $kelasid     		= $_POST['kelas'];
 $kelas = getkelas($kelasid);
 $namamapel = getmapel($idmapel);
-$hasil = $koneksi_db->sql_query( "SELECT * FROM `kelas_isi`where kelas ='$kelasid'" );
+$hasil2 = $koneksi_db->sql_query( "SELECT * FROM `kelas_isi`where kelas ='$kelasid'" );
 $admin.='<div class="panel-heading"><b>Daftar Siswa Kelas '.$kelas.'</b></div>';
 $admin .="
 <form method='post' action='excellnilaiujian.php'><table class='table table-striped table-hover'>";
@@ -1250,22 +1250,36 @@ $admin .="</table></form>";
 $admin.='
 <table id="example" class="table table-striped table-hover">
 <thead><tr>
-    <td align="left" width="100px"><b>No.Induk</b></td>
+    <td align="left"><b>No</b></td>
+    <td align="left"><b>No.Induk</b></td>
     <td align="left"><b>Nama</b></td>
     <td align="left"><b>Tanggal</b></td>
-    <td align="left" width="100px"><b>Nilai</b></td>
+    <td align="left"><b>Jam</b></td>
+    <td align="left"><b>Nilai</b></td>
+    <td align="left"><b>Aksi</b></td>	
   </tr></thead><tbody>';
-while ($data = $koneksi_db->sql_fetchrow($hasil)) {
-$namasiswa = getnamasiswa($data['siswa']);
-$nilaiujian = getnilaiujian ($idmapel,$data['siswa']);
-$tanggalujian = gettanggalujian ($idmapel,$data['siswa']);
+  $no=1;
+while ($data2 = $koneksi_db->sql_fetchrow($hasil2)) {
+$user = $data2['siswa'];
+$namasiswa = getnamasiswa($data2['siswa']);
+$nilaiujian = getnilaiujian ($idmapel,$dat2['siswa']);
+$tanggalujian = gettanggalujian ($idmapel,$data2['siswa']);
+$jamujian = getjamujian ($idmapel,$data2['siswa']);
+
+if ($koneksi_db->sql_numrows($koneksi_db->sql_query("SELECT * FROM ujiannilai WHERE mapel = '$idmapel' and user = '$user'")) > 0)
+{
+$lihathistory = "<a href='admin.php?pilih=ujian&mod=yes&aksi=nilaihistorysiswa&idmapel=$idmapel&user=$user' class='btn btn-success'>Lihat History</a>";}
 $admin.='
   <tr>
-    <td>'.$data['siswa'].'</td>
+      <td>'.$no.'</td>
+    <td>'.$data2['siswa'].'</td>
     <td>'.$namasiswa.'</td>
     <td>'.$tanggalujian.'</td>
+    <td>'.$jamujian.'</td>
     <td>'.$nilaiujian.'</td>
+    <td>'.$lihathistory.'</td>
    </tr>';
+   $no++;
 }
 $admin.='</table>';
 }
@@ -1323,6 +1337,7 @@ $admin .= '<table id="example" class="table table-striped table-hover">
 </tr></thead><tbody>';
 $no = 1;
 while ($data = $koneksi_db->sql_fetchrow($hasil)) {
+$user = $data['user'];
 $tgl     = $data['tgl'];  
 $jam     = $data['jam'];  
 $nilai     = $data['nilai'];  
@@ -1342,14 +1357,88 @@ $no++;
 $admin .= '</tbody></table>';
 $admin .="<table class='table'>";
 $admin .= '<tr>
-    <td>Hapus Semua History Nilai : <a href="?pilih=ujian&amp;mod=yes&amp;aksi=delhistorynilai&amp;id='.$data['id'].'&amp;idmapel='.$idmapel.'" onclick="return confirm(\'Nilai History pada ujian tersebut akan ikut terhapus,Apakah Anda Yakin Ingin Menghapus Data Ini ?\')"><span class="btn btn-danger">Hapus</span></a></td>
+    <td>Hapus Semua History Nilai : <a href="?pilih=ujian&amp;mod=yes&amp;aksi=delhistorynilai&amp;id='.$data['id'].'&amp;user='.$user.'" onclick="return confirm(\'Nilai History pada ujian tersebut akan ikut terhapus,Apakah Anda Yakin Ingin Menghapus Data Ini ?\')"><span class="btn btn-danger">Hapus</span></a></td>
   </tr>'; 
 $admin .="</table>";
 }
 
 }
 
+if($_GET['aksi']=="nilaihistorysiswa"){
+$user     		= $_GET['user'];
+$idmapel     		= $_GET['idmapel'];
+$namamapel = getmapel($idmapel);
+$namasiswa = getnamasiswa($user);
+$admin .='<div class="panel-heading"><b>Data Ujian</b></div>';
+$admin .="<table class='table'>";
+   $admin .= "<tr>
+    <td width='30%' valign='top'>Mata Pelajaran </td>
+    <td width='1%' valign='top'>:</td>
+    <td width='69%' valign='top'>$namamapel</td>
+  </tr>"; 
+    $admin .= "<tr>
+    <td width='30%' valign='top'>Nama Siswa </td>
+    <td width='1%' valign='top'>:</td>
+    <td width='69%' valign='top'>$namasiswa</td>
+  </tr>"; 
+$admin .="</table>";
+$admin .='<div class="panel-heading"><b>History Nilai</b></div>';
+$hasil = $koneksi_db->sql_query( "SELECT * FROM ujiannilai where mapel = '$idmapel' and user='$user'  order by id desc" );
+$admin .= '<table id="example" class="table">
+<thead><tr>
+<th>No</th>
+<th>Tanggal</th>
+<th>Jam</th>
+<th>Nama</th>
+<th>Nilai</th>';
+if($_SESSION['LevelAkses']=='Administrator'){
+$admin .= '<th>Aksi</th>';
+}
+$admin .= '</tr></thead><tbody>';
+$no = 1;
+while ($data = $koneksi_db->sql_fetchrow($hasil)) {
+$tgl     = $data['tgl'];  
+$jam     = $data['jam'];  
+$nilai     = $data['nilai'];  
+$nama     = getnamaguru($data['user']);  
+$admin .='<tr>
+<td><b>'.$no.'</b></td>
+<td>'.datetimes($data['tgl']).'</td>
+<td>'.$data['jam'].'</td>
+<td>'.$nama.'</td>
+<td>'.$data['nilai'].'</td>';
+if($_SESSION['LevelAkses']=='Administrator'){
+$admin .='
+<td>
+<a href="?pilih=ujian&amp;mod=yes&amp;aksi=delnilaisiswa&amp;id='.$data['id'].'&amp;idmapel='.$idmapel.'" onclick="return confirm(\'Nilai pada ujian tersebut akan ikut terhapus,Apakah Anda Yakin Ingin Menghapus Data Ini ?\')"><span class="btn btn-danger">Hapus</span></a></td>';
+}
+$admin .='
+</tr>';
+$no++;
+}
+$admin .= '</tbody></table>';
+if($_SESSION['LevelAkses']=='Administrator'){
+$admin .="<table class='table'>";
+$admin .= '<tr>
+    <td>Hapus Semua History Nilai : <a href="?pilih=ujian&amp;mod=yes&amp;aksi=delhistorynilaisiswa&amp;user='.$user.'&amp;idmapel='.$idmapel.'" onclick="return confirm(\'Nilai History pada ujian tersebut akan ikut terhapus,Apakah Anda Yakin Ingin Menghapus Data Ini ?\')"><span class="btn btn-danger">Hapus</span></a></td>
+  </tr>'; 
+$admin .="</table>";
+}
+}
+
 if($_GET['aksi']== 'delnilai'){    
+	global $koneksi_db;    
+	$id     = int_filter($_GET['id']);  
+	$hasil = $koneksi_db->sql_query("DELETE FROM `ujiannilai` WHERE `id`='$id'");    
+	if($hasil){    
+		$admin.='<div class="sukses">Nilai History berhasil dihapus! .</div>';    
+		$style_include[] ='<meta http-equiv="refresh" content="1; url=admin.php?pilih=ujian&mod=yes&aksi=nilaihistoryujian" />';    
+	}else{
+		$admin.='<div class="error">Nilai History gagal dihapus! .</div>';		
+	}
+}
+
+if($_GET['aksi']== 'delnilaisiswa'){    
 	global $koneksi_db;    
 	$id     = int_filter($_GET['id']);  
 	$hasil = $koneksi_db->sql_query("DELETE FROM `ujiannilai` WHERE `id`='$id'");    
@@ -1363,7 +1452,20 @@ if($_GET['aksi']== 'delnilai'){
 
 if($_GET['aksi']== 'delhistorynilai'){    
 	global $koneksi_db;    
-	$id     = int_filter($_GET['id']);  
+	$user     = $_GET['user'];  
+	$idmapel     = int_filter($_GET['idmapel']);  
+	$hasil = $koneksi_db->sql_query("DELETE FROM `ujiannilai` WHERE `mapel`='$idmapel' and `user` ='$user'");    
+	if($hasil){    
+		$admin.='<div class="sukses">Semua Nilai History berhasil dihapus! .</div>';    
+		$style_include[] ='<meta http-equiv="refresh" content="1; url=admin.php?pilih=ujian&mod=yes&aksi=nilaihistoryujian" />';    
+	}else{
+		$admin.='<div class="error">Nilai History gagal dihapus! .</div>';		
+	}
+}
+
+if($_GET['aksi']== 'delhistorynilaisiswa'){    
+	global $koneksi_db;    
+	$user     = $_GET['user'];  
 	$idmapel     = int_filter($_GET['idmapel']);  
 	$hasil = $koneksi_db->sql_query("DELETE FROM `ujiannilai` WHERE `mapel`='$idmapel' and `user` ='$user'");    
 	if($hasil){    

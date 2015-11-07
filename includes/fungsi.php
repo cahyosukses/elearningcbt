@@ -1656,6 +1656,13 @@ $data=mysql_fetch_array($hasil);
 $tgl .= $data["tgl"];
 return $tgl;
 }
+function getjamujian ($idmapel,$user){
+$query = "SELECT * FROM ujiannilai WHERE mapel = '$idmapel' and user='$user' order by id desc";
+$hasil = mysql_query($query);
+$data=mysql_fetch_array($hasil);
+$jam .= $data["jam"];
+return $jam;
+}
 function getnamaujian ($idujian){
 $query = "SELECT * FROM ujian WHERE id = '$idujian'";
 $hasil = mysql_query($query);

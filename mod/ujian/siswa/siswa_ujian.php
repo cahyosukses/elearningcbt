@@ -127,7 +127,7 @@ $script_include[] = $JS_SCRIPT;
 					<h3 class="page-header"><i class="fa fa-list-alt"></i> Ujian</h3>
 					<ol class="breadcrumb">
 					<li><i class="fa fa-home"></i><a href="?pilih=ujian&mod=yes">Home</a></li>
-					<li><i class="fa fa-home"></i><a href="admin.php?pilih=ujian&mod=yes&aksi=nilaiujian">Lihat History Nilai</a></li>
+					<li><i class="icon  icon_documents_alt"></i><a href="admin.php?pilih=ujian&mod=yes&aksi=nilaiujian">Lihat History Nilai</a></li>
 					</ol>
 				</div>
 			</div>';
