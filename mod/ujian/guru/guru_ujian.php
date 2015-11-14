@@ -910,11 +910,18 @@ $tipe=$data['tipe'];
 $status=$data['status'];
 $tipeujian=$data['tipeujian'];
 $userujian=$data['user'];
+$soaldibuat=getjumlahsoal($idujian);
+$persensoal= ($soaldibuat/$jumlahsoal)*100;
+$persen='                                  <div class="progress progress-striped active">
+                                        <div class="progress-bar"  role="progressbar" aria-valuenow="50" aria-valuenow="'.$persensoal.'" aria-valuemax="100" style="width: '.$persensoal.'%"> <div>'.$persensoal.'% Complete</div>
+                                        </div>
+                                    </div>';
 $admin .='<tr>
 <td><b>'.tglsort($tgl).'</b></td>
-<td>'.$judul.'</td>
-<td>'.getjumlahsoal($idujian).' / '.$jumlahsoal.'</td>
-<td>'.$tipe.'/'.$status.'</td>
+<td>'.$judul.'</td>';
+//$admin .='<td>'.getjumlahsoal($idujian).' / '.$jumlahsoal.'</td>';
+$admin .='<td>'.$persen.'</td>';
+$admin .='<td>'.$tipe.'/'.$status.'</td>
 <td>'.getnamaguru($userujian).'</td>
 ';
 if(($_SESSION['UserName']==$userujian)){
