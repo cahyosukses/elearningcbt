@@ -928,7 +928,8 @@ $admin .='<td>'.$tipe.'/'.$status.'</td>
 if(($_SESSION['UserName']==$userujian)){
 $editujian ='<a href="?pilih=ujian&amp;mod=yes&amp;aksi=del&amp;id='.$data['id'].'&amp;idmapel='.$idmapel.'" onclick="return confirm(\'Soal pada ujian tersebut akan ikut terhapus,Apakah Anda Yakin Ingin Menghapus Data Ini ?\')"><span class="btn btn-danger">Del</span></a>&nbsp;<a href="?pilih=ujian&amp;mod=yes&amp;aksi=edit&amp;id='.$data['id'].'&amp;idmapel='.$idmapel.'" onclick="return confirm(\'Edit Ujian hanya mengedit Tipe Soal Urut/Random dan Status Ujian, Apakah ingin melanjutkan ?\')"><span class="btn btn-warning">Edit</span></a>&nbsp;<a href="?pilih=ujian&amp;mod=yes&amp;aksi=addsoal&amp;idujian='.$data['id'].'&amp;id='.$idmapel.'"><span class="btn btn-success">Soal</span></a>';	
 }elseif($_SESSION['LevelAkses']=='Administrator'){
-$editujian ='<a href="?pilih=ujian&amp;mod=yes&amp;aksi=del&amp;id='.$data['id'].'&amp;idmapel='.$idmapel.'" onclick="return confirm(\'Soal pada ujian tersebut akan ikut terhapus,Apakah Anda Yakin Ingin Menghapus Data Ini ?\')"><span class="btn btn-danger">Del</span></a>&nbsp;<a href="?pilih=ujian&amp;mod=yes&amp;aksi=edit&amp;id='.$data['id'].'&amp;idmapel='.$idmapel.'" onclick="return confirm(\'Edit Ujian hanya mengedit Tipe Soal Urut/Random dan Status Ujian, Apakah ingin melanjutkan ?\')"><span class="btn btn-warning">Edit</span></a>&nbsp;<a href="?pilih=ujian&amp;mod=yes&amp;aksi=addsoal&amp;idujian='.$data['id'].'&amp;id='.$idmapel.'"><span class="btn btn-success">Soal</span></a>';	
+$editujian ='<a href="?pilih=ujian&amp;mod=yes&amp;aksi=del&amp;id='.$data['id'].'&amp;idmapel='.$idmapel.'" onclick="return confirm(\'Soal pada ujian tersebut akan ikut terhapus,Apakah Anda Yakin Ingin Menghapus Data Ini ?\')"><span class="btn btn-danger">Del</span></a>&nbsp;<a href="?pilih=ujian&amp;mod=yes&amp;aksi=edit&amp;id='.$data['id'].'&amp;idmapel='.$idmapel.'" onclick="return confirm(\'Edit Ujian hanya mengedit Tipe Soal Urut/Random dan Status Ujian, Apakah ingin melanjutkan ?\')"><span class="btn btn-warning">Edit</span></a>&nbsp;<a href="?pilih=ujian&amp;mod=yes&amp;aksi=addsoal&amp;idujian='.$data['id'].'&amp;id='.$idmapel.'"><span class="btn btn-success">Soal</span>&nbsp;';	
+$listening = '<a href="?pilih=ujian&amp;mod=yes&amp;aksi=editlistening&amp;idujian='.$data['id'].'&amp;id='.$idmapel.'"><span class="btn btn-success">--</span></a>';
 
 }
 
@@ -939,7 +940,7 @@ $test = '<a href="?pilih=ujian&amp;mod=yes&amp;aksi=testujian&amp;idujian='.$dat
 $test = '';
 }
 $admin .='
-<td>'.$editujian.'&nbsp;'.$test.'</td>
+<td>'.$editujian.'&nbsp;'.$listening.'&nbsp;'.$test.'</td>
 </tr>';
 $no++;
 }
