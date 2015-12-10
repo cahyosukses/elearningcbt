@@ -157,7 +157,7 @@ $admin .='<tr>
 <td>'.$data['mapel'].'</td>
 <td>';
 if($cekjmlujian>0){
-$admin .='<a href="?pilih=ujian&amp;mod=yes&amp;aksi=listujian&amp;id='.$data['id'].'"><span class="btn btn-primary">Ujian('.$cekjmlujian.')</span></a>';
+$admin .='<a href="?pilih=ujian&amp;mod=yes&amp;aksi=listujian&amp;id='.$data['id'].'"><span class="btn btn-primary">Mulai</span></a>';
 }else{
 $admin .='<a href="#"><span class="btn btn-danger">Kosong</span></a>';
 }
@@ -208,7 +208,7 @@ $jumlahsoal=$data['jumlahsoal'];
 $tipe=$data['tipe'];
 $status=$data['status'];
 $tipeujian=$data['tipeujian'];
-$test = '<a href="?pilih=ujian&amp;mod=yes&amp;aksi=testujian&amp;idujian='.$idujian.'&amp;id='.$idmapel.'"><span class="btn btn-success">Mulai</span></a>';
+$test = '<a href="?pilih=ujian&amp;mod=yes&amp;aksi=testujian&amp;idujian='.$idujian.'&amp;id='.$idmapel.'"><span class="btn btn-success">Mulai Test</span></a>';
 $kembali ="<a href='?pilih=ujian&mod=yes'><span class='btn btn-primary'>KEMBALI</span></a>";
 $admin .= '<tr>
 		<td></td>

@@ -491,7 +491,8 @@ $admin.='
 		<td>:</td>
 <td><select name="tipejawaban" class="form-control" required>';
 $admin .= '<option value="a,b,c,d,e" selected> A - E </option>';
-//$admin .= '<option value="a,b,c,d"> A - D </option>';
+$admin .= '<option value="a,b,c,d"> A - D </option>';
+$admin .= '<option value="a,b,c"> A - C </option>';
 $admin .='</select></td>
 	</tr>';
 $admin .= "	<tr>
