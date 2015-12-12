@@ -403,12 +403,17 @@ $status     		= $_POST['status'];
 $idmapel     		= $_POST['idmapel'];	
 $petunjuk     		= addslashes($_POST['petunjuk']);	
 $tipeujian     		= $_POST['tipeujian'];	
+$namafile_name 	= $_FILES['listening']['name'];	
+
+    if ($namafile_name){
+		@copy($_FILES['listening']['tmp_name'], $temp.$namafile_name);
+	}
 if (!$judul)  	$error .= "Error: Silahkan Isi Judul<br />";
 if ($koneksi_db->sql_numrows($koneksi_db->sql_query("SELECT * FROM ujian WHERE  judul='$judul'")) > 0) $error .= "Error: Ujian dengan Judul $judul sudah terdaftar , silahkan ulangi.<br />";
 if ($error){
 $admin .= '<div class="error">'.$error.'</div>';
 }else{
-$hasil  = mysql_query( "INSERT INTO `ujian` VALUES ('','$tgl','$judul','$pointbenar','$pointsalah','$pointkosong','$tipe','$jumlahsoal','$tipejawaban','$status','$idmapel','$petunjuk','$tipeujian','$user')" );
+$hasil  = mysql_query( "INSERT INTO `ujian` VALUES ('','$tgl','$judul','$pointbenar','$pointsalah','$pointkosong','$tipe','$jumlahsoal','$tipejawaban','$status','$idmapel','$petunjuk','$tipeujian','$namafile_name','$user')" );
 if($hasil){
 $admin .= '<div class="sukses"><b>Berhasil di Buat.</b></div>';
 		$style_include[] ='<meta http-equiv="refresh" content="1; url=admin.php?pilih=ujian&aksi=&aksi=listujian&mod=yes&id='.$idmapel.'" />'; 
@@ -458,7 +463,7 @@ foreach ($arr3 as $kk=>$vv){
 $sel3 .= '</select>';   
 $admin .='<div class="panel-heading"><b>Tambah Ujian</b></div>';
 $admin .= '
-<form method="post" action="" class="form-inline" id="posts">
+<form method="post" action="" class="form-inline" id="posts" enctype ="multipart/form-data">
 <table class="table table-striped table-hover">';
 $admin.='
 		<tr>
@@ -495,6 +500,9 @@ $admin .= '<option value="a,b,c,d"> A - D </option>';
 $admin .= '<option value="a,b,c"> A - C </option>';
 $admin .='</select></td>
 	</tr>';
+	$admin .="<tr><td>File Listening </td>
+		<td></td>
+<td><input type='file' name='listening'> *bila tipe ujian listening harus ada, file harus berformat mp3</td></tr>";
 $admin .= "	<tr>
 		<td></td>
 		<td></td>
@@ -929,7 +937,7 @@ if(($_SESSION['UserName']==$userujian)){
 $editujian ='<a href="?pilih=ujian&amp;mod=yes&amp;aksi=del&amp;id='.$data['id'].'&amp;idmapel='.$idmapel.'" onclick="return confirm(\'Soal pada ujian tersebut akan ikut terhapus,Apakah Anda Yakin Ingin Menghapus Data Ini ?\')"><span class="btn btn-danger">Del</span></a>&nbsp;<a href="?pilih=ujian&amp;mod=yes&amp;aksi=edit&amp;id='.$data['id'].'&amp;idmapel='.$idmapel.'" onclick="return confirm(\'Edit Ujian hanya mengedit Tipe Soal Urut/Random dan Status Ujian, Apakah ingin melanjutkan ?\')"><span class="btn btn-warning">Edit</span></a>&nbsp;<a href="?pilih=ujian&amp;mod=yes&amp;aksi=addsoal&amp;idujian='.$data['id'].'&amp;id='.$idmapel.'"><span class="btn btn-success">Soal</span></a>';	
 }elseif($_SESSION['LevelAkses']=='Administrator'){
 $editujian ='<a href="?pilih=ujian&amp;mod=yes&amp;aksi=del&amp;id='.$data['id'].'&amp;idmapel='.$idmapel.'" onclick="return confirm(\'Soal pada ujian tersebut akan ikut terhapus,Apakah Anda Yakin Ingin Menghapus Data Ini ?\')"><span class="btn btn-danger">Del</span></a>&nbsp;<a href="?pilih=ujian&amp;mod=yes&amp;aksi=edit&amp;id='.$data['id'].'&amp;idmapel='.$idmapel.'" onclick="return confirm(\'Edit Ujian hanya mengedit Tipe Soal Urut/Random dan Status Ujian, Apakah ingin melanjutkan ?\')"><span class="btn btn-warning">Edit</span></a>&nbsp;<a href="?pilih=ujian&amp;mod=yes&amp;aksi=addsoal&amp;idujian='.$data['id'].'&amp;id='.$idmapel.'"><span class="btn btn-success">Soal</span>&nbsp;';	
-$listening = '<a href="?pilih=ujian&amp;mod=yes&amp;aksi=editlistening&amp;idujian='.$data['id'].'&amp;id='.$idmapel.'"><span class="btn btn-success">--</span></a>';
+
 
 }
 
@@ -940,7 +948,7 @@ $test = '<a href="?pilih=ujian&amp;mod=yes&amp;aksi=testujian&amp;idujian='.$dat
 $test = '';
 }
 $admin .='
-<td>'.$editujian.'&nbsp;'.$listening.'&nbsp;'.$test.'</td>
+<td>'.$editujian.'&nbsp;'.$test.'</td>
 </tr>';
 $no++;
 }
