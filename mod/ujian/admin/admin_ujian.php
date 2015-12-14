@@ -137,6 +137,25 @@ $admin .= '</ol></div></div>';
 
 $admin .='<div class="panel">';
 
+if($_GET['aksi']== 'dellistening'){    
+	global $koneksi_db;    
+	$id     = int_filter($_GET['id']);   
+	$idmapel     = int_filter($_GET['idmapel']);   	
+
+	$hasil = $koneksi_db->sql_query( "SELECT * FROM ujian WHERE id='$id'" );
+	$data = mysql_fetch_array($hasil);
+    $listening =  $data['listening'];		
+    $uploaddir2 = $temp . $listening; 
+	unlink($uploaddir2);	
+	
+	$hasil = $koneksi_db->sql_query("update `ujian`set listening ='' WHERE `id`='$id'");    
+	if($hasil){    
+		$admin.='<div class="sukses">File Listening berhasil dihapus! .</div>';    
+		$style_include[] ='<meta http-equiv="refresh" content="2; url=admin.php?pilih=ujian&mod=yes&aksi=edit&id='.$id.'&idmapel='.$idmapel.'" />';    
+	}
+}
+
+
 if($_GET['aksi']==""){
 if($_SESSION['LevelAkses']=='Guru'){
 $hasil = $koneksi_db->sql_query( "SELECT * FROM mapel where id='$mapel'  order by mapel asc" );
@@ -239,7 +258,7 @@ $error = "Soal yang terbentuk lebih besar dari jumlah Soal yang akan di Edit.<br
 if ($error){
 $admin .= '<div class="error">'.$error.'</div>';
 }else{
-if ($namafile_name){
+if ($namafile_name<>''){
 	$hasil = $koneksi_db->sql_query( "SELECT * FROM ujian WHERE id='$id'" );
 	$data = mysql_fetch_array($hasil);
     $listening =  $data['listening'];		
@@ -323,7 +342,7 @@ $sel3 .= '</select>';
 
 $admin .='<div class="panel-heading"><b>Edit Ujian</b></div>';
 $admin .= '
-<form method="post" action="" class="form-inline" id="posts">
+<form method="post" action="" class="form-inline" id="posts" enctype ="multipart/form-data">
 <table class="table table-striped table-hover">';
 $admin.='
 		<tr>
@@ -372,7 +391,7 @@ $admin .='<tr>
 <td>File Listening ( Lama )</td>
 <td></td>
 <td>
-<audio src="'.$filelistening.'" controls="true" loop="true" autoplay="true"></audio><br>
+<audio src="'.$filelistening.'" controls="true" loop="true" autoplay="false"></audio> <a href="admin.php?pilih=ujian&mod=yes&aksi=dellistening&id='.$id.'&idmapel='.$idmapel.'" onclick="return confirm(\'File Listening pada ujian tersebut akan ikut terhapus,Apakah Anda Yakin Ingin Menghapus File Ini ?\')"><span class="btn btn-danger"><i class="icon icon_blocked"></i></span></a><br>
 '.$filelistening.'
 </td>
 </tr>';
@@ -1056,6 +1075,7 @@ $status =$data2['status'];
 $pointbenar =$data2['pointbenar'];
 $pointsalah =$data2['pointsalah'];
 $pointkosong =$data2['pointkosong'];
+$filelistening =$data2['listening'];
 if($petunjuk){
 $petunjukumum = "
 <tr><td colspan='6'>
@@ -1063,6 +1083,11 @@ $petunjukumum = "
 <br>$petunjuk
 </td></tr>
 ";
+if($filelistening<>''){
+$listeningaudio .='<tr><td colspan="6">
+<audio src="mod/ujian/download/'.$filelistening.'" controls="true" loop="false" autoplay="false"></audio></td>
+</tr>';
+}
 }
 
 $timercountdown = '<tr><td colspan="6"><div id="future_date"></div></td></tr>';
@@ -1093,7 +1118,7 @@ $admin .= '
 		<td>'.konversi_detik($detik).'</td>
 	</tr>';
 $admin .= '
-	'.$petunjukumum.''.$timercountdown.'
+	'.$petunjukumum.''.$timercountdown.''.$listeningaudio.'
 </table>';
 $tipejawaban = getjumlahjawaban($idujian);
 $jawaban = explode(",", $tipejawaban);
