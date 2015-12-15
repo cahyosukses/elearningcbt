@@ -265,6 +265,7 @@ if ($namafile_name<>''){
     $uploaddir2 = $temp . $listening; 
 	unlink($uploaddir2);	
 @copy($_FILES['listening']['tmp_name'], $temp.$namafile_name);
+$tipe='urut';
 $hasil  = mysql_query( "update `ujian` set tgl = '$tgl',judul = '$judul',tipe = '$tipe',status='$status',jumlahsoal='$jumlahsoal',pointbenar='$pointbenar',pointsalah='$pointsalah',pointkosong='$pointkosong',petunjuk='$petunjuk',tipeujian='$tipeujian',listening='$namafile_name' where id='$id'" );
 	}else{
 $hasil  = mysql_query( "update `ujian` set tgl = '$tgl',judul = '$judul',tipe = '$tipe',status='$status',jumlahsoal='$jumlahsoal',pointbenar='$pointbenar',pointsalah='$pointsalah',pointkosong='$pointkosong',petunjuk='$petunjuk',tipeujian='$tipeujian' where id='$id'" );
@@ -469,6 +470,9 @@ if ($koneksi_db->sql_numrows($koneksi_db->sql_query("SELECT * FROM ujian WHERE  
 if ($error){
 $admin .= '<div class="error">'.$error.'</div>';
 }else{
+if ($namafile_name){
+		$tipe='urut';
+	}
 $hasil  = mysql_query( "INSERT INTO `ujian` VALUES ('','$tgl','$judul','$pointbenar','$pointsalah','$pointkosong','$tipe','$jumlahsoal','$tipejawaban','$status','$idmapel','$petunjuk','$tipeujian','$namafile_name','$user')" );
     if ($namafile_name){
 		@copy($_FILES['listening']['tmp_name'], $temp.$namafile_name);
