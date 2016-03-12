@@ -607,7 +607,7 @@ $admin .= '
 		<td>'.$judul.'</td>
 		<td>Jumlah Soal</td>
 		<td>:</td>
-		<td>'.$jumlahsoal.'</td>
+		<td>'.getjumlahsoal($idujian).' / '.$jumlahsoal.'</td>
 	</tr>
 	<tr>
 		<td>Mata Pelajaran</td>
@@ -694,40 +694,43 @@ $admin.="
 	</tr>";
 $admin.="
 	<tr>
+		<td>Jawaban</td>
+		<td></td>
+		<td>$sel</td>
+	</tr>";
+$admin.="
+	<tr>
 		<td>Pilihan</td>
 		<td></td>
 		<td>";
 		$no=1;
 for ($i = 0; $i < $jml_jawaban; $i++) {
-/*
+
 $admin .="
     <div class='input-group'>
       <div class='input-group-addon'>$jawaban[$i].</div><input type='text' name='pilihan$no' class='form-control'required /></div>";
-	  */
+	  
+	  /*
 $admin .="
     <div class='input-group'>
       <div class='input-group-addon'>$jawaban[$i].</div>	  
 	  <textarea name='pilihan$no' id='textareas$no'></textarea></div>";
+	  */
 $no++;
 }
 $admin .="
 <input type='hidden' name='tot' value='$no' />";
 $admin .="</td>
 	</tr>";
-$admin.="
-	<tr>
-		<td>Jawaban</td>
-		<td></td>
-		<td>$sel</td>
-	</tr>";
+
 $admin .="<tr><td><label><b>File Materi  </b></label></td>
 		<td></td>
 <td><input type='file' name='gambar'></td></tr>";
 $admin .="
 <tr><td></td><td></td><td>
-<input type='hidden' name='idujian' value='$idujian'>
-<input type='submit'class='btn btn-success' value='Simpan' name='submit'> ";
-$admin.="<a href='?pilih=ujian&mod=yes&aksi=listujian&id=$idmapel'><span class='btn btn-primary'>BACK</span></a>";	
+<input type='hidden' name='idujian' value='$idujian'>";
+$admin.="<a href='?pilih=ujian&mod=yes&aksi=addsoal&idujian=$idujian&id=$idmapel'><span class='btn btn-primary'>BACK</span></a>";
+$admin .="&nbsp;&nbsp;<input type='submit'class='btn btn-success' value='Simpan' name='submit'> ";
 $admin.="
 </td>";
 $admin.="</tr></table>
@@ -754,7 +757,7 @@ $admin .= '
 		<td>'.$judul.'</td>
 		<td>Jumlah Soal</td>
 		<td>:</td>
-		<td>'.$jumlahsoal.'</td>
+		<td>'.getjumlahsoal($idujian).' / '.$jumlahsoal.'</td>
 	</tr>
 	<tr>
 		<td>Mata Pelajaran</td>
@@ -820,16 +823,16 @@ $namafile_name 	= $_FILES['gambar']['name'];
 }
 
 /******************************/
+$idsoal     = int_filter($_GET['idsoal']);
 $idujian     = int_filter($_GET['idujian']);
 $tipejawaban = getjumlahjawaban($idujian);
 $jawaban = explode(",", $tipejawaban);
 $jml_jawaban = count($jawaban);
-$idsoal     = int_filter($_GET['idsoal']);
-$hasil =  $koneksi_db->sql_query( "SELECT * FROM soal where id='$idsoal'" );
+$hasil =  $koneksi_db->sql_query( "SELECT * FROM soal where id = '$idsoal'" );
 $data = $koneksi_db->sql_fetchrow($hasil);
-$konten=$data['soal'];
+$soal=$data['soal'];
 $kunci=$data['kunci'];
-$pilihansoal = explode("#", $data["pilihan"]);
+$pilihansoal = explode("#", $data['pilihan']);
 $jml_pil = count($pilihansoal);
 /**/
 $sel = '<select name="kunci" class="form-control" required>';
@@ -851,7 +854,7 @@ $admin.="
 	<tr>
 		<td>Soal</td>
 		<td></td>
-		<td><textarea name='konten' id='textarea1'>$konten</textarea></td>
+		<td><textarea name='konten'>$soal</textarea></td>
 	</tr>";
 $admin.="
 	<tr>
@@ -861,15 +864,17 @@ $admin.="
 		$no=1;
 for ($i = 0; $i < $jml_jawaban; $i++) {
 	
-	/*
+$pilihan = striptags($pilihansoal[$i]);
 $admin .="
     <div class='input-group'>
-      <div class='input-group-addon'>$jawaban[$i].</div><input type='text' name='pilihan$no' class='form-control'required value='$pilihansoal[$i]' /></div>";
-	  */
-	  $admin .="
+      <div class='input-group-addon'>$jawaban[$i].</div><input type='text' name='pilihan$no' class='form-control'required value='$pilihan' /></div>";
+	  
+	  /*
+	  $admin .="$pilihansoal[$i]
     <div class='input-group'>
       <div class='input-group-addon'>$jawaban[$i].</div>	  
 	  <textarea name='pilihan$no' id='textareas$no'>$pilihansoal[$i]</textarea></div>";
+	  */
 $no++;
 }
 $admin .="
@@ -900,10 +905,10 @@ $admin.="
 $admin .="
 <tr><td></td><td></td><td>
 <input type='hidden' name='idsoal' value='$idsoal'>
-<input type='hidden' name='idujian' value='$idujian'>
-<input type='submit'class='btn btn-success' value='Simpan' name='submit'> ";
+<input type='hidden' name='idujian' value='$idujian'>";
 $admin.="<a href='?pilih=ujian&mod=yes&aksi=addsoal&idujian=$idujian&id=$idmapel'><span class='btn btn-primary'>BACK</span></a>";
-	
+$admin .="&nbsp;&nbsp;<input type='submit'class='btn btn-success' value='Simpan' name='submit'> ";
+
 $admin.="
 </td>";
 $admin.="</tr></table>
@@ -1604,7 +1609,7 @@ $admin.="
 	<tr>
 		<td>Petunjuk</td>
 		<td></td>
-		<td><textarea name='petunjuk' id='textareal1'>$petunjuk</textarea></td>
+		<td><textarea name='petunjuk' id='textarea1'>$petunjuk</textarea></td>
 	</tr>";
 $admin.='<tr>
 		<td>Waktu (dalam detik)</td>
