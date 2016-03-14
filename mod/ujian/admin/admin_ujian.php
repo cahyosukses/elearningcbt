@@ -65,10 +65,17 @@ jQuery(function(){
         jQuery('.btnsoal').click(function(){
               jQuery('.targetDiv').hide();
               jQuery('#div'+$(this).attr('target')).show();
+			  
         });
+		$('#foobar input[type=radio]').change(function(){
+		jQuery('#soal'+$(this).attr('target').class);	
+      alert ( $(this).attr('target') ) 
+      
+      });
 });
 </script>
 js;
+
 if ($_GET['aksi']== 'testujian') {
 date_default_timezone_set('Asia/Jakarta');
 $detik=getwaktu();
@@ -1143,8 +1150,9 @@ $tombolsoal=1;
 $admin .='<table class="table">';
 $admin .='<tr><td><div id="buttons">  ';
 for ($j = 1; $j <= $total; $j++) {
+	
 $admin .='
-<a  class="btnsoal" target="'.$j.'">Soal '.$j.'</a>&nbsp;';
+<a id="soal" class="btnsoal" target="'.$j.'">Soal '.$j.'</a>&nbsp;';
 }
 
 $admin .='</div></td></tr>';
@@ -1174,11 +1182,13 @@ $gambar = '';
 $admin .='<div id="div'.$nosoal.'" class="targetDiv"style="display:none">
 <b>'.$nosoal.'</b>. 
 '.$gambar.''.$soal.'<br>';
+$admin .='<fieldset id="foobar">';
 for ($i = 0; $i < $jml_jawaban; $i++) {
 $admin .="<label class='radio'>
-  <input type='radio' name='jawabantest$nosoal' value='$jawaban[$i]'>
+<input type='radio' name='jawabantest$nosoal' value='$jawaban[$i]'target='$nosoal'>
 $jawaban[$i]. $pilihansoal[$i]</label>";
 }
+$admin.='</fieldset>';
 $admin.='</div>';
 
 $nosoal++;
