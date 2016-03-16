@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 29 Okt 2015 pada 14.34
+-- Generation Time: 16 Mar 2016 pada 10.31
 -- Versi Server: 5.6.16
 -- PHP Version: 5.5.11
 
@@ -68,11 +68,11 @@ CREATE TABLE IF NOT EXISTS `admin` (
 --
 
 INSERT INTO `admin` (`id`, `menu`, `url`, `mod`, `ordering`, `parent`, `icon`) VALUES
-(5, 'Master', '#', 0, 6, 0, 'plugins.png'),
+(5, 'Master', '#', 0, 6, 0, 'icon_drive'),
 (8, 'Menus', 'menu', 1, 1, 4, ''),
 (14, 'Admin User', 'user', 1, 1, 2, ''),
-(96, 'Kursus', '#', 0, 7, 0, 'posts.png'),
-(2, 'Settings', '#', 0, 2, 0, 'settings.png'),
+(96, 'E-Learning', '#', 0, 7, 0, 'icon_box-checked'),
+(2, 'Settings', '#', 0, 2, 0, ' icon_tools'),
 (77, 'Kelas', 'kelas', 1, 1, 5, ''),
 (79, 'Siswa', 'importsiswa', 1, 2, 5, ''),
 (84, 'Mata Pelajaran', 'mapel', 1, 3, 5, ''),
@@ -137,7 +137,7 @@ CREATE TABLE IF NOT EXISTS `kelas` (
   `id` int(2) NOT NULL AUTO_INCREMENT,
   `kelas` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=48 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=36 ;
 
 --
 -- Dumping data untuk tabel `kelas`
@@ -488,7 +488,8 @@ INSERT INTO `kelas_isi` (`id`, `kelas`, `siswa`) VALUES
 (1060, '35', '16869'),
 (1061, '35', '16871'),
 (1062, '35', '16877'),
-(1063, '35', '16887');
+(1063, '35', '16887'),
+(1064, '25', 'kelas12');
 
 -- --------------------------------------------------------
 
@@ -519,15 +520,23 @@ CREATE TABLE IF NOT EXISTS `mapel` (
   `mapel` varchar(255) NOT NULL,
   `icon` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=15 ;
 
 --
 -- Dumping data untuk tabel `mapel`
 --
 
 INSERT INTO `mapel` (`id`, `mapel`, `icon`) VALUES
-(4, 'TIK', 'icon04.jpg'),
-(5, 'Kimia', '98dce83da57b0395e163467c9dae521b.jpg');
+(5, 'KIMIA', '98dce83da57b0395e163467c9dae521b.jpg'),
+(6, 'BAHASA INDONESIA', 'c16a5320fa475530d9583c34fd356ef5.jpg'),
+(7, 'BAHASA INGGRIS', '6ea9ab1baa0efb9e19094440c317e21b.jpg'),
+(8, 'MATEMATIKA', '9a1158154dfa42caddbd0694a4e9bdc8.jpg'),
+(9, 'FISIKA', 'b53b3a3d6ab90ce0268229151c9bde11.jpg'),
+(10, 'BIOLOGI', 'f899139df5e1059396431415e770c6dd.jpg'),
+(11, 'GEOGRAFI', '43ec517d68b6edd3015b3edc9a11367b.jpg'),
+(12, 'EKONOMI', '8613985ec49eb8f757ae6439e879bb2a.jpg'),
+(13, 'SOSIOLOGI', 'e2ef524fbf3d9fe611d5a8e90fefdc9c.jpg'),
+(14, 'UJIAN SIM', 'ea5d2f1c4608232e07d3aa3d998e5135.jpg');
 
 -- --------------------------------------------------------
 
@@ -623,11 +632,11 @@ CREATE TABLE IF NOT EXISTS `menu_guru` (
 --
 
 INSERT INTO `menu_guru` (`id`, `menu`, `url`, `ordering`, `parent`, `icon`) VALUES
-(2, 'Change Password', 'admin.php?pilih=user&mod=yes&aksi=change', 1, 1, ''),
-(1, 'Account', '#', 1, 0, 'settings.png'),
+(2, 'Ubah Password', 'admin.php?pilih=ubahpassword&mod=yes', 1, 1, ''),
+(1, 'Akun', '#', 1, 0, 'icon_profile'),
 (26, 'Photo', 'admin.php?pilih=user&mod=yes&aksi=photo', 3, 1, ''),
 (25, 'Profil', 'admin.php?pilih=user&mod=yes&aksi=profil', 2, 1, ''),
-(23, 'E-Learning', '#', 1, 0, 'posts.png'),
+(23, 'E-Learning', '#', 1, 0, 'icon_box-checked'),
 (24, 'Latihan Ujian', 'admin.php?pilih=ujian&mod=yes', 2, 23, '');
 
 -- --------------------------------------------------------
@@ -652,10 +661,10 @@ CREATE TABLE IF NOT EXISTS `menu_siswa` (
 --
 
 INSERT INTO `menu_siswa` (`id`, `menu`, `url`, `ordering`, `parent`, `icon`) VALUES
-(2, 'Change Password', 'admin.php?pilih=user&mod=yes&aksi=change', 1, 1, ''),
-(1, 'Account', '#', 1, 0, 'settings.png'),
+(2, 'Ubah Password', 'admin.php?pilih=ubahpassword&mod=yes', 1, 1, ''),
+(1, 'Akun', '#', 1, 0, 'icon_profile'),
 (18, 'Latihan Ujian', 'admin.php?pilih=ujian&mod=yes', 3, 19, ''),
-(19, 'E-Learning', '#', 1, 0, 'posts.png');
+(19, 'E-Learning', '#', 1, 0, 'icon_box-checked');
 
 -- --------------------------------------------------------
 
@@ -833,17 +842,73 @@ CREATE TABLE IF NOT EXISTS `soal` (
   `kunci` enum('a','b','c','d','e') NOT NULL,
   `files` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=88 ;
 
 --
 -- Dumping data untuk tabel `soal`
 --
 
 INSERT INTO `soal` (`id`, `ujian`, `soal`, `pilihan`, `kunci`, `files`) VALUES
-(2, 33, 'Dibawah ini diberikan teori tentang atom :<br />I. &nbsp; Atom adalah bola yang netral dengan muatan tersebar ke seluruh bagian <br />II. &nbsp;Dalam atom ada inti dan elektron bergerak mengelilingi inti pada tingkat energi yang dimiliki<br />III. Atom adalah bola yang sangat kecil, keras dan tidak dapat pecah<br />IV. Dalam atom terdapat inti dan elektron bergerak mengelilingi inti pada orbital-orbital tertentu<br />V. &nbsp;Dalam atom ada inti dan elektron mengelilingi inti<br />\r\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Pernyataan tentang atom tersebut merupakan teori atom paling akhir (Modern) adalah&hellip;</p>', 'I#II#III#IV#V', 'a', ''),
-(3, 33, 'HCl dan NH<sub>3</sub>', '<span lang="EN-US">HCl dan NH<sub>3</sub></span>#<span lang="EN-US">HCl dan NH<sub>3</sub></span>#<span lang="EN-US">HCl dan NH<sub>3</sub></span>#<span lang="EN-US">HCl dan NH<sub>3</sub></span>#<span lang="EN-US">HCl dan NH<sub>3</sub></span>', 'a', ''),
-(4, 34, 'jawaban A benar', 'A#B#C#D#E', 'a', ''),
-(5, 35, 'jawaban c Benar', 'A#B#C#D#E', 'c', '');
+(26, 39, '<span>Fungsi Marka jalan adalah :</span><br /><span>a. Untuk memberi batas jalan agar jalan terlihat jelas oleh pemakai&nbsp;</span><span>jalan Yang sedang berlalu lintas dijalan.</span><br /><span>b. Untuk menambah dan mengurangi kecepatan pemakai jalan yang Berlalu lintas dijalan.</span><br /><span>c. Untuk mengatur lalu lintas atau memperingatkan atau menuntun</span><span>&nbsp;Pemakai jalan dalam berlalu lintas di jalan</span>', 'A#B#C', 'c', ''),
+(27, 39, '<span>Yang bukan merupakan Marka Lambang adalah :</span><br /><span>a. Segi tiga</span><br /><span>b. Gambar</span><br /><span>c. Panas</span>', 'A#B#C', 'c', ''),
+(28, 39, '<span><span>&nbsp;&nbsp;</span></span><span>Rambu dengan warna dasar kuning dengan lambang atau tulisan&nbsp;Berwarna hitam merupakan<br />a. Rambu petunjuk&nbsp;<br />b. Rambu peringatan<br />c. Rambu perintah</span>', 'A#B#C', 'a', ''),
+(29, 39, '<span>Garis ganda yang terdiri dari garis utuh dan garis putus-putus</span><span>&nbsp;termasuk :</span><br /><span>a. Marka membujur</span><br /><span>b. Marka melintang</span><br /><span>c. Marka serong</span>', 'A#B#C', 'a', ''),
+(30, 39, '<span>Anda berjalan dengan kecepatan kurang lebih 30 km per jam mendekati persimpangan yang diatur oleh lampu lalu lintas. Ketika lampu berubah dari warna hijau ke kuning, apa yang anda lakukan.</span><br /><span>a. Berhenti</span><br /><span>b. Jalan terus</span><br /><span>c. Bersiap-siap berhenti karena belum melewati garis berhenti</span>', 'A#B#C', 'c', ''),
+(31, 39, '<span><span></span></span><span>Apabila anda ingin berpindah jalur dengan aman, maka anda harus&nbsp;<br />a. Memberikan isyarat secara jelas dan tepat waktunya dengan<br />&nbsp; &nbsp; menggunakan petunjuk arah<br />b. Yakin bahwa tidak membahayakan pemakai jalan lain<br />c. Kedua jawaban diatas benar</span>', 'A#B#C', 'c', ''),
+(32, 39, '<span>Pengemudi diharuskan memberikan isyarat dengan petunjuk arah yang berkedip pada waktu :</span><br /><span>a. Akan berjalan atau akan mengubah arah ke kanan</span><br /><span>b. Akan berjalan atau akan berhenti</span><br /><span>c. Akan merubah arah ke kiri atau ke kanan.</span>', 'A#B#C', 'c', ''),
+(33, 39, '<span>Teknik mengemudikan sepeda motor yang baik pada saat</span><span>&nbsp;gerakan membelok adalah :&nbsp;</span><br /><span>a. Menambah kecepatan pada jarak pendek sebelum mencapai&nbsp;</span><span>tikungan</span><br /><span>b. Memiringkan sepeda motor kearah pusat tikungan dan tetap&nbsp;</span><span>dalam&nbsp;posisi tegak</span><br /><span>c. Memiringkan sepeda motor dan pengemudi kearah pusat</span><span>&nbsp;tikungan&nbsp;yang sesuai dengan kecepatan dan ketajaman tikungan</span>', 'A#B#C', 'c', ''),
+(34, 39, '<span>Apa kegunaan bahu jalan&nbsp;</span><br /><span>a. Untuk pejalan Kaki</span><br /><span>b. Untuk berhenti dan parkir</span><br /><span>c. Untuk berhenti dalam keadaan darurat</span>', 'A#B#C', 'b', ''),
+(35, 39, '<span>Apa kegunaan helm ?&nbsp;</span><br /><span>a. Untuk melindungi pandangan pengendara, melindungi&nbsp;</span><span>pengendara&nbsp;dari Panas dan hujan</span><br /><span>b. Untuk melindungi kepala dari benturan atau gesekan yang</span><span>&nbsp;mengakibatkan luka di kepala</span><br /><span>c. Untuk menambah penampilan pengendara dan merupakan</span><span>&nbsp;kelengkapan bagi sepeda motor</span>', 'A#B#C', 'b', ''),
+(37, 42, 'Perhatikan dengan cermat beberapa pernyataan berikut ini:<br />1. Memaparkan sesuatu hal apa adanya<br />2. Tidak menghakimi benar salahnya suatu hal<br />3. Menggunakan data-data sekunder<br />4. Peneliti bisa mengurangi kesalahan yang diteliti<br />Dari pernyataan-pernyataan tersebut yang merupakan ciri sosiologi ditunjukkan dengan nomor&hellip;.', '1 dan 2#1 dan 3#2 dan 3#2 dan 4#3 dan 4', 'a', ''),
+(38, 42, 'Semua hasil observasi dalam sosiologi disusun secara sistematis supaya orang yang membaca dapat memahami pemikiran para tokoh atau pemikiran penulis. Hal ini menunjukkan bahwa sosiologi sebagai ilmu pengetahuan memiliki ciri&hellip;.', 'Empiris<br /><br />#Kategoris<br /><br />#Kumulatif<br /><br />#Teoritis<br /><br />#Nonetis', 'd', ''),
+(39, 42, 'Dilakukan sebuah penelitian mengenai manfaat sebuah terminal dengan cara melakukan pengamatan sekilas dan wawancara dengan masyarakat sekitar. Metode yang dilakukan untuk mengumpulkan data tersebut adalah&hellip;./>', 'Observasi dan dokumentasi<br /><br />#Angket dan observasi<br /><br />#Dokumentasi dan wawancara<br /><br />#Observasi dan wawancara<br /><br />#Dokumentasi dan kuesioner', 'd', ''),
+(40, 42, 'Rini seorang pelajar mengadakan suatu riset mendalam untuk mencari solusi atas permasalahan sosial di sekitar tempat tinggalnya. Dalam kasus tersebut, merupakan kegunaan sosiologi dalam&hellip;.', 'Pembangunan<br /><br />#Masyarakat luas<br /><br />#Lingkungan<br /><br />#Penelitian<br /><br />#Pemecahan masalah', 'e', ''),
+(41, 42, 'Maraknya kasus korupsi yang tidak pernah mendapat sanksi yang tegas menyebabkan penyimpangan itu tumbuh subur di hampir semua lapisan masyarakat. Ini termasuk masalah sosial yang didorong oleh faktor&hellip;.', 'Psikologi<br /><br />#Sosiologi<br /><br />#Biologi<br /><br />#Politik<br /><br />#Budaya', 'e', ''),
+(42, 42, 'Sebagai seorang artis yang punya jadwal mengisi acara di banyak tempat, selalu membawa Ipad untuk membantu mengingat jadwal kerja dan berbagai hal yang berkaitan dengan keperluan show-nya. Ini menunjukkan bahwa Ipad baginya memiliki nilai....', 'Vital<br /><br />#Logika<br /><br />#Material<br /><br />#Estetika<br /><br />#Spiritual', 'a', ''),
+(43, 42, 'Perilaku berjabat tangan saat bertemu teman atau sahabat, menghormati orang yang lebih tua, makan dengan tangan kanan, berpakaian bagus pada waktu pesta serta berjalan kaki di jalur kiri merupakan contoh dari norma&hellip;.', 'Sosial<br /><br />#Tata kelakuan<br /><br />#Custom<br /><br />#Kelaziman<br /><br />#Folkways', 'b', ''),
+(44, 42, 'Perhatikan data-data berikut ini!<br />1. Tahap penerimaan kolektif (generalized other)<br />2. Tahap persiapan (preparatory stage)<br />3. Tahap siap bertindak (game stage)<br />4. Tahap meniru (play stage)<br />Tahapan sosialisasi dalam pembentukan kepribadian dari awal sampai terakhir yang benar ditunjukkan dengan nomor&hellip;.', '2, 4, 3, dan 1<br /><br />#2, 4, 1, dan 3<br /><br />#4, 2, 3, dan 1<br /><br />#4, 3, 2, dan 1<br /><br />#3, 4, 1, dan 2', 'a', ''),
+(45, 42, 'Setiap hari siswa SMAK Frateran Surabaya harus sampai di sekolah sebelum pukul 06.45 pagi. Tahapan keteraturan sosial yang terjadi adalah&hellip;.', 'Keajegan<br /><br />#Pola<br /><br />#Order<br /><br />#Tertib sosial<br /><br />#Norma sosial', 'a', ''),
+(46, 42, 'Perhatikan data berikut ini!<br />1.Lembaga bersifat formal<br />2.Memiliki kurikulum<br />3.Berbentuk klasikal<br />4.Berfungsi untuk melestarikan kebudayaan antargenerasi<br />Ciri-ciri di atas merupakan karakteristik media sosialisasi&hellip;.', 'Peer group<br /><br />#Media massa<br /><br />#Masyarakat umum<br /><br />#Sekolah<br /><br />#Keluarga', 'd', ''),
+(47, 42, 'Setelah melihat iklan di televise, Rizky ingin membeli salah satu produk shampoo tersebut dengan harapan rambutnya dapat menjadi kuat dan tebal seperti model yang memperagakan iklan tersebut. Faktor yang mempengaruhi interaksi sosial pada kasus tersebut adalah&hellip;.', 'Identifikasi<br /><br />#Sugesti<br /><br />#Simpati<br /><br />#Empati<br /><br />#Motivasi', 'b', ''),
+(48, 42, 'Seorang investor asing ingin membangun perusahaan asing di Indonesia. Ia bekerjasama dengan pengusaha yang ada di Indonesia. Modal usaha berasal dari modal masing-masing yang digabungkan bersama untuk membangun perusahaan. Usaha investor asing ini dikenal dengan istilah&hellip;.', 'Bargaining<br /><br />#Cooptation<br /><br />#Joint venture<br /><br />#Coalition<br /><br />#Accommodation', 'c', ''),
+(50, 42, 'Seorang balita diberitakan telah mengonsumsi rokok setiap hari sejak ia berusia 3 tahun. Balita tersebut awalnya mencoba dari Sang Kakek yang juga gemar mengonsumsi rokok. Sekarang balita tersebut selalu menangis dan mengalami ketergantungan mengonsumsi rokok. Kejadian tersebu merupakan bentuk penyimpangan yang disebabkan oleh&hellip;.', 'Gaya hidup konsumtif<br /><br />#Gangguan jiwa atau mental<br /><br />#Dorongan ekonomi keluarga<br /><br />#Pengaruh pergaulan yang tidak baik<br /><br />#Sosialisasi keluarga yang tidak sempurna', 'e', ''),
+(51, 42, 'Kasus bom Bali yang menewaskan banyak orang jika ditinjau dari jumlah individunya termasuk dalam penyimpangan&hellip;.', 'Individu<br /><br />#Kelompok<br /><br />#Institusi<br /><br />#Primer<br /><br />#Formal', 'b', ''),
+(52, 42, 'Fungsi pengendalian sosial bagi pelaku pelanggaran melalui jalan gossip atau desas-desus yang beredar di masyarakat adalah&hellip;.', 'Menimbulkan rasa takut dengan menggunakan ancaman sanksi dan kekuasaan#Menciptakan sistem hukum<br /><br />#Memberikan hukuman bagi pelaku pelanggaran<br /><br />#Mempertebal keyakinan masyarakat tentang kebaikan norma<br /><br />#Mengembangkan rasa malu bila melakukan pelanggaran', 'e', ''),
+(53, 42, 'Beberapa kasus yang dapat ditemukan di kota-kota besar adalah masalah anak jalanan. Beberapa anak jalanan di kota besar menunjukkan adanya ketergantungan mengonsumsi lem, dengan cara dihirup. Efek samping yang timbul adalah adanya rasa tenang untuk sementara waktu, tetapi hal ini dapat merusak jaringan otak dan paru-paru si pengguna. Lembaga berikut ini berperan menanggulangi masalah tersebut secara preventif, kecuali&hellip;.', 'Lembaga agama<br /><br />#Lembaga keluarga<br /><br />#Lembaga pendidikan&nbsp;<br /><br />#Lembaga pengadilan<br /><br />#Lembaga media massa', 'd', ''),
+(54, 42, 'Perhatikan variabel berikut!<br />1. Lapisan-lapisan sosial atau stratifikasi sosial<br />2. Lembaga-lembaga sosial atau institusi sosial<br />3. Kaidah-kaidah atau norma-norma sosial<br />4. Kesenjangan sosial<br />5. Integrasi sosial<br />Unsur-unsur pokok struktur sosial ditunjukkan oleh nomor&hellip;.', '1, 2, dan 3<br /><br />#1, 2, dan 4<br /><br />#1, 3, dan 5<br /><br />#2, 4, dan 5<br /><br />#3, 4, dan 5', 'a', ''),
+(55, 42, 'Tawuran pelajar di Jakarta sudah sangat meresahkan warga.<br />Faktor utama yang melatarbelakangi terjadinya tawuran pelajar adalah&hellip;.', 'Kesenjangan fasilitas pendidikan yang diberikan kepada setiap pelajar<br /><br />#Kurangnya kebersamaan antarpelajar<br /><br />#Sikap in-group dan out-group yang terinternalisasi dalam diri setiap pelajar<br /><br />#Tidak adanya interaksi yang terjalin antarpelajar<br /><br />#Kurangnya pengetahuan para pelajar terhadap dampak tawuran', 'c', ''),
+(56, 42, 'Bentuk akomodasi secara majority rule terdapat pada peristiwa&hellip;.', 'Perselisihan antara dua kelompok sosial dapat terhenti ketika salah satu kelompok memutuskan mengalah<br /><br />#Pertentangan dalam diskusi dapat diatasi dengan cara pengambilan suara<br /><br />#Konflik antarsuku bangsa dapat diselesaikan dengan forum komunikasi antarsuku bangsa<br /><br />#Konflik antara suami dan istri diselesaikan melalui pengadilan agama<br /><br />#Perselisihan antara dua selebritas diselesaikan melalui jalur hukum', 'b', ''),
+(57, 42, 'Partai Ketela pada periode yang lalu memperoleh suara 55% dari seluruh warga desa yang memilih. Akan tetapi, pada tahun 2013 partai ketela hanya memperoleh 35%. Kondisi ini menunjukkan bahwa partai politik tersebut mengalami&hellip;.', 'Social role<br /><br />#Social sinking<br /><br />#Social mobility<br /><br />#Social climbing<br /><br />#Social stratification', 'b', ''),
+(58, 42, 'Dena yang berasal dari keluarga kurang mampu mempunyai cita-cita menjadi pengacara. Oleh karena itu Dena berusaha mengajukan beasiswa ke kampusnya supaya kuliahnya bisa terselesaikan. Dengan demikian, Dena mempunyai peluang untuk menjadi pengacara. Saluran mobilitas yang digunakan Dena adalah&hellip;.', 'Lembaga pemerintah<br /><br />#Organisasi profesi<br /><br />#Lembaga pendidikan<br /><br />#Organisasi politik<br /><br />#Organisasi kedokteran', 'c', ''),
+(59, 42, 'Sekelompok manusia disatukan atas dasar ikatan profesi yang sama, hubungan sosialnya bersifat kontraktual, dan memiliki kepentingan atau tujuan tertentu yang bersifat sementara, misalnya IDI, PERI, dan PWI. Contoh tersebut menggambarkan kesatuan sosial yang berbentuk&hellip;.', 'Gemeinschaft<br /><br />#Gesselschaft<br /><br />#Primary group<br /><br />#In group<br /><br />#Paguyuban', 'b', ''),
+(60, 42, 'Di Jakarta sering terjadi aksi demonstrasi yang dilakukan oleh kelompok buruh yang menuntut kenaikan gaji. Ketika hari buruh tiba, para buruh akan berkerumun membentuk suatu kelompok untuk melakukan demonstrasi. Penyebab terbentuknya kelompok pada kaum buruh yang berdemonstrasi adalah&hellip;.', 'Terjadinya pertemuan secara fisik<br /><br />#Persamaan kepentingan dan tujuan<br /><br />#Keinginan mendapat simpati pemerintah<br /><br />#Keinginan untuk menyatu dengan kelompok lain<br /><br />#Keinginan untuk berhubungan dengan manusia lain', 'b', ''),
+(61, 42, 'Dominasi kelompok satu terhadap kelompok lain semakin membuat masyarakat multikultural rentan mengalami konflik. Upaya meminimalkan terjadinya konflik dapat dilakukan dengan cara&hellip;.', 'Meningkatkan sikap toleransi serta penghormatan terhadap kaum minoritas agar terjadi keharmonisan<br /><br />#Menyeimbangkan jumlah kelompok minoritas dengan mayoritas agar tidak terjadi dominasi<br /><br />#Melemahkan kekuatan kelompok dominan agar tidak ada kesenjangan kekuatan<br /><br />#Memberikan ruang tersendiri agar kaum minoritas tidak merasa didominasi<br /><br />#Memberikan semangat agar moral kelompok minoritas terangkat', 'a', ''),
+(62, 42, 'Perhatikan pernyataan-pernyataan berikut!<br />1.Pembangunan jembatan dapat menghubungkan desa-desa yang terisolasi<br />2.Penemuan alat komunikasi yang mempermudah interaksi luar daerah<br />3.Penggalakan kembali program bike to work untuk menjaga lingkungan<br />4.Pembangunan jalan tol dapat memperlancar arus lalu lintas<br />Pernyataan di atas termasuk perubahan&hellip;.', 'Progres#Revolusi #Evolusi #Regres #Lambat', 'a', ''),
+(63, 43, 'Dalam perkembangan masyarakat ditemukan bahwa penyimpangan tidak hanya terjadi karena faktor lingkungan tetapi juga disebabkan oleh sifat manusia yang memiliki bibit untuk menyimpang. Hal ini menyebabkan adanya perkembangan teori dalam kajian perilaku menyimpang. Sebagai salah satu ilmu pengetahuan hal ini menunjukkan bahwa sosiologi memiliki ciri....', 'Empiris #Teoritis #Kumulatif #Nonetis #Metodologis', 'c', ''),
+(64, 43, 'Departemen Kajian Sosiologi Universitas Airlangga menyerahkan hasil temuannya yang ,menyatakan bahwa lebih dari 80% warga menghendaki agar Kebun Binatang Surabaya tidak ditutup atau dipindah karena merupakan ikon kota Surabaya. Dengan demikian diharapkan Pemkot akan segera menyelamatkan keberadaan KBS ini. Ini menunjukkan bahwa sosiologi memiliki fungsi....', 'Guru # Ahli riset #Konsultan kebijakan #Teknisi  #Penyalur/mediator aspirasi', 'c', ''),
+(65, 43, 'Indonesia dan Malaysia pernah terlibat konflik dimana Malaysia mengklaim lagu Rasa Sayange dan Reog Ponorogo sebagai salah satu warisan karya nenek moyangnya. Ini termasuk masalah sosial yang didorong faktor...', 'Ekonomi #Budaya #Biologis #Sosial #Politik', 'b', ''),
+(66, 43, 'Dalam mengatasi masalah kemiskinan pemerintah menciptakan iklim usaha yang mampu mendorong pengembangan UMKM secara sistematik, mandiri, dan berkelanjutan. Ini merupakan upaya pada aspek....', 'Struktural  #Pendidikan  #Kebudayaan  #Ekonomi  #Sosial', 'd', ''),
+(67, 43, 'Sebagai seorang Ustad yang punya jadwal mengisi acara dakwah di banyak tempat, Ustad Solmed selalu membawa Ipad untuk membantu mengingat jadwal dakwah dan menyimpan semua isi dakwah yang pernah disampaikannya. Ini menunjukkan bahwa Ipad baginya memiliki nilai....', 'Vital #Logika #Material#Estetika #Spiritual', 'a', ''),
+(68, 43, 'Dalam tahapan keteraturan sosial, keselarasan tindakan masyarakat dengan nilai dan norma sosial yang berlaku di masyarakat, disebut....', 'Pola #Order #Keajegan #Keteraturan sosial #Tertib sosial', 'e', ''),
+(69, 43, 'Edi diterima di SMA favorit di kotanya. Pada tahap awal, ia mengalami proses adaptasi yang didahului dengan mengganti pakaian putih biru menjadi putih abu-abu. Berdasarkan tahapannya, proses adaptasi tersebut merupakan bentuk sosialisasi yang bersifat...', 'Represif #Sekunder #Informal #Formal #Primer', 'd', ''),
+(70, 43, 'Ketika kita lahir masih belum mengenal tata sopan santun. Melalui proses sosialisasi, individu belajar untuk menjadi pribadi yang baik dalam berperilaku. Menjadi pribadi seperti yang dimaksudkan pada uraian tersebut merupakan...', 'Tujuan sosialisasi#Bentuk sosialisasi#Tahap sosialisasi#Tipe sosialisasi#Agen sosialisasi', 'a', ''),
+(71, 43, 'Cermati hal-hal berikut ini!<br />1. Menanamkan nilai dan norma yang dianut masyarakat<br />2. Membentuk kemampuan beradaptasi dengan lingkungan yang luas<br />3. Sarana pemenuhan kebutuhan hidup individu dan kelompok<br />4. Sebagai dasar pembentukan kepribadian seseorang<br />Berdasarkan pernyataan tersebut di atas yang termasuk peran sosialisasi sekunder dan sosialisasi primer adalah...', '1 dan 2#1 dan 3#1 dan 4#2 dan 3# 3 dan 4', 'c', ''),
+(72, 43, 'Pada masa remaja individu yang sedang melakukan pencarian jati diri sebagian besar melakukan proses imitasi terhadap tokoh idolanya yang sering mereka lihat melalui visualisasi televisi baik dalah hal tata rambut hingga fashionnya. Ini menunjukkan bahwa pada masa remaja sosialisasi individu lebih banyak dipengaruhi oleh media...', 'Keluarga#Teman sebaya#Sekolah#Media massa#Lingkungan kerja', 'd', ''),
+(73, 43, 'Interaksi sosial dapat terjadi karena beberapa hal berikut ini, kecuali...', 'Jumlah pelaku yang lebih dari satu orang#Diwariskan melalui proses belajar#Adanya komunikasi antarpelaku dengan menggunakan symbol atau lambang#Adanya suatu dimensi waktu meliputi masa lalu, masa kini, dan masa yang akan datang#Adanya tujuan yang hendak dicapai', 'b', ''),
+(74, 43, 'Sutandyo terkesima dengan ceramah dari salah seorang pemuka agama. Ia beranggapan semua hal yang dikatakan oleh pemuka agama tersebut benar dan sesuai dengan realitas. Interaksi tersebut dipengaruhi oleh faktor...', 'Simpati#Identifikasi#Imitasi#Empati#Sugesti', 'e', ''),
+(75, 43, 'Amin dan Amir terlibat perselisihan menyangkut pembagian harta warisan peninggalan Ayah mereka. Amin dan Amir sama &ndash; sama menginginkan bagian yang lebih besar. Setelah beberapa waktu, mereka akhirnya bersedia saling mengurangi tuntutannya serta membagi rata harta warisan tersebut. Bentuk akomodasi yang dilakukan oleh Amin dan Amir dalam upaya meredakan perselisihan di antara mereka adalah &hellip;', 'toleransi#kompromi#musyawarah mufakat#mediasi#konsiliasi', 'b', ''),
+(76, 43, 'Salah satu daya tarik wisata rohani di Surabaya adalah keberadaan Masjid Cheng Ho yang memiliki perpaduan arsitektur Timur Tengah dengan arsitektur Cina, dan ini menjadi salah satu ikon kebanggaan masyarakat Surabaya. Hal ini menunjukkan bahwa masyarakat Surabaya mengalami interaksi sosial bentuk....', 'Akomodasi#Akulturasi#Asimilasi#Asosiatif#Koalisi', 'b', ''),
+(77, 43, 'Tim SAR (Search And Rescue) dan relawan memberikan bantuan dalam pencarian anggota masyarakat yang menjadi korban musibah tanah longsor. Hubungan interaksi antara regu penolong dengan masyarakat yang mengalami bencana tersebut berbentuk...<br /><br />', 'Kontravensi#Disosiatif#Kompetisi#Oposisi#Kerjasama', 'e', ''),
+(78, 43, 'Seorang anak perempuan menjadi tomboy dan berperilaku menyimpang dengan mengikuti geng motor yang suka tawuran. Ia menjadi demikian karena di rumah ia tidak mendapatkan kasih sayang secara utuh. Ibunya pergi meninggalkan rumah karena tidak tahan dengan perlakuan kasar ayahnya. Berdasarkan kasus tersebut dapat disimpulkan bahwa penyimpangan terjadi karena...<br /><br /><br /><br /><br />', 'Adanya sosialisasi dari nilai-nilai sub kebudayaan yang menyimpang#Ikatan sosial yang berlainan#Sosialisasi yang tidak sempurna# Proses belajar yang menyimpang#Ketegangan antara kebudayaan dan struktur sosial', 'c', ''),
+(79, 43, 'Perhatikan perilaku menyimpang berikut!<br />1. Meminta sumbangan untuk menyantuni yatim piatu<br />2. Menerobos lampu merah di persimpangan jalan raya<br />3. memacu motor dengan kecepatan tinggi (ngebut) di sirkuit balap<br />4. Membuat contekan sebelum dilaksanakan ulangan akhir semester<br />Contoh di atas yang termasuk penyimpangan sekunder adalah...<br /><br />', '1 dan 2#1 dan 3#2 dan 3#2 dan 4#3 dan 4', 'd', ''),
+(80, 43, 'Proses sosialisasi tidak sempurna merupakan salah satu faktor penyebab terjadinya perilaku menyimpang. Pada lembaga primer, sosialisasi tidak sempurna seringkali terjadi karena...', 'Perceraian suami istri#Pertentangan agen sosialisasi#Pergolakan dalam lingkungan kerja#Perseteruan staf dalam lingkungan kerja#Perbedaan pendapat dalam membuat keputusan', 'a', ''),
+(81, 43, 'Dalam menyelesaikan kasus di masyarakat yang berwenang mengajukan tuntutan hukum adalah...', 'Polisi#Pengadilan#Pengadilan adat/masyarakat#Keluarga#Kejaksaan', 'e', ''),
+(82, 43, 'Suatu perusahaan membutuhkan karyawan baru dengan kualifikasi: wanita usia maksimal 29 tahun, lulusan S1 Sosiologi, IPK minimal 3,00 dan menguasai program Microsoft Office. Berdasarkan kualifikasi tersebut perusahaan menerima pekerjanya berdasarkan bentuk...', 'Stratifikasi sosial dan diferensiasi sosial#Diferensiasi sosial dan primordialisme#Primordialisme dan stratifikasi sosial#Etnosentrisme dan diferensiasi sosial#Sektarian dan primordialisme', 'a', ''),
+(83, 43, 'Perhatikan beberapa faktor sosial berikut ini!<br />1. Keinginan untuk melihat daerah lain<br />2. Merasa telah puas dengan keadaan yang ada sekarang<br />3. Individu yang berada di lapisan atas terbatas<br />4. Keterbelakangan sistem pendidikan<br />Yang merupakan faktor penghambat mobilitas sosial adalah...', '1 dan 2#1 dan 3#2 dan 3#2 dan 4#3 dan 4', 'd', ''),
+(84, 43, 'Prita dituduh mencemarkan nama baik salah satu rumah sakit ternama. Dia dijerat UU Informasi dan Transaksi Elektronik karena mengirim e-mail berisi keluh kesahnya tentang kesalahan diagnosis rumah sakit tersebut. Dari kasus ini nampak bahwa penyebab konfliknya adalah..', 'Perbedaan kepentingan kedua belah pihak#Kondisi yang saling bertolak belakang#Perbedaan prinsip dari kedua belah pihak#Pengaruh kultur kerja dan profesionalisme#Pengaruh teknologi komunikasi internet', 'a', ''),
+(85, 43, 'Berikut ini adalah bentuk kedudukan yang didapat seseorang dari pemberian suatu kelompok di dalam kehidupan masyarakatnya karena jasa, dalam kaitannya dengan mobilitas sosial adalah...', 'Social status#Ascribed status#Achieved status#Assigned status#Alternative status', 'd', ''),
+(86, 43, 'Dalam mobilitas sosial vertikal antargenerasi dapat menimbulkan konflik generasi, hal ini disebabkan oleh...<br /><br /><br /><br /><br />', 'Generasi muda mengambil alih kepemimpinan generasi tua#Anak muda berhasil menjadi pelopor pembangunan di desa#Seorang anak dari keluarga sederhana menjadi sarjana#Anak pengrajin mengembangkan usaha orang tuanya# Anak pegawai rendahan bekerja sebagai pramuniaga', 'a', ''),
+(87, 43, 'Gino bersikeras tidak mau bergabung dengan kelompok Toni. Gino memilih dimarahi oleh guru dan tidak mendapat nilai dalam pelajaran Ekonomi. Dari peristiwa tersebut dapat diketahui bahwa...', 'Sikap in-group Gino belum begitu kuat#Gino memiliki perasaan out-group terhadap kelompok Toni#Sikap out-group Toni menghalangi masuknya Gino ke kelompoknya#Sikap in-group Toni membuat Gino enggan masuk ke kelompoknya#Gino memiliki rasa out-group terhadap mata pelajaran Ekonomi', 'b', '');
 
 -- --------------------------------------------------------
 
@@ -979,18 +1044,19 @@ CREATE TABLE IF NOT EXISTS `ujian` (
   `idmapel` varchar(5) NOT NULL,
   `petunjuk` text NOT NULL,
   `tipeujian` enum('latihan','ujian') NOT NULL DEFAULT 'latihan',
+  `listening` varchar(255) NOT NULL,
   `user` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=36 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=44 ;
 
 --
 -- Dumping data untuk tabel `ujian`
 --
 
-INSERT INTO `ujian` (`id`, `tgl`, `judul`, `pointbenar`, `pointsalah`, `pointkosong`, `tipe`, `jumlahsoal`, `tipejawaban`, `status`, `idmapel`, `petunjuk`, `tipeujian`, `user`) VALUES
-(33, '2015-10-27', 'Tipe 1', '10', '0', '0', 'random', '10', 'a,b,c,d,e', 'enabled', '5', '<p>- Pada bagian atas terdapat nomor soal ujian dimana peserta tes dapat berpindah-pindah ke soal yang lain.<br />- Untuk menjawab soal peserta harus melakukan klik pada combobox / pilihan yang ada.<br />- Untuk mengakhiri ujian klik tombol selesai, nantinya akan terdapat notifikasi mengakhiri tes.</p>', 'latihan', 'gurukimia'),
-(34, '2015-10-28', 'tipe B', '100', '0', '0', 'random', '1', 'a,b,c,d,e', 'disabled', '5', '', 'latihan', 'gurukimia'),
-(35, '2015-10-28', 'Tipe C Admin', '100', '0', '0', 'random', '1', 'a,b,c,d,e', 'enabled', '5', '', 'latihan', 'admin');
+INSERT INTO `ujian` (`id`, `tgl`, `judul`, `pointbenar`, `pointsalah`, `pointkosong`, `tipe`, `jumlahsoal`, `tipejawaban`, `status`, `idmapel`, `petunjuk`, `tipeujian`, `listening`, `user`) VALUES
+(39, '2015-12-10', 'Ujian SIM C', '10', '0', '0', 'random', '10', 'a,b,c', 'disabled', '14', '', 'latihan', '', 'admin'),
+(42, '2016-03-12', 'SOSIOLOGI KODE 01', '4', '0', '0', 'random', '25', 'a,b,c,d,e', 'enabled', '13', '', '', '', 'admin'),
+(43, '2016-03-16', 'SOSIOLOGI KODE 02', '4', '0', '0', 'random', '25', 'a,b,c,d,e', 'disabled', '13', '', '', '', 'admin');
 
 -- --------------------------------------------------------
 
@@ -1002,20 +1068,60 @@ DROP TABLE IF EXISTS `ujiannilai`;
 CREATE TABLE IF NOT EXISTS `ujiannilai` (
   `id` int(5) NOT NULL AUTO_INCREMENT,
   `tgl` date NOT NULL,
+  `jam` time NOT NULL,
   `mapel` varchar(50) NOT NULL,
   `user` varchar(50) NOT NULL,
   `nilai` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=16 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=46 ;
 
 --
 -- Dumping data untuk tabel `ujiannilai`
 --
 
-INSERT INTO `ujiannilai` (`id`, `tgl`, `mapel`, `user`, `nilai`) VALUES
-(13, '2015-10-28', '5', 'gurukimia', '0'),
-(14, '2015-10-28', '5', 'kelas10', '100'),
-(15, '2015-10-28', '5', 'kelas10', '0');
+INSERT INTO `ujiannilai` (`id`, `tgl`, `jam`, `mapel`, `user`, `nilai`) VALUES
+(21, '2015-11-06', '00:00:00', '5', 'admin', '30'),
+(22, '2015-11-06', '00:00:00', '5', 'admin', '10'),
+(27, '2015-11-06', '08:28:20', '5', 'octhan', '30'),
+(28, '2015-11-06', '08:28:52', '5', 'octhan', '40'),
+(29, '2015-11-06', '08:35:11', '5', 'siswa12', '10'),
+(30, '2015-11-06', '08:38:25', '5', 'siswa12', '0'),
+(31, '2015-11-06', '08:39:31', '5', 'siswa12', '40'),
+(32, '2015-11-23', '09:30:30', '5', 'admin', '40'),
+(33, '2015-11-23', '09:32:25', '5', 'kelas12', '0'),
+(34, '2015-12-10', '10:56:24', '14', 'admin', '80'),
+(35, '2015-12-10', '11:01:56', '14', 'admin', '0'),
+(36, '2015-12-14', '11:29:55', '7', 'admin', '0'),
+(37, '2015-12-14', '11:35:12', '7', 'admin', '0'),
+(38, '2015-12-14', '11:35:50', '7', 'admin', '0'),
+(39, '2015-12-14', '11:40:42', '7', 'admin', '0'),
+(40, '2016-03-11', '09:21:33', '7', 'admin', '0'),
+(41, '2016-03-12', '11:07:23', '13', 'admin', '0'),
+(42, '2016-03-14', '07:27:20', '13', 'admin', '12'),
+(43, '2016-03-14', '07:43:47', '13', 'admin', '0'),
+(44, '2016-03-14', '10:05:26', '13', 'admin', '0'),
+(45, '2016-03-16', '09:21:17', '13', 'admin', '0');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `ujiansetting`
+--
+
+DROP TABLE IF EXISTS `ujiansetting`;
+CREATE TABLE IF NOT EXISTS `ujiansetting` (
+  `id` int(5) NOT NULL AUTO_INCREMENT,
+  `petunjuk` text NOT NULL,
+  `waktu` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data untuk tabel `ujiansetting`
+--
+
+INSERT INTO `ujiansetting` (`id`, `petunjuk`, `waktu`) VALUES
+(1, '<p>- Waktu akan berjalan setelah peserta mengklik tombol Mulai<br />- Peserta Mengklik langsung Soal kemudian menjawab langsung dengan memilih pilihan jawaban yang terdapat pada Soal<br />- Apabila peserta melakukan refresh / menekan F5 maka semua jawaban akan hilang tetapi waktu masih tetap berjalan.<br />- Peserta masih dapat mengerjakan Soal yang sebelumnya telah terbuka dengan mengklik Soal yang dikehendaki.<br />- Peserta dinyatakan selesai mengerjakan soal apabila telah mengklik tombol Selesai atau otomatis selesai ketika Waktu/Timer telah habis.<br />- Selamat Mengerjakan</p>', '3600');
 
 -- --------------------------------------------------------
 
@@ -1044,17 +1150,17 @@ CREATE TABLE IF NOT EXISTS `useraura` (
   PRIMARY KEY (`UserId`),
   UNIQUE KEY `user` (`user`),
   UNIQUE KEY `user_2` (`user`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2411 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2443 ;
 
 --
 -- Dumping data untuk tabel `useraura`
 --
 
 INSERT INTO `useraura` (`UserId`, `user`, `password`, `level`, `tipe`, `is_online`, `last_ping`, `start`, `exp`, `nama`, `photo`, `statusemail`, `statustelp`, `email`, `telp`, `mapel`) VALUES
-(1, 'admin', 'c84258e9c39059a89ab77d846ddab909', 'Administrator', 'aktif', 0, '2015-10-29 08:05:37', '2010-08-27 00:00:00', '2034-08-27 00:00:00', 'Administrator', '', 'sembunyikan', 'sembunyikan', '', '', '0'),
+(1, 'admin', '21232f297a57a5a743894a0e4a801fc3', 'Administrator', 'aktif', 1, '2016-03-16 07:13:58', '2010-08-27 00:00:00', '2034-08-27 00:00:00', 'Administrator', '', 'sembunyikan', 'sembunyikan', '', '', '0'),
 (68, 'superadmin', 'b11d5ece6353d17f85c5ad30e0a02360', 'Administrator', 'aktif', 1, '2014-09-12 13:44:53', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', '', 'sembunyikan', 'sembunyikan', '', '', '0'),
-(2410, 'gurukimia', '61734eb555e5c8ac3e4df4ab770971a3', 'Guru', 'aktif', 1, '2015-10-29 14:01:52', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'guru kimia', '', 'sembunyikan', 'sembunyikan', '', '', '5'),
-(1381, 'siswa12', '380a0238d4eeb7ebbf6445d1541865c2', 'Siswa', 'aktif', 0, '2015-08-12 09:18:06', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'siswa12', '', 'sembunyikan', 'sembunyikan', '', '', '0'),
+(2442, 'octhan', '37aa4898d80f16db336cd3c8f585661b', 'Administrator', 'aktif', 0, '2015-11-06 08:19:47', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Octhan Setyawan, S.Si. ', '', 'sembunyikan', 'sembunyikan', '', '', ''),
+(1381, 'siswa12', '380a0238d4eeb7ebbf6445d1541865c2', 'Siswa', 'aktif', 1, '2015-11-06 08:30:28', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'siswa12', '', 'sembunyikan', 'sembunyikan', '', '', '0'),
 (2096, '16613', 'f95008d294f277e432261d458fe91c76', 'Siswa', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Adrian Reynardi', '', 'sembunyikan', 'sembunyikan', '', '', '0'),
 (2097, '16622', 'dae43844e99e2120bb9f2e00b05d7ca3', 'Siswa', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Alysha Junita Iskandar', '', 'sembunyikan', 'sembunyikan', '', '', '0'),
 (2098, '16624', '784ff39684c7a23cfa09e77719256e20', 'Siswa', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Anastasia Hanny Irawan', '', 'sembunyikan', 'sembunyikan', '', '', '0'),
@@ -1309,9 +1415,9 @@ INSERT INTO `useraura` (`UserId`, `user`, `password`, `level`, `tipe`, `is_onlin
 (2347, '16792', 'f796ccd346e70859193bb1a60812d685', 'Siswa', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Kevin Susanto', '', 'sembunyikan', 'sembunyikan', '', '', '0'),
 (2348, '16803', '6eda0403281df4b9a24d37790828effb', 'Siswa', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Leony Gunawan', '', 'sembunyikan', 'sembunyikan', '', '', '0'),
 (2349, '16812', '1560fe0e80c19847a91c22e69d5036f1', 'Siswa', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Maria Clarita Hariono', '', 'sembunyikan', 'sembunyikan', '', '', '0'),
-(2350, '16817', '5eea6fd7b02448c35fd405cfe823d128', 'Siswa', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Martinus Maximillian Sunur', '', 'sembunyikan', 'sembunyikan', '', '', '0'),
-(2351, '16821', '1d5988d346d89a4e49e0b43c0f0d28d0', 'Siswa', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Meliana Hartanto', '', 'sembunyikan', 'sembunyikan', '', '', '0');
+(2350, '16817', '5eea6fd7b02448c35fd405cfe823d128', 'Siswa', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Martinus Maximillian Sunur', '', 'sembunyikan', 'sembunyikan', '', '', '0');
 INSERT INTO `useraura` (`UserId`, `user`, `password`, `level`, `tipe`, `is_online`, `last_ping`, `start`, `exp`, `nama`, `photo`, `statusemail`, `statustelp`, `email`, `telp`, `mapel`) VALUES
+(2351, '16821', '1d5988d346d89a4e49e0b43c0f0d28d0', 'Siswa', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Meliana Hartanto', '', 'sembunyikan', 'sembunyikan', '', '', '0'),
 (2352, '16823', 'afd53be629a8800e6447030f2e0961f7', 'Siswa', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Melissa Wong', '', 'sembunyikan', 'sembunyikan', '', '', '0'),
 (2353, '16829', 'd958bc7285c14d6f775973d6d723d17b', 'Siswa', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Monica Emily Wiyanto', '', 'sembunyikan', 'sembunyikan', '', '', '0'),
 (2354, '16836', 'cff815dabb3555cf1df47388baa32b84', 'Siswa', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Nastasia Nolia Seva', '', 'sembunyikan', 'sembunyikan', '', '', '0'),
@@ -1367,7 +1473,36 @@ INSERT INTO `useraura` (`UserId`, `user`, `password`, `level`, `tipe`, `is_onlin
 (2404, '16869', 'b1491b673670aeae2dbf8827ba87a758', 'Siswa', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Sintia Bela', '', 'sembunyikan', 'sembunyikan', '', '', '0'),
 (2405, '16871', '386a1940efd5c4d0c584523e580653b4', 'Siswa', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Stefani Patricia', '', 'sembunyikan', 'sembunyikan', '', '', '0'),
 (2406, '16877', 'a90f92d5609224ee7112c1f5d99f7e5f', 'Siswa', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Stella Matutina Septania', '', 'sembunyikan', 'sembunyikan', '', '', '0'),
-(2407, '16887', 'c87a29375d7d9eb63b5316cd73aa3229', 'Siswa', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Tiffanny Angeline', '', 'sembunyikan', 'sembunyikan', '', '', '0');
+(2407, '16887', 'c87a29375d7d9eb63b5316cd73aa3229', 'Siswa', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Tiffanny Angeline', '', 'sembunyikan', 'sembunyikan', '', '', '0'),
+(2413, 'kelas12', '4fecc680d4779fc32a2a12903b46e4a8', 'Siswa', 'aktif', 1, '2015-11-24 11:03:49', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'kelas12', '', 'sembunyikan', 'sembunyikan', '', '', ''),
+(2414, 'cbt03', '217f77948a1fe62ec677b65041acf359', 'Guru', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Drs. Y. Panji Dwi Riyanto', '', 'sembunyikan', 'sembunyikan', '', '', '6'),
+(2415, 'cbt12', '9786ab92ab8b9262a4e23703461cdeed', 'Guru', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'B. Widi Krismantari , S.Pd. ', '', 'sembunyikan', 'sembunyikan', '', '', '6'),
+(2416, 'cbt23', '0685f4e78dccef0b9903bd4080e80dc2', 'Guru', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Th. Estiningtyas Utami , S.Pd. ', '', 'sembunyikan', 'sembunyikan', '', '', '6'),
+(2417, 'cbt38', 'ba181ab510ee415b423928977d53b275', 'Guru', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Aloisius Rabata Edhi Siswanto, S.Pd.', '', 'sembunyikan', 'sembunyikan', '', '', '6'),
+(2418, 'cbt22', 'b59696ffcaf1da563b4b0c22cd2b4f87', 'Guru', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Dra. Theresia Lilyana ', '', 'sembunyikan', 'sembunyikan', '', '', '7'),
+(2419, 'cbt34', '2cba56db2f234439dcda6778b35acd4e', 'Guru', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'A. Gatot Wibawanto, S.Pd.', '', 'sembunyikan', 'sembunyikan', '', '', '7'),
+(2420, 'cbt10', '490dc541a6be7d4fed8c6ccbebc243d8', 'Guru', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Dra.C. Sunarni', '', 'sembunyikan', 'sembunyikan', '', '', '7'),
+(2421, 'cbt33', '87ead5ce129b4b4cf614b1be0878d298', 'Guru', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Anastasia Lelyana Tuhuleruw, S.Pd. ', '', 'sembunyikan', 'sembunyikan', '', '', '7'),
+(2422, 'cbt07', 'b742a079a3c70f741b9e33d755d93c02', 'Guru', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Dra. Rosula Sri Pamungkas Yudoretno', '', 'sembunyikan', 'sembunyikan', '', '', '8'),
+(2423, 'cbt15', 'b6b9dd05462a0b854ee316d9caeb1bf3', 'Guru', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Y.B. Andik Adi Cahyono , S.Pd.', '', 'sembunyikan', 'sembunyikan', '', '', '8'),
+(2424, 'cbt19', '697bd211de157a1c4ea97b0459ab2952', 'Guru', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Stephanus Sulistyantoro , M.Pd.', '', 'sembunyikan', 'sembunyikan', '', '', '8'),
+(2425, 'cbt37', '76e0d809a571b2328eaf4e76761ed8c6', 'Guru', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Resti Citranintyas, S.Pd.', '', 'sembunyikan', 'sembunyikan', '', '', '8'),
+(2426, 'cbt44', '5115abf6fb2347691aa106cb49b999d6', 'Guru', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Bayu Adhiwibowo, S. Pd.', '', 'sembunyikan', 'sembunyikan', '', '', '8'),
+(2427, 'cbt13', 'e05aa2968dd92cd68dc45de6bb65eb1e', 'Guru', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'M.V. Meliana Pantouw , S.Pd., S.H., M.Kn.', '', 'sembunyikan', 'sembunyikan', '', '', '9'),
+(2428, 'cbt14', '888ccfb8c6732e7a4219c4c6a90d4d40', 'Guru', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Laurensius Wahyudiarjo , S.Pd.', '', 'sembunyikan', 'sembunyikan', '', '', '9'),
+(2429, 'cbt43', 'dfc1412581a06ab01120d434018466ef', 'Guru', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Theresia Anata, S.Pd.', '', 'sembunyikan', 'sembunyikan', '', '', '9'),
+(2430, 'cbt16', '5ef80ebc0db63bf38e228bbb1c7b2ef4', 'Guru', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Hendrika Dwi Hendrastuti, S.Si.', '', 'sembunyikan', 'sembunyikan', '', '', '10'),
+(2431, 'cbt20', 'df79d0ac2c505deca05c70c7f2b9a00c', 'Guru', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Veronica Ervina Pudjiastuti , S.Si. ', '', 'sembunyikan', 'sembunyikan', '', '', '10'),
+(2432, 'cbt36', '951175531260ec173a47cb0778a0170a', 'Guru', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Christina Handoyo S.Si.', '', 'sembunyikan', 'sembunyikan', '', '', '10'),
+(2433, 'cbt24', 'a20a6984e9e5253b46f4408106439618', 'Guru', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Flaviana Emmi Dwi Astuti, S.T. ', '', 'sembunyikan', 'sembunyikan', '', '', '5'),
+(2434, 'cbt35', 'da8c529985f2935e626746e182d68ce0', 'Guru', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Fransiska Martanti, S.Pd.', '', 'sembunyikan', 'sembunyikan', '', '', '5'),
+(2435, 'cbt08', 'bd7185008943c97779db5c1c77d3399e', 'Guru', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Drs. Bernadus Edy Gunarso', '', 'sembunyikan', 'sembunyikan', '', '', '11'),
+(2436, 'cbt40', '9d10646f8c23057870b2ca2e71db10dd', 'Guru', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Albertus Bambang Ariantoko, S.Pd.', '', 'sembunyikan', 'sembunyikan', '', '', '11'),
+(2437, 'cbt18', '0eed7579e5944117599ca2ee35a0e1ef', 'Guru', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Christina Kustindarti , S.Pd., CFP', '', 'sembunyikan', 'sembunyikan', '', '', '12'),
+(2438, 'cbt25', 'f32e7f9dda01a3e1b19967549e63bf65', 'Guru', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Markus Tri Wibowo , S.Pd. ', '', 'sembunyikan', 'sembunyikan', '', '', '12'),
+(2439, 'cbt28', '3f4de3f5dbdeeb2771ce03a613288361', 'Guru', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Albertus Prihayudi Purnawijaya , S.Pd.', '', 'sembunyikan', 'sembunyikan', '', '', '12'),
+(2440, 'cbt21', 'd9129a4cb014e62b3863664577ae7406', 'Guru', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Eva Renanthya Grimaldi, S.Sos. ', '', 'sembunyikan', 'sembunyikan', '', '', '13'),
+(2441, 'cbt32', '977cba6f8aa1466ca5b81ee6ab93fd94', 'Guru', 'aktif', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Erlina Thomas Novita, S.Pd.', '', 'sembunyikan', 'sembunyikan', '', '', '13');
 
 -- --------------------------------------------------------
 

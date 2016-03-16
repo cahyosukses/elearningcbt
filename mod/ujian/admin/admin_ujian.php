@@ -668,7 +668,7 @@ if ($koneksi_db->sql_numrows($koneksi_db->sql_query("SELECT soal FROM soal WHERE
 		if($hasil){
 			$admin .= "<div class='sukses'><b>Soal Berhasil di Buat.</b></div>";
 			unset($konten);
-	//		header("location:?pilih=ujian&mod=yes&aksi=addsoal&idujian=$idujian&id=$idkursus");
+			header("location:?pilih=ujian&mod=yes&aksi=addsoal&idujian=$idujian&id=$idmapel");
 		}else{
 			$admin .= '<div class="error"><b>Soal Gagal di Buat.</b></div>';
 	//		header("location:?pilih=ujian&mod=yes&aksi=addsoal&idujian=$idujian&id=$idkursus");
@@ -736,7 +736,7 @@ $admin .="<tr><td><label><b>File Materi  </b></label></td>
 $admin .="
 <tr><td></td><td></td><td>
 <input type='hidden' name='idujian' value='$idujian'>";
-$admin.="<a href='?pilih=ujian&mod=yes&aksi=addsoal&idujian=$idujian&id=$idmapel'><span class='btn btn-primary'>BACK</span></a>";
+$admin.="<a href='?pilih=ujian&mod=yes&aksi=listujian&id=$idmapel'><span class='btn btn-primary'>BACK</span></a>";
 $admin .="&nbsp;&nbsp;<input type='submit'class='btn btn-success' value='Simpan' name='submit'> ";
 $admin.="
 </td>";
@@ -871,7 +871,7 @@ $admin.="
 		$no=1;
 for ($i = 0; $i < $jml_jawaban; $i++) {
 	
-$pilihan = striptags($pilihansoal[$i]);
+$pilihan = strip_tags($pilihansoal[$i]);
 $admin .="
     <div class='input-group'>
       <div class='input-group-addon'>$jawaban[$i].</div><input type='text' name='pilihan$no' class='form-control'required value='$pilihan' /></div>";
