@@ -88,7 +88,7 @@ $JS_SCRIPT .= <<<js
     </script>
 
 js;
-$script_include[] = $JS_SCRIPT;
+
 
 if ($_GET['aksi']== 'testujian') {
 date_default_timezone_set('Asia/Jakarta');
@@ -110,7 +110,7 @@ $_SESSION['waktuakhir']= $waktuakhir;
 }
 
 $JS_SCRIPT.= <<<js
-<script type="text/javascript" src="includes/countdown2/jquery.countdownTimer.js"></script>
+
 <script>
   $(function(){
     $('#future_date').countdowntimer({
@@ -1227,7 +1227,7 @@ $admin .='<tr><td><div id="buttons">  ';
 for ($j = 1; $j <= $total; $j++) {
 	
 $admin .='
-<a id="soal" class="btnsoal" target="'.$j.'">Soal '.$j.'</a>&nbsp;';
+<a class="btnsoal" target="'.$j.'">Soal '.$j.'</a>&nbsp;';
 }
 
 $admin .='</div></td></tr>';
@@ -1257,13 +1257,11 @@ $gambar = '';
 $admin .='<div id="div'.$nosoal.'" class="targetDiv"style="display:none">
 <b>'.$nosoal.'</b>. 
 '.$gambar.''.$soal.'<br>';
-$admin .='<fieldset id="foobar">';
 for ($i = 0; $i < $jml_jawaban; $i++) {
 $admin .="<label class='radio'>
 <input type='radio' name='jawabantest$nosoal' value='$jawaban[$i]'target='$nosoal'>
 $jawaban[$i]. $pilihansoal[$i]</label>";
 }
-$admin.='</fieldset>';
 $admin.='</div>';
 
 $nosoal++;
