@@ -18,15 +18,25 @@ $(document).ready(function() {
 </script>
 js;
 $script_include[] = $JS_SCRIPT;
-	$admin .= '<div class="row">
-				<div class="col-lg-12">
-					<h3 class="page-header"><i class="fa fa-list-alt"></i> Mata Pelajaran</h3>
-					<ol class="breadcrumb">
-					<li><i class="fa fa-home"></i><a href="admin.php?pilih=mapel&amp;mod=yes">Home</a></li>
-					</ol>
-				</div>
-			</div>';
-			
+
+$admin .='<section class="content-header">
+          <h1>
+            Mata Pelajaran
+            <small>Mengatur Mata Pelajaran</small>
+          </h1>
+          <ol class="breadcrumb">
+            <li><a href="./admin.php?pilih=mapel&mod=yes"><i class="fa fa-dashboard"></i>Home</a></li>
+			<li>Master</li>
+            <li class="active">Mata Pelajaran</li>
+          </ol>
+        </section>';			
+$admin .='
+<section class="content-header">
+<a class="btn btn-default btn-flat" href="./admin.php?pilih=mapel&mod=yes" >
+<i class="fa fa-flask">&nbsp;</i> Mata Pelajaran <span class="badge bg-green"></span></a>
+</section>';
+$admin .='
+<section class="content">';		
 
 $temp = 'mod/mapel/temp/';
 $thumb = 'mod/mapel/';
@@ -94,7 +104,11 @@ unlink($timg);
 }
 $query 		= mysql_query ("SELECT * FROM `mapel` WHERE `id`='$id'");
 $data 		= mysql_fetch_array($query);
-$admin .='<div class="panel-heading"><b>Edit mapel</b></div>';
+$admin .= '<div class="box">
+                <div class="box-header">
+                  <h3 class="box-title">Edit Mata Pelajaran</h3>
+                </div><!-- /.box-header -->
+                <div class="box-body">';
 $admin .= '
 <form method="post" action=""class="form-inline" enctype ="multipart/form-data">
 <table border="0" cellspacing="0" cellpadding="0"class="table table-striped table-hover">
@@ -111,6 +125,8 @@ $admin .= '
 	</tr>
 </table>
 </form>';
+$admin .= '</div><!-- /.box-body -->
+</div><!-- /.box -->';
 }
 
 if($_GET['aksi']==""){
@@ -155,7 +171,11 @@ unlink($uploaddir);
 }
 $mapel     		= !isset($mapel) ? '' : $mapel;
 $icon     		= !isset($icon) ? '' : $icon;
-$admin .='<div class="panel-heading"><b>Tambah Mapel</b></div>';
+$admin .= '<div class="box">
+                <div class="box-header">
+                  <h3 class="box-title">Tambah Mata Pelajaran</h3>
+                </div><!-- /.box-header -->
+                <div class="box-body">';
 $admin .= '
 <form method="post" action="" class="form-inline"enctype ="multipart/form-data">
 <table class="table table-striped table-hover">
@@ -172,12 +192,18 @@ $admin .= '
 	</tr>
 </table>
 </form>';	
+$admin .= '</div><!-- /.box-body -->
+</div><!-- /.box -->';
 }
 
 /************************************/
 $hasil = $koneksi_db->sql_query( "SELECT * FROM mapel order by mapel asc" );
-$admin .='<div class="panel-heading"><b>Data mapel</b></div>';
-$admin .= '<table id="example" class="table table-striped table-hover">
+$admin .= '<div class="box">
+                <div class="box-header">
+                  <h3 class="box-title">Mata Pelajaran</h3>
+                </div><!-- /.box-header -->
+                <div class="box-body">';
+$admin .= '<table id="example1" class="table table-striped table-hover">
 <thead><tr>
 <th>No</th>
 <th>Mata Pelajaran</th>
@@ -198,9 +224,11 @@ $admin .='<tr>
 $no++;
 }
 $admin .= '</tbody></table>';
+$admin .= '</div><!-- /.box-body -->
+</div><!-- /.box -->';
 /************************************/
 }
-$admin .='</div>';
+$admin .='</section>';
 echo $admin;
 
 ?>

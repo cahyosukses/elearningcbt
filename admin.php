@@ -1,11 +1,15 @@
 <?php
 /**
- * Teamworks v2.3
- * http://www.teamworks.co.id
+ * Nafiweb v2.3
+ * http://www.nafiweb.com
  * December 03, 2007 07:29:56 AM 
- * Author: Teamworks Creative - reky@teamworks.co.id - +6285732037068 - pin 25b7edd4
- */
-
+ * Author: Nafiweb - reky@nafiweb.com +6285732037068
+ *
+Disclaimer
+- Dilarang memperjualbelikan aplikasi dengan alasan apapun!
+- Dilarang memperbanyak/menyebarkan aplikasi tanpa izin.
+- Seluruh Kode di dalam aplikasi merupakan hak nafiweb.com. Dilarang keras mengubah, menggandakan, menyebarkan, mencetak sebagian atau seluruh isi aplikasi ini, dengan cara dan tujuan apapun.
+**/
 	class microTimer {
     function start() {
         global $starttime;
@@ -52,7 +56,7 @@ if (!cek_login ()){
 
 }else{
 
-if (isset( $_SESSION['LevelAkses'] )&&  $_SESSION['LevelAkses']=="Administrator"){
+if (isset( $_SESSION['LevelAkses'] ) &&  $_SESSION['LevelAkses']=="Administrator"){
 
 include "includes/security.php";
 
@@ -85,8 +89,27 @@ logout ();
 
 
 }
+else if (isset( $_SESSION['LevelAkses'] ) &&  $_SESSION['LevelAkses']=="Guru"){
+	
+include "includes/security.php";	
 
-else if (isset( $_SESSION['LevelAkses']) &&  $_SESSION['LevelAkses']=="Siswa"){
+ob_start();
+if(!isset($_GET['pilih'])){
+	include 'content/dashboard.php';
+		}else if (@$_GET['mod'] == 'yes' 
+				  && file_exists('mod/'.$_GET['pilih'].'/guru/guru_'.$_GET['pilih'].'.php') 
+				  && !preg_match("/[\.\/]/",$_GET['pilih'])){
+						include 'mod/'.$_GET['pilih'].'/guru/guru_'.$_GET['pilih'].'.php';	
+					}else {
+	include 'content/dashboard.php';	
+					}
+$content = ob_get_contents();
+ob_end_clean();
+if ($_GET['aksi'] == 'logout') {
+logout ();
+}
+}
+else if (isset( $_SESSION['LevelAkses'] ) &&  $_SESSION['LevelAkses']=="Siswa"){
 	
 include "includes/security.php";	
 
@@ -99,25 +122,6 @@ if(!isset($_GET['pilih'])){
 						include 'mod/'.$_GET['pilih'].'/siswa/siswa_'.$_GET['pilih'].'.php';	
 					}else {
 	include 'content/dashboard.php';	
-					}
-$content = ob_get_contents();
-ob_end_clean();
-
-}
-else if (isset( $_SESSION['LevelAkses']) &&  $_SESSION['LevelAkses']=="Guru"){
-	
-include "includes/security.php";	
-
-ob_start();
-if(!isset($_GET['pilih'])){
-	include 'content/dashboard.php';
-		}else if (@$_GET['mod'] == 'yes' 
-				  && file_exists('mod/'.$_GET['pilih'].'/guru/guru_'.$_GET['pilih'].'.php') 
-				  && !preg_match("/[\.\/]/",$_GET['pilih'])){
-						include 'mod/'.$_GET['pilih'].'/guru/guru_'.$_GET['pilih'].'.php';	
-					}else {
-				//		include 'content/'.$theme.'/normal.php';
-	include 'content/dashboard.php';				
 					}
 $content = ob_get_contents();
 ob_end_clean();
@@ -178,6 +182,17 @@ ob_start();
 include "content/adminprofile.php";
 $adminprofile = ob_get_contents();
 ob_end_clean();
+///// useraccount /////////////////////
+ob_start();
+include "content/useraccount.php";
+$useraccount = ob_get_contents();
+ob_end_clean();
+///// menuadmin /////////////////////
+ob_start();
+include "content/menuadmin.php";
+$menuadmin = ob_get_contents();
+ob_end_clean();
+
 echo $cek;
 $style_include_out = !isset($style_include) ? '' : implode("",$style_include);
 $script_include_out = !isset($script_include) ? '' : implode("",$script_include);
@@ -185,8 +200,13 @@ $rightside = !isset($rightside) ? '' : $rightside;
 $leftside = !isset($leftside) ? '' : $leftside;
 $ceklogin = !isset($ceklogin) ? '' : $ceklogin;
 $adminprofile = !isset($adminprofile) ? '' : $adminprofile;
-$define = array ('adminprofile'    => $adminprofile,
-'leftside'    => $leftside,
+$useraccount = !isset($useraccount) ? '' : $useraccount;
+$menuadmin = !isset($menuadmin) ? '' : $menuadmin;
+
+$define = array ('menuadmin'    => $menuadmin,
+'useraccount'    => $useraccount,
+				'adminprofile'    => $adminprofile,
+				'leftside'    => $leftside,
 				 'ceklogin'    => $ceklogin,
 				 'url'     => $url_situs,
 				 'content'     => $content,
@@ -201,7 +221,8 @@ $define = array ('adminprofile'    => $adminprofile,
                 
 //$tpl = new template ('themes/'.$theme.'/'.$theme.'.html');
 
-$tpl = new template ('themes/niceadmin/niceadmin.html');
+//$tpl = new template ('themes/niceadmin/niceadmin.html');
+$tpl = new template ('themes/administrator/administrator.html');
 $tpl-> define_tag($define);
 
 $tpl-> cetak();

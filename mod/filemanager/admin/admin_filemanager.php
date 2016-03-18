@@ -22,23 +22,39 @@ $(document).ready(function() {
 </script>
 js;
 $script_include[] = $JS_SCRIPT;
-	$admin .= '<div class="row">
-				<div class="col-lg-12">
-					<h3 class="page-header"><i class="fa fa-list-alt"></i> File Manager</h3>
-					<ol class="breadcrumb">
-					<li><i class="fa fa-home"></i><a href="?pilih=filemanager&mod=yes">Home</a></li>
-					<li><i class="fa fa-home"></i><a href="admin.php?pilih=filemanager&mod=yes&aksi=add">Upload File</a></li>
-					</ol>
-				</div>
-			</div>';
-$admin .='<blockquote>
-<b>Catatan:</b><br />
-Gunakan url seperti dibawah ini untuk menyisipkan image di artikel atau halaman web : <br /><b>"files/nama_file.extension"</b><br /><b>contoh :</b> <br />&lt;img src="files/teamworks.jpg" alt="" border="0" /&gt;
-</blockquote>';
 
+$admin .='<section class="content-header">
+          <h1>
+            File Manager
+            <small>Mengatur File / Image</small>
+          </h1>
+          <ol class="breadcrumb">
+            <li><a href="./admin.php?pilih=filemanager&mod=yes"><i class="fa fa-dashboard"></i>Home</a></li>
+			<li>Master</li>
+            <li class="active">File Manager</li>
+          </ol>
+        </section>';			
+$admin .='
+<section class="content-header">
+<a class="btn btn-default btn-flat" href="./admin.php?pilih=filemanager&mod=yes" >
+<i class="fa fa-image">&nbsp;</i> File Manager <span class="badge bg-green"></span></a>
+<a class="btn btn-default btn-flat" href="./admin.php?pilih=filemanager&mod=yes&aksi=add" >
+<i class="fa fa-plus">&nbsp;</i> Upload File <span class="badge bg-green"></span></a>
+</section>';
+$admin .='
+<section class="content">';
+$admin .= '<div class="box">
+                <div class="box-header">
+                  <h3 class="box-title">File Manager</h3>
+                </div><!-- /.box-header -->
+                <div class="box-body">';
+$admin .='<div class="alert alert-info alert-dismissable">
+<h4><i class="icon fa fa-info"></i> Catatan!</h4>
+                  Gunakan url seperti dibawah ini untuk menyisipkan image di artikel atau halaman web : <br /><b>"files/nama_file.extension"</b><br /><b>contoh :</b> <br />&lt;img src="files/image.jpg" alt="" border="0" /&gt;
+                  </div>';
 
 if($_GET['aksi'] == ''){
-$admin .= '<table class="table table-striped table-bordered" id="example">
+$admin .= '<table class="table table-striped table-bordered" id="example1">
 <thead>
 <tr>
 <td>Nama File</td>
@@ -143,7 +159,9 @@ if ($_GET['aksi']=='hapus'){
     $style_include[] ='<meta http-equiv="refresh" content="3; url=?pilih=filemanager&mod=yes" />';
 }
 
-
+$admin .= '</div><!-- /.box-body -->
+</div><!-- /.box -->';
+$admin .='</section>';
 echo $admin;
 
 }

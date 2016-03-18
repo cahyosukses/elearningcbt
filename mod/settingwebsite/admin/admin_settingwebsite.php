@@ -11,19 +11,26 @@ if (!cek_login ()){
 }else{
 
 global $koneksi_db,$PHP_SELF,$theme,$error,$url_situs;
-$admin .= ' <div class="row">
-				<div class="col-lg-12">
-					<h3 class="page-header"><i class="icon_puzzle"></i> Website Setting</h3>
-					<ol class="breadcrumb">
-						<li><i class="fa fa-home"></i><a href="admin.php?pilih=settingwebsite&mod=yes">Home</a></li>
-						<li><i class="icon_toolbox"></i>Settings</li>
-
-						<li><i class="fa fa-list-alt"></i><a href="admin.php?pilih=settingwebsite&mod=yes&aksi=logo">Logo Website</a></li>
-						<li><i class="fa fa-list-alt"></i><a href="admin.php?pilih=settingwebsite&mod=yes&aksi=favicon">Icon Website</a></li>
-					</ol>
-				</div>
-			</div>';
-
+$admin .='<section class="content-header">
+          <h1>
+            Setting Website
+            <small>Mengatur Website</small>
+          </h1>
+          <ol class="breadcrumb">
+            <li><a href="./admin.php?pilih=settingwebsite&mod=yes"><i class="fa fa-dashboard"></i>Home</a></li>
+			<li>Settings</li>
+            <li class="active">Setting Website</li>
+          </ol>
+        </section>';
+$admin .='
+<section class="content-header">
+<a class="btn btn-default btn-flat" href="./admin.php?pilih=settingwebsite&mod=yes" >
+<i class="fa fa-plug">&nbsp;</i> Setting <span class="badge bg-green"></span></a>
+<a class="btn btn-default btn-flat" href="./admin.php?pilih=settingwebsite&mod=yes&aksi=logo" > <i class="fa fa-photo">&nbsp;</i>Logo Website</span></a>
+<a class="btn btn-default btn-flat" href="./admin.php?pilih=settingwebsite&mod=yes&aksi=icon" > <i class="fa fa-paw">&nbsp;</i>Icon Website</span></a>
+</section>';
+$admin .='
+<section class="content">';
 if($_GET['aksi']==""){
 
 if (isset($_POST["submit"])) {
@@ -72,11 +79,11 @@ while ($data = $koneksi_db->sql_fetchrow($hasil)) {
 	$webmastercode=$data['webmastercode'];
 	$analyticcode=$data['analyticcode'];
 }
-$admin .= '<section class="panel">
-                          <header class="panel-heading">
-                              Website Setting
-                          </header>
-						  <div class="panel-body">';
+$admin .= '<div class="box">
+                <div class="box-header">
+                  <h3 class="box-title">Settings Website</h3>
+                </div><!-- /.box-header -->
+                <div class="box-body">';
 $admin.='<form method="post" action="">';
 $admin .= '<div class="form-group">
 <label class="col-sm-2 control-label">Judul Situs</label>
@@ -117,7 +124,9 @@ $admin .= '<div class="form-group">
 <label class="col-sm-2 control-label"><input type="hidden" name="id" value="'.$id.'" /></label>
 <div class="col-sm-10"><input type="submit" name="submit" value="Simpan" class="btn btn-success" /></div>
 </div>';
-$admin .= '</form></div></section>';
+$admin .= '</form>';
+$admin .= '</div><!-- /.box-body -->
+</div><!-- /.box -->';
 
 }
 
@@ -152,11 +161,11 @@ if (!empty ($namafile_name)){
 $style_include[] ='<meta http-equiv="refresh" content="1; url=?pilih=admin_info&aksi=logo" />';
 }
 }
-$admin .= '<section class="panel">
-                          <header class="panel-heading">
-                              Website Logo
-                          </header>
-						  <div class="panel-body">';
+$admin .= '<div class="box">
+                <div class="box-header">
+                  <h3 class="box-title">Logo Website</h3>
+                </div><!-- /.box-header -->
+                <div class="box-body">';
 $admin.='<form method="post" action=""enctype ="multipart/form-data" id="posts">';
 $admin .= '<div class="form-group">
 <label class="col-sm-2 control-label">Preview Logo</label>
@@ -176,10 +185,12 @@ $admin .= '<div class="form-group">
 <label class="col-sm-2 control-label"><input type="hidden" name="id" value="'.$id.'" /></label>
 <div class="col-sm-10"><input type="submit" name="submit" value="Simpan" class="btn btn-success" /></div>
 </div>';
-$admin .= '</form></div></section>';
+$admin .= '</form>';
+$admin .= '</div><!-- /.box-body -->
+</div><!-- /.box -->';	
 }
 
-if($_GET['aksi']=="favicon"){
+if($_GET['aksi']=="icon"){
 if (isset($_POST['submit'])){
 define("GIS_GIF", 1);
 define("GIS_JPG", 2);
@@ -205,11 +216,11 @@ $admin.='<div class="sukses">Berhasil update favicon</div>';
 $style_include[] ='<meta http-equiv="refresh" content="1; url=?pilih=admin_info&aksi=favicon" />';
 }
 }
-$admin .= '<section class="panel">
-                          <header class="panel-heading">
-                              Website Icon
-                          </header>
-						  <div class="panel-body">';
+$admin .= '<div class="box">
+                <div class="box-header">
+                  <h3 class="box-title">Icon Website</h3>
+                </div><!-- /.box-header -->
+                <div class="box-body">';
 $admin.='<form method="post" action=""enctype ="multipart/form-data" id="posts">';
 $admin .= '<div class="form-group">
 <label class="col-sm-2 control-label">Preview Favicon</label>
@@ -229,8 +240,11 @@ $admin .= '<div class="form-group">
 <label class="col-sm-2 control-label"><input type="hidden" name="id" value="'.$id.'" /></label>
 <div class="col-sm-10"><input type="submit" name="submit" value="Simpan" class="btn btn-success" /></div>
 </div>';
-$admin .= '</form></div></section>';
+$admin .= '</form>';
+$admin .= '</div><!-- /.box-body -->
+</div><!-- /.box -->';	
 }
+$admin .= '</section>';
 }
 echo $admin;
 ?>

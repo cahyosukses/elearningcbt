@@ -76,19 +76,32 @@ js;
 $script_include[] = $JS_SCRIPT;
 $total2 =  $koneksi_db->sql_query( "SELECT * FROM pengumuman_sekolah" );
 $jumlah2 = $koneksi_db->sql_numrows( $total2 );
-	$admin .= '<div class="row">
-				<div class="col-lg-12">
-					<h3 class="page-header"><i class="fa fa-list-alt"></i> Pengumuman</h3>
-					<ol class="breadcrumb">
-					<li><i class="fa fa-home"></i><a href="?pilih=pengumuman&mod=yes">Home</a></li>
-					<li><i class="fa fa-home"></i><a href="admin.php?pilih=pengumuman&mod=yes&aksi=add">Tambah Pengumuman</a></li>
-					</ol>
-				</div>
-			</div>';
-			
-
+$admin .='<section class="content-header">
+          <h1>
+            Pengumuman
+            <small>Mengatur Pengumuman</small>
+          </h1>
+          <ol class="breadcrumb">
+            <li><a href="./admin.php?pilih=pengumuman&mod=yes"><i class="fa fa-dashboard"></i>Home</a></li>
+			<li>E-Learning</li>
+            <li class="active">Pengumuman</li>
+          </ol>
+        </section>';			
+$admin .='
+<section class="content-header">
+<a class="btn btn-default btn-flat" href="./admin.php?pilih=pengumuman&mod=yes" >
+<i class="fa fa-image">&nbsp;</i> Pengumuman <span class="badge bg-green">'.$jumlah2.'</span></a>
+<a class="btn btn-default btn-flat" href="./admin.php?pilih=pengumuman&mod=yes&aksi=add" >
+<i class="fa fa-plus">&nbsp;</i> Tambah Pengumuman <span class="badge bg-green"></span></a>
+</section>';
+$admin .='
+<section class="content">';			
+$admin .= '<div class="box">
+                <div class="box-header">
+                  <h3 class="box-title">Pengumuman</h3>
+                </div><!-- /.box-header -->
+                <div class="box-body">';
 if($_GET['aksi']=="add"){
-$admin .='<div class="panel-heading"><b>Pengumuman Sekolah</b></div>';
 if (isset($_POST['submit'])){
 $judul     		= addslashes($_POST['judul']);
 $konten  = addslashes($_POST['konten']);
@@ -126,7 +139,6 @@ $konten	= !isset($konten) ? '' : $konten;
 $tglnow = date("Y-m-d");
 $tgl 		= !isset($tgl) ? $tglnow : $tgl;
 $admin .= "
-<div class='border'>
 <form method='post' action='' enctype ='multipart/form-data' id='posts'>
 <table cellspacing='5'cellpadding='1' class='table table-striped table-hover'><tr><td>
 <label>Judul</label><br /><input type='text' name='judul' class='form-control' value='$judul' size='53' onkeyup=\"genSEF(this,document.forms['posts'].seftitle)\" onchange=\"genSEF(this,document.forms['posts'].seftitle)\">
@@ -141,13 +153,11 @@ $admin .="
 </td>";
 $admin .= "
 </tr></table>
-</form></div>";
+</form>";
 }
 
 if($_GET['aksi']=="edit"){
 $id     = $_GET['id'];
-$admin .='<div class="panel-heading"><b>Edit Pengumuman Sekolah</b> Dengan Id ='.$id.'</div>';
-
 if (isset($_POST['submit'])){
 
 $judul   = addslashes($_POST['judul']);
@@ -209,8 +219,7 @@ exit;
 if($_GET['aksi']==""){
 /************************************/
 $hasil = $koneksi_db->sql_query( "SELECT * FROM pengumuman_sekolah order by tgl desc" );
-$admin .='<div class="panel-heading"><b>Pengumuman Sekolah</b></div>';
-$admin .= '<table id="example" class="table table-striped table-hover">
+$admin .= '<table id="example1" class="table table-striped table-hover">
 <thead><tr>
 <th width="50px">Tgl</th>
 <th width="150px">Judul</th>
@@ -234,7 +243,9 @@ $no++;
 $admin .= '</tbody></table>';
 /************************************/
 }
-$admin .= '</div>';
+$admin .= '</div><!-- /.box-body -->
+</div><!-- /.box -->';
+$admin .='</section>';
 
 echo $admin;
 

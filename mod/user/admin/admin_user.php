@@ -19,18 +19,26 @@ js;
 $script_include[] = $JS_SCRIPT;
 	
 //$index_hal=1;	
-$admin .= ' <div class="row">
-				<div class="col-lg-12">
-					<h3 class="page-header"><i class="icon_group"></i> Users Manager</h3>
-					<ol class="breadcrumb">
-						<li><i class="fa fa-home"></i><a href="admin.php?pilih=user&amp;mod=yes">Home</a></li>
-						<li><i class="icon_toolbox"></i>Settings</li>
-						<li><i class="fa fa-list-alt"></i><a href="admin.php?pilih=user&amp;mod=yes&amp;aksi=add">Tambah Users</a></li>
-					</ol>
-				</div>
-			</div>';	
-
-
+$admin .='<section class="content-header">
+          <h1>
+            Users
+            <small>Mengatur Users / Pengguna</small>
+          </h1>
+          <ol class="breadcrumb">
+            <li><a href="./admin.php?pilih=user&mod=yes"><i class="fa fa-plug"></i>Home</a></li>
+			<li>Settings</li>
+            <li class="active">User</li>
+          </ol>
+        </section>';
+$admin .='
+<section class="content-header">
+<a class="btn btn-default btn-flat" href="./admin.php?pilih=user&mod=yes" >
+<i class="fa fa-users">&nbsp;</i> User <span class="badge bg-green"></span></a>
+<a class="btn btn-default btn-flat" href="./admin.php?pilih=user&mod=yes&aksi=add" >
+<i class="fa fa-plus">&nbsp;</i> Tambah</span></a>
+</section>';
+$admin .='
+<section class="content">';
 if ($_GET['aksi'] == 'hapus' && is_numeric($_GET['id'])){
 	$id = int_filter ($_GET['id']);
 	$user = getuserguru($id);
@@ -43,9 +51,9 @@ $hapus = mysql_query ("DELETE FROM `ujian` WHERE `guru`='$user'");
 $hapus = mysql_query ("DELETE FROM `kursus_setting` WHERE `guru`='$user'");	
 $hapus = mysql_query ("DELETE FROM `useraura` WHERE `UserId`='$id' AND `user`!='admin'");	
 if ($hapus){
-$admin.='<div class="sukses">Data Berhasil Dihapus Dengan ID = '.$id.'</div>';	
+$admin.='<div class="callout callout-success">Data Berhasil Dihapus Dengan ID = '.$id.'</div>';	
 }else {
-$admin.='<div class="error">Data Gagal dihapus Dengan ID = '.$id.'</div>';	
+$admin.='<div class="callout callout-danger">Data Gagal dihapus Dengan ID = '.$id.'</div>';	
 }	
 }
 
@@ -61,10 +69,10 @@ if (isset ($_POST['edit_users']) && is_numeric($_GET['id'])){
 $mapel = $_POST['mapel'];
 //if (!is_valid_email($email)) $error .= "Error, E-Mail address invalid!<br />";
 if ($error) {
-$admin.='<div class="alert alert-block alert-danger fade in">'.$error.'</div>';
+$admin.='<div class="callout callout-danger">'.$error.'</div>';
 } else {
 $up = mysql_query ("UPDATE `useraura` SET `level`='$level',`tipe`='$tipe',`nama`='$nama',`mapel`='$mapel' WHERE `UserId`='$id'");	
-$admin.='<div class="alert alert-success fade in">Data Berhasil Diupdate Dengan ID = '.$id.'</div>';	
+$admin.='<div class="callout callout-success">Data Berhasil Diupdate Dengan ID = '.$id.'</div>';	
 }
 }
 
@@ -95,10 +103,10 @@ if ($koneksi_db->sql_numrows($koneksi_db->sql_query("SELECT user FROM useraura W
 //if ($koneksi_db->sql_numrows($koneksi_db->sql_query("SELECT email FROM useraura WHERE email='$email'")) > 0) $error .= "Error: Email ".$email." sudah terdaftar , silahkan ulangi.<br />";
 //if ($email and !is_valid_email($email)) $error .= "Error: E-Mail address invalid!<br />";
 if ($error){
-        $admin.='<div class="alert alert-block alert-danger fade in">'.$error.'</div>';
+        $admin.='<div class="callout callout-danger">'.$error.'</div>';
 }else{
 $query = mysql_query ("INSERT INTO `useraura` (`user`,`password`,`level`,`tipe`,`nama`,`mapel`) VALUES ('$user',md5('$password'),'$level','$tipe','$nama','$mapel')");	
-$admin .= '<div class="alert alert-success fade in">Data Berhasil Di add</div>';
+$admin .= '<div class="callout callout-success">Data Berhasil Di add</div>';
 }
 	
 }	
@@ -115,10 +123,12 @@ while ($as = mysql_fetch_array ($ss)){
 if (isset ($_GET['offset']) && isset ($_GET['pg']) && isset ($_GET['stg'])) {
 $qss = "&pg=$pg&stg=$stg&offset=$offset";
 }	
-$admin.='<section class="panel">
-                          <header class="panel-heading">
-                              Tambah User
-                          </header>';
+$admin .= '<div class="box">
+                <div class="box-header">
+                  <h3 class="box-title">Tambah</h3>
+                </div><!-- /.box-header -->
+                <div class="box-body">';
+
 $admin.= "<form method='post' action='#'>
 <table  class='table table-condensed'>
   <tr>
@@ -184,7 +194,8 @@ $admin .= "<tr><td width='30%'>&nbsp;</td>
     <td width='69%'><br /><input type='submit' value='Simpan' name='add_users' class='btn btn-success'/></td>
   </tr>
 </table></form>";	
-	
+$admin .= '</div><!-- /.box-body -->
+              </div><!-- /.box -->';	
 	
 	
 }
@@ -212,10 +223,11 @@ if (substr($arrs,0,4) == 'enum' && $as['Field'] == 'level') break;
 if (isset ($_GET['offset']) && isset ($_GET['pg']) && isset ($_GET['stg'])) {
 $qss = "&amp;pg=$pg&amp;stg=$stg&amp;offset=$offset";
 }	
-$admin.='<section class="panel">
-                          <header class="panel-heading">
-                              Edit User
-                          </header>';
+$admin .= '<div class="box">
+                <div class="box-header">
+                  <h3 class="box-title">Edit</h3>
+                </div><!-- /.box-header -->
+                <div class="box-body">';
 $admin .= "<form method='post' action='admin.php?pilih=user&amp;mod=yes&amp;id=$id$qss'>
 <table  class='table table-condensed'>
   <tr>
@@ -291,24 +303,27 @@ $admin .= "<tr><td width='30%'>&nbsp;</td>
     <td width='69%'><br /><input type='submit' value='Simpan' name='edit_users' class='btn btn-success'/></td>
   </tr>
 </table></form>";	
+$admin .= '</div><!-- /.box-body -->
+              </div><!-- /.box -->';
 }
 
 if (!in_array($_GET['aksi'],array('add','edit','hint','addhint','editpassword','photo'))){
 
 $hasil = $koneksi_db->sql_query( "SELECT * FROM `useraura`where level <>'Siswa' and user<>'superadmin'" );
-$admin.='<section class="panel">
-                          <header class="panel-heading">
-                              Daftar User
-                          </header>';
+$admin .= '<div class="box">
+                <div class="box-header">
+                  <h3 class="box-title">Daftar Users</h3>
+                </div><!-- /.box-header -->
+                <div class="box-body">';
 $admin .="<form method='post' action=''>";
 $admin.='
-<table id="example" class="table">
+<table id="example1" class="table">
 <thead><tr>
     <td align="center"><b>User</b></td>
     <td align="center"><b>Nama</b></td>
     <td align="center"><b>Level</b></td>
     <td align="center"><b>Mapel</b></td>
-    <td align="center" width="270px"><b>Actions</b></td>
+    <td align="center" width="30%"><b>Actions</b></td>
   </tr></thead><tbody>';
 
 while ($data = $koneksi_db->sql_fetchrow($hasil)) {
@@ -334,6 +349,8 @@ $linkphoto = '<a href="?pilih=user&amp;mod=yes&amp;aksi=photo&amp;id='.$data['Us
 }
 $admin .= '<tbody></table>';
 $admin .="</form>";
+$admin .= '</div><!-- /.box-body -->
+              </div><!-- /.box -->';
 }
 
 if($_GET['aksi'] == 'editpassword'){
@@ -344,24 +361,25 @@ if(isset($_POST['submit'])){
 	$error 	= '';
 	if (!$password)  	$error .= "Error: Silahkan Isi password<br />";
 	if ($error){
-		$tengah .= '<div class="alert alert-block alert-danger fade in">'.$error.'</div>';
+		$tengah .= '<div class="callout callout-danger">'.$error.'</div>';
 	}else{
 		$hasil  = mysql_query( "UPDATE `useraura` SET `password`=md5('$password') WHERE `UserId`='$id'" );
 		if($hasil){
-			$admin .= '<div class="alert alert-success fade in"><b>Password Berhasil di Update.</b></div>';
+			$admin .= '<div class="callout callout-success"><b>Password Berhasil di Update.</b></div>';
 			$style_include[] ='<meta http-equiv="refresh" content="1; url=admin.php?pilih=user&amp;mod=yes" />';	
 		}else{
-			$admin .= '<div class="alert alert-block alert-danger fade in"><b>Gagal di Update.</b></div>';
+			$admin .= '<div class="callout callout-danger"><b>Gagal di Update.</b></div>';
 		}
 	}
 
 }
 $query 		= mysql_query ("SELECT * FROM `useraura` WHERE `UserId`='$id'");
 $data 		= mysql_fetch_array($query);
-$admin.='<section class="panel">
-                          <header class="panel-heading">
-                              Edit Pasword User
-                          </header>';
+$admin .= '<div class="box">
+                <div class="box-header">
+                  <h3 class="box-title">Edit password</h3>
+                </div><!-- /.box-header -->
+                <div class="box-body">';
 $admin .= '
 <form method="post" action=""class="form-inline">
 <table class="table table-condensed">
@@ -383,6 +401,8 @@ $admin .= '
 	</tr>
 </table>
 </form>';
+$admin .= '</div><!-- /.box-body -->
+              </div><!-- /.box -->';
 }
 
 if($_GET['aksi'] == 'photo'){
@@ -400,7 +420,7 @@ $extension = end(explode('.', $_FILES['gambar']['name']));
 $error 	= '';
 if ($extension!='jpg')  	$error .= "Error: Format ekstensi jpg<br />";
 if ($error){
-$admin.='<div class="alert alert-block alert-danger fade in">'.$error.'</div>';
+$admin.='<div class="callout callout-danger">'.$error.'</div>';
 
 }else{
 
@@ -425,7 +445,7 @@ $seftitle = $seftitle.$jumlah;
     //$tgl= date('Y-m-d H:i:s');
     $hasil = $koneksi_db->sql_query( "update useraura set photo ='$namagambar'where user='$username'" );
     if($hasil){
-    $admin.='<div class="alert alert-success fade in">Berhasil Update Photo ...</div>';
+    $admin.='<div class="callout callout-success">Berhasil Update Photo ...</div>';
 
 unlink($uploaddir);
 }
@@ -442,10 +462,11 @@ $photo = '<img src="mod/user/photo/'.$photo.'">';
 }else{
 $photo = '<img src="mod/user/photo/default-photo.jpg">';
 }
-$admin.='<section class="panel">
-                          <header class="panel-heading">
-                              Profil Picture User
-                          </header>';
+$admin .= '<div class="box">
+                <div class="box-header">
+                  <h3 class="box-title">Picture Users</h3>
+                </div><!-- /.box-header -->
+                <div class="box-body">';
 $admin .= '
 <form method="post" action=""class="form-inline" enctype ="multipart/form-data">
 <table class="table table-striped table-hover">
@@ -473,7 +494,8 @@ $admin .= '
 	</tr>
 </table>
 </form>';
-
+$admin .= '</div><!-- /.box-body -->
+              </div><!-- /.box -->';
 }
 
 

@@ -6,15 +6,24 @@ if (!defined('AURACMS_CONTENT')) {
 }
 global $koneksi_db;
 
-$admin .= ' <div class="row">
-				<div class="col-lg-12">
-					<h3 class="page-header"><i class="icon_group"></i> Dashboard</h3>
-				</div>
-			</div>';	
-$admin.='<section class="panel">
-                          <header class="panel-heading">
-                              Info
-                          </header>';
+$admin .='<section class="content-header">
+          <h1>
+            Dashboard
+            <small>Admin Site</small>
+          </h1>
+          <ol class="breadcrumb">
+            <li><i class="fa fa-dashboard"></i>Home</a></li>
+			<li>Dashboard</li>
+            <li class="active">Admin Site</li>
+          </ol>
+        </section>';
+$admin .='
+<section class="content">';	
+$admin .= '<div class="box">
+                <div class="box-header">
+                  <h3 class="box-title">Dashboard</h3>
+                </div><!-- /.box-header -->
+                <div class="box-body">';
 if (isset( $_SESSION['LevelAkses'] )){
 $username = $_SESSION['UserName'];
 $query =  $koneksi_db->sql_query( "SELECT * FROM useraura where user = '$username'" );
@@ -24,13 +33,15 @@ if ($_SESSION['LevelAkses']=="Administrator"){
 $admin .='-&nbsp;<b>Last Login :</b> '.$last_ping.'';
 
 }
-if ($_SESSION['LevelAkses']=="User"){
+if ($_SESSION['LevelAkses']=="Siswa"){
 $admin .='-&nbsp;Last Login : '.$last_ping.'';
 }
 
 
 
 }
-$admin.='</section>';
+$admin .= '</div><!-- /.box-body -->
+</div><!-- /.box -->';
+$admin .='</section>';
 echo $admin;
 ?>

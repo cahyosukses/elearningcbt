@@ -18,17 +18,24 @@ $(document).ready(function() {
 </script>
 js;
 $script_include[] = $JS_SCRIPT;
-$admin .= '<div class="row">
-				<div class="col-lg-12">
-					<h3 class="page-header"><i class="fa fa-list-alt"></i> Kelas</h3>
-					<ol class="breadcrumb">
-					<li><i class="fa fa-home"></i><a href="admin.php?pilih=kelas&mod=yes">Home</a></li>
-						<li><i class="icon_contacts_alt"></i>IPA</li>
-						<li><i class="fa fa-list-alt"></i>Tambah Kelas</li>
-					</ol>
-				</div>
-			</div>';
-
+$admin .='<section class="content-header">
+          <h1>
+            Kelas
+            <small>Mengatur Kelas</small>
+          </h1>
+          <ol class="breadcrumb">
+            <li><a href="./admin.php?pilih=kelas&mod=yes"><i class="fa fa-dashboard"></i>Home</a></li>
+			<li>Master</li>
+            <li class="active">Kelas</li>
+          </ol>
+        </section>';
+$admin .='
+<section class="content-header">
+<a class="btn btn-default btn-flat" href="./admin.php?pilih=kelas&mod=yes" >
+<i class="fa fa-users">&nbsp;</i> Kelas <span class="badge bg-green"></span></a>
+</section>';
+$admin .='
+<section class="content">';
 if($_GET['aksi']== 'del'){    
 	global $koneksi_db;    
 	$id     = int_filter($_GET['id']); 
@@ -69,10 +76,11 @@ if ($koneksi_db->sql_numrows($koneksi_db->sql_query("SELECT kelas FROM kelas WHE
 }
 $query 		= mysql_query ("SELECT * FROM `kelas` WHERE `id`='$id'");
 $data 		= mysql_fetch_array($query);
-$admin.='<section class="panel">
-                          <header class="panel-heading">
-                              Edit Kelas
-                          </header>';
+$admin .= '<div class="box">
+                <div class="box-header">
+                  <h3 class="box-title">Kelas</h3>
+                </div><!-- /.box-header -->
+                <div class="box-body">';
 $admin .= '
 <form method="post" action=""class="form-inline">
 <table border="0" cellspacing="0" cellpadding="0"class="table table-striped table-hover">
@@ -89,7 +97,8 @@ $admin .= '
 	</tr>
 </table>
 </form>';
-$admin.='</section>';
+$admin .= '</div><!-- /.box-body -->
+              </div><!-- /.box -->';
 }
 
 if($_GET['aksi']==""){
@@ -112,10 +121,11 @@ if ($koneksi_db->sql_numrows($koneksi_db->sql_query("SELECT kelas FROM kelas WHE
 
 }
 $kelas     		= !isset($kelas) ? '' : $kelas;
-$admin.='<section class="panel">
-                          <header class="panel-heading">
-                              Tambah Kelas
-                          </header>';
+$admin .= '<div class="box">
+                <div class="box-header">
+                  <h3 class="box-title">Kelas</h3>
+                </div><!-- /.box-header -->
+                <div class="box-body">';
 $admin .= '
 <form method="post" action="" class="form-inline">
 <table class="table  table-hover">
@@ -132,16 +142,18 @@ $admin .= '
 	</tr>
 </table>
 </form>';	
-$admin.='</section>';
+$admin .= '</div><!-- /.box-body -->
+              </div><!-- /.box -->';
 }
 
 /************************************/
 $hasil = $koneksi_db->sql_query( "SELECT * FROM kelas order by kelas asc" );
-$admin.='<section class="panel">
-                          <header class="panel-heading">
-                              Data Kelas
-                          </header>';
-$admin .= '<table id="example" class="table  table-hover">
+$admin .= '<div class="box">
+                <div class="box-header">
+                  <h3 class="box-title">Data Kelas</h3>
+                </div><!-- /.box-header -->
+                <div class="box-body">';
+$admin .= '<table id="example1" class="table  table-hover">
 <thead><tr>
 <th>No</th>
 <th>Kelas</th>
@@ -158,10 +170,10 @@ $admin .='<tr>
 $no++;
 }
 $admin .= '</tbody></table>';
-/************************************/
-$admin.='</section>';
+$admin .= '</div><!-- /.box-body -->
+              </div><!-- /.box -->';
 }
-
+$admin .='</section>';
 echo $admin;
 
 ?>

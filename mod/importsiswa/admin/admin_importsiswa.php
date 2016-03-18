@@ -21,18 +21,31 @@ if (!cek_login ()){
 	
 $admin .='<p class="judul">Access Denied !!!!!!</p>';
 }else{
-	$admin .= '<div class="row">
-				<div class="col-lg-12">
-					<h3 class="page-header"><i class="fa fa-list-alt"></i> Siswa</h3>
-					<ol class="breadcrumb">
-					<li><i class="fa fa-home"></i><a href="admin.php?pilih=importsiswa&amp;mod=yes">Home</a></li>
-					<li><i class="fa fa-list-alt"></i><a href="admin.php?pilih=importsiswa&amp;mod=yes&amp;aksi=delkelas">Hapus Siswa Per Kelas</a></li>
-					<li><i class="fa fa-list-alt"></i><a href="admin.php?pilih=importsiswa&amp;mod=yes&amp;aksi=inputsiswa">Input Siswa Satuan</a></li>
-					<li><i class="fa fa-list-alt"></i><a href="admin.php?pilih=importsiswa&amp;mod=yes&amp;aksi=daftarsiswa">Siswa tanpa Kelas</a></li>
-					</ol>
-				</div>
-			</div>';
-			
+
+$admin .='<section class="content-header">
+          <h1>
+            Siswa
+            <small>Mengatur Siswa</small>
+          </h1>
+          <ol class="breadcrumb">
+            <li><a href="./admin.php?pilih=daftarsiswa&mod=yes"><i class="fa fa-dashboard"></i>Home</a></li>
+			<li>Master</li>
+            <li class="active">Siswa</li>
+          </ol>
+        </section>';
+$admin .='
+<section class="content-header">
+<a class="btn btn-default btn-flat" href="./admin.php?pilih=importsiswa&mod=yes" >
+<i class="fa fa-users">&nbsp;</i> Siswa <span class="badge bg-green"></span></a>
+<a class="btn btn-default btn-flat" href="./admin.php?pilih=importsiswa&mod=yes&aksi=delkelas" >
+<i class="fa fa-user-times">&nbsp;</i> Hapus Siswa Per Kelas <span class="badge bg-green"></span></a>
+<a class="btn btn-default btn-flat" href="./admin.php?pilih=importsiswa&mod=yes&aksi=inputsiswa" >
+<i class="fa fa-user-plus">&nbsp;</i> Tambah Siswa Satuan <span class="badge bg-green"></span></a>
+<a class="btn btn-default btn-flat" href="./admin.php?pilih=importsiswa&mod=yes&aksi=daftarsiswa" >
+<i class="fa fa-user-secret">&nbsp;</i>Siswa tanpa Kelas <span class="badge bg-green"></span></a>
+</section>';
+$admin .='
+<section class="content">';		
 
 if($_GET['aksi']==""){
 if(isset($_POST['submit'])){
@@ -77,7 +90,12 @@ $gagal++;
 
 
 }
-$admin .='<div class="panel-heading"><b>Import Siswa</b></div>';
+
+$admin .= '<div class="box">
+                <div class="box-header">
+                  <h3 class="box-title">Import Siswa</h3>
+                </div><!-- /.box-header -->
+                <div class="box-body">';
 $admin .='
  <form method="post" enctype="multipart/form-data" action="">
  <table class="table table-striped table-hover">
@@ -110,6 +128,8 @@ $admin .='</select></td>
  </tr>
  </table>
  </form>';
+ $admin .= '</div><!-- /.box-body -->
+              </div><!-- /.box -->';
 }
 
 if($_GET['aksi'] == 'edit'){
@@ -165,7 +185,11 @@ $nama 		= $data['nama'];
 $siswa 		= $data['siswa'];
 $kelas 		= $data['kelas'];
 if($siswa<>''){
-$admin .='<div class="panel-heading"><b>Edit Siswa</b></div>';
+$admin .= '<div class="box">
+                <div class="box-header">
+                  <h3 class="box-title">Edit Siswa</h3>
+                </div><!-- /.box-header -->
+                <div class="box-body">';
 $admin .= '
 <form method="post" action=""class="form-inline">
 <table border="0" cellspacing="0" cellpadding="0"class="table table-striped table-hover">
@@ -198,12 +222,18 @@ $admin .= '
 	</tr>
 </table>
 </form>';
+$admin .= '</div><!-- /.box-body -->
+              </div><!-- /.box -->';
 }else{
 $query 		= mysql_query ("SELECT ki.siswa,ki.kelas FROM kelas_isi as ki where ki.siswa='$user'");
 $data 		= mysql_fetch_array($query);
 $siswa 		= $data['siswa'];
 $kelas 		= $data['kelas'];	
-$admin .='<div class="panel-heading"><b>Edit Siswa</b></div>';
+$admin .= '<div class="box">
+                <div class="box-header">
+                  <h3 class="box-title">Edit Siswa</h3>
+                </div><!-- /.box-header -->
+                <div class="box-body">';
 $admin .= '
 <form method="post" action=""class="form-inline">
 <table border="0" cellspacing="0" cellpadding="0"class="table table-striped table-hover">
@@ -236,6 +266,8 @@ $admin .= '
 	</tr>
 </table>
 </form>';	
+$admin .= '</div><!-- /.box-body -->
+              </div><!-- /.box -->';
 }
 }
 
@@ -255,7 +287,11 @@ WHERE useraura.user= kelas_isi.siswa and kelas_isi.kelas = '$kelas'");
 	$style_include[] ='<meta http-equiv="refresh" content="1; url=admin.php?pilih=importsiswa&mod=yes&aksi=delkelas" />';    	
 
 }
-$admin .='<div class="panel-heading"><b>Import Siswa</b></div>';
+$admin .= '<div class="box">
+                <div class="box-header">
+                  <h3 class="box-title">Hapus Siswa</h3>
+                </div><!-- /.box-header -->
+                <div class="box-body">';
 $admin .='
  <form method="post" enctype="multipart/form-data" action="">
  <table class="table table-striped table-hover">
@@ -278,6 +314,8 @@ $admin .='</select></td>
  </tr>
  </table>
  </form>';
+ $admin .= '</div><!-- /.box-body -->
+              </div><!-- /.box -->';
 }
 
 if($_GET['aksi']=="inputsiswa"){
@@ -312,7 +350,11 @@ $kelas     		= !isset($kelas) ? '' : $kelas;
 $username     		= !isset($username) ? '' : $username;
 $password     		= !isset($password) ? '' : $password;
 $nama     		= !isset($nama) ? '' : $nama;
-$admin .='<div class="panel-heading"><b>Tambah Kelas</b></div>';
+$admin .= '<div class="box">
+                <div class="box-header">
+                  <h3 class="box-title">Tambah Siswa</h3>
+                </div><!-- /.box-header -->
+                <div class="box-body">';
 $admin .= '
 <form method="post" action="" class="form-inline">
 <table class="table table-striped table-hover">
@@ -351,6 +393,8 @@ $admin .='</select></td>
 	</tr>
 </table>
 </form>';	
+ $admin .= '</div><!-- /.box-body -->
+              </div><!-- /.box -->';
 }
 
 if($_GET['aksi']== 'resetpassword'){    
@@ -396,7 +440,11 @@ $kelas     		= !isset($kelas) ? '' : $kelas;
 $username     		= !isset($username) ? '' : $username;
 $password     		= !isset($password) ? '' : $password;
 $nama     		= !isset($nama) ? '' : $nama;
-$admin .='<div class="panel-heading"><b>Tambah Kelas</b></div>';
+$admin .= '<div class="box">
+                <div class="box-header">
+                  <h3 class="box-title">Tambah Kelas</h3>
+                </div><!-- /.box-header -->
+                <div class="box-body">';
 $admin .= '
 <form method="post" action="" class="form-inline">
 <table class="table table-striped table-hover">
@@ -429,13 +477,19 @@ $admin .='</select></td>
 		<input type="submit" value="Tambah" name="submit"class="btn btn-success" ></td>
 	</tr>
 </table>
-</form>';	
+</form>';
+ $admin .= '</div><!-- /.box-body -->
+              </div><!-- /.box -->';	
 }
 
 if (in_array($_GET['aksi'],array('','edit','del','delkelas','inputsiswa','resetpassword'))){
-$admin .='<div class="panel-heading"><b>Daftar Siswa Per Kelas</b></div>';
+$admin .= '<div class="box">
+                <div class="box-header">
+                  <h3 class="box-title">Daftar Siswa</h3>
+                </div><!-- /.box-header -->
+                <div class="box-body">';
 $admin.='
-<table id="example" class="table table-striped table-bordered" cellspacing="0">
+<table id="example1" class="table table-striped table-bordered" cellspacing="0">
 <thead>
 <tr>
 <th>Kelas</th>
@@ -460,9 +514,14 @@ $admin.='
 </tr>';
 }
 $admin .= '</tbody></table>';
-$admin .='</div>';
+ $admin .= '</div><!-- /.box-body -->
+              </div><!-- /.box -->';	
 }else{
-$admin .='<div class="panel-heading"><b>Daftar Siswa Per User</b></div>';
+$admin .= '<div class="box">
+                <div class="box-header">
+                  <h3 class="box-title">Daftar Siswa</h3>
+                </div><!-- /.box-header -->
+                <div class="box-body">';
 $admin.='
 <table id="example" class="table table-striped table-bordered" cellspacing="0">
 <thead>
@@ -491,11 +550,10 @@ $admin.='
 }
 }
 $admin .= '</tbody></table>';
-$admin .='</div>';	
-	
+$admin .= '</div><!-- /.box-body -->
+</div><!-- /.box -->';	
 }
-
-
+$admin .='</section>';
 }
 
 
