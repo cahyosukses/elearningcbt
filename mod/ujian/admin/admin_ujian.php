@@ -10,38 +10,6 @@ if (!cek_login ()){
 $admin .='<p class="judul">Access Denied !!!!!!</p>';
 }else{
 
-$JS_SCRIPT = <<<js
-<!-- TinyMCE -->
-<script type="text/javascript" src="js/tinymce/tinymce.min.js"></script>
-<script type="text/javascript">
-tinymce.init({
-        selector: "textarea",
-        plugins: [
-                "advlist autolink autosave link image lists charmap print preview hr anchor pagebreak spellchecker",
-                "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
-                "table contextmenu directionality emoticons template textcolor paste  textcolor filemanager"
-        ],
-
-        toolbar1: "| bold italic underline strikethrough | code",
-		
-
-        menubar: false,
-        toolbar_items_size: 'small',
-		image_advtab: true,
-forced_root_block : false,
-    force_p_newlines : 'false',
-    remove_linebreaks : false,
-    force_br_newlines : true,
-    remove_trailing_nbsp : false,
-    verify_html : false,
-        templates: [
-                {title: 'Test template 1', content: 'Test 1'},
-                {title: 'Test template 2', content: 'Test 2'}
-        ]
-		
-});</script>
-<!-- /TinyMCE -->
-js;
 $JS_SCRIPT.= <<<js
 <script type="text/javascript">
   $(function() {
@@ -67,27 +35,11 @@ jQuery(function(){
               jQuery('#div'+$(this).attr('target')).show();
 			  
         });
-		$('#foobar input[type=radio]').change(function(){
-		jQuery('#soal'+$(this).attr('target').class);	
-      alert ( $(this).attr('target') ) 
-      
-      });
+
 });
 </script>
 js;
-$JS_SCRIPT .= <<<js
-<!-- TinyMCE -->
-    <script type="text/javascript">
-      $(function () {
-        // Replace the <textarea id="editor1"> with a CKEditor
-        // instance, using default configuration.
-        CKEDITOR.replace('editor1');
-        //bootstrap WYSIHTML5 - text editor
-        $(".textarea").wysihtml5();
-      });
-    </script>
-
-js;
+$script_include[] = $JS_SCRIPT;
 
 
 if ($_GET['aksi']== 'testujian') {
@@ -109,9 +61,9 @@ $waktuakhir = $_SESSION['waktuakhir'];
 $_SESSION['waktuakhir']= $waktuakhir;	
 }
 
-$JS_SCRIPT.= <<<js
-
-<script>
+$JS_SCRIPT= <<<js
+<script type="text/javascript" src="includes/countdown2/jquery.countdownTimer.js"></script>
+<script type="text/javascript">
   $(function(){
     $('#future_date').countdowntimer({
        dateAndTime : "<?php $_SESSION[waktuakhir] ?>",
@@ -1198,7 +1150,7 @@ $admin .= '
 		<td>'.getmapel($idmapel).'</td>
 		<td>Tipe / Status Soal</td>
 		<td>:</td>
-		<td>'.$tipeujian.' / '.$status.'</td>
+		<td>'.$tipe.' / '.$status.'</td>
 	</tr>
 	<tr>
 		<td>Nilai Sebelumnya</td>
@@ -1258,9 +1210,9 @@ $admin .='<div id="div'.$nosoal.'" class="targetDiv"style="display:none">
 <b>'.$nosoal.'</b>. 
 '.$gambar.''.$soal.'<br>';
 for ($i = 0; $i < $jml_jawaban; $i++) {
-$admin .="<label class='radio'>
+$admin .="<label>
 <input type='radio' name='jawabantest$nosoal' value='$jawaban[$i]'target='$nosoal'>
-$jawaban[$i]. $pilihansoal[$i]</label>";
+$jawaban[$i]. $pilihansoal[$i]</label><br>";
 }
 $admin.='</div>';
 
