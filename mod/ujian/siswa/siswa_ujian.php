@@ -98,7 +98,7 @@ $JS_SCRIPT.= <<<js
        dateAndTime : "<?php $_SESSION[waktuakhir] ?>",
        size : "lg",
        regexpMatchFormat: "([0-9]{1,2}):([0-9]{1,2}):([0-9]{1,2}):([0-9]{1,2})",
-       regexpReplaceWith: "<div align='center'><div class='btn btn-danger btn-lg'>$2</div>:<div class='btn btn-danger btn-lg'>$3</div>:<div class='btn btn-danger btn-lg'>$4</div></div>"
+       regexpReplaceWith: "<div align='center'><div class='btn btn-danger btn-lg'>$2</div>&nbsp;<div class='btn btn-danger btn-lg'>$3</div>&nbsp;<div class='btn btn-danger btn-lg'>$4</div></div>"
     });
   });
 </script>
@@ -122,25 +122,39 @@ js;
 $script_include[] = $JS_SCRIPT;
 
     $temp 	= 'mod/ujian/download/';
-	$admin .= '<div class="row">
-				<div class="col-lg-12">
-					<h3 class="page-header"><i class="fa fa-list-alt"></i> Ujian</h3>
-					<ol class="breadcrumb">
-					<li><i class="fa fa-home"></i><a href="?pilih=ujian&mod=yes">Home</a></li>
-					<li><i class="icon  icon_documents_alt"></i><a href="admin.php?pilih=ujian&mod=yes&aksi=nilaiujian">Lihat History Nilai</a></li>
-					</ol>
-				</div>
-			</div>';
+$admin .='<section class="content-header">
+          <h1>
+            Ujian
+            <small>Latihan Ujian Basis Komputer</small>
+          </h1>
+          <ol class="breadcrumb">
+            <li><a href="./admin.php?pilih=ujian&mod=yes"><i class="fa fa-dashboard"></i>Home</a></li>
+			<li>E-Learning</li>
+            <li class="active">Ujian</li>
+          </ol>
+        </section>';	
+$admin .='
+<section class="content-header">
+<a class="btn btn-default btn-flat" href="./admin.php?pilih=ujian&mod=yes" >
+<i class="fa fa-image">&nbsp;</i> Ujian <span class="badge bg-green"></span></a>&nbsp;';
+$admin .='<a class="btn btn-default btn-flat" href="./admin.php?pilih=ujian&mod=yes&aksi=nilaiujian" >
+<i class="fa fa-bar-chart">&nbsp;</i> History Nilai <span class="badge bg-green"></span></a>&nbsp;
+</section>';					
+$admin .='
+<section class="content">';			
 			
-$admin .='<div class="panel panel">';
 $user =  $_SESSION['UserName'];
 $levelakses=$_SESSION['LevelAkses'];
 $petunjuk=getpetunjuk();
 $waktu=getwaktu();
 if($_GET['aksi']==""){
 $hasil = $koneksi_db->sql_query( "SELECT * FROM mapel  order by mapel asc" );
-$admin .='<div class="panel-heading"><b>Daftar Mapel</b></div>';
-$admin .= '<table id="example" class="table table-striped table-hover">
+$admin .= '<div class="box">
+                <div class="box-header">
+                  <h3 class="box-title">Ujian</h3>
+                </div><!-- /.box-header -->
+                <div class="box-body">';
+$admin .= '<table id="example1" class="table table-striped table-hover">
 <thead><tr>
 <th>No</th>
 <th>Mata Pelajaran</th>
@@ -166,6 +180,8 @@ $admin .='</td>
 $no++;
 }
 $admin .= '</tbody></table>';
+$admin .= '</div><!-- /.box-body -->
+</div><!-- /.box -->';
 /************************************/
 }
 
@@ -173,7 +189,11 @@ if (in_array($_GET['aksi'],array('listujian'))) {
 unset($_SESSION['waktumulai']);
 unset($_SESSION['waktuakhir']);
 $id     = int_filter($_GET['id']);
-$admin .='<div class="panel-heading"><b>Mata Pelajaran</b></div>';
+$admin .= '<div class="box">
+                <div class="box-header">
+                  <h3 class="box-title">Mata Pelajaran</h3>
+                </div><!-- /.box-header -->
+                <div class="box-body">';
 $hasil =  $koneksi_db->sql_query( "SELECT * FROM mapel where id='$id' " );
 $data = $koneksi_db->sql_fetchrow($hasil);
 $idmapel=$data['id'];
@@ -219,6 +239,8 @@ $admin .= '<tr>
 		<td></td>
 	</tr>';
 $admin.='</table>';
+$admin .= '</div><!-- /.box-body -->
+</div><!-- /.box -->';
 /*
 $hasil = $koneksi_db->sql_query( "SELECT * FROM ujian where  idmapel='$idmapel' order by tgl desc" );
 $admin .='<div class="panel-heading"><b>Daftar Ujian</b></div>';
@@ -264,11 +286,15 @@ $admin.="<table class='table'><tr><td><a href='?pilih=ujian&mod=yes'><span class
 
 
 if ($_GET['aksi']== 'testujian') {
+
+
 $idmapel     = int_filter($_GET['id']);
 $idujian     = int_filter($_GET['idujian']);
-
-$idujian     = int_filter($_GET['idujian']);
-$admin .='<div class="panel-heading"><b>Latihan Ujian</b></div>';
+$admin .= '<div class="box">
+                <div class="box-header">
+                  <h3 class="box-title">Latihan Ujian</h3>
+                </div><!-- /.box-header -->
+                <div class="box-body">';
 $hasil2 =  $koneksi_db->sql_query( "SELECT * FROM ujian where id='$idujian' " );
 $data2 = $koneksi_db->sql_fetchrow($hasil2);
 $judul=$data2['judul'];
@@ -279,7 +305,7 @@ $status =$data2['status'];
 $pointbenar =$data2['pointbenar'];
 $pointsalah =$data2['pointsalah'];
 $pointkosong =$data2['pointkosong'];
-
+$filelistening =$data2['listening'];
 if($petunjuk){
 $petunjukumum = "
 <tr><td colspan='6'>
@@ -288,7 +314,7 @@ $petunjukumum = "
 </td></tr>
 ";
 }
-$timercountdown = '<tr><td colspan="6"><div id="future_date"></div></td></tr>';
+
 $admin .= '
 <table cellspacing="0" cellpadding="0"class="table table-striped table-hover">
 	<tr>
@@ -305,18 +331,34 @@ $admin .= '
 		<td>'.getmapel($idmapel).'</td>
 		<td>Tipe / Status Soal</td>
 		<td>:</td>
-		<td>'.$tipeujian.' / '.$status.'</td>
+		<td>'.$tipe.' / '.$status.'</td>
 	</tr>
 	<tr>
 		<td>Nilai Sebelumnya</td>
 		<td>:</td>
-		<td>'.getnilaiujian($idmapel,$user).'</td>
+		<td>'.getnilaiujian($idujian,$user).'</td>
 		<td>Waktu</td>
 		<td>:</td>
-		<td>'.konversi_detik($waktu).'</td>';
-//$admin .= '<a href="./downloaddoc.php?idujian='.$idujian.'&amp;id='.$idmapel.'"><span class="btn btn-primary">Download DOC</span></a>';
-$admin .= '	'.$petunjukumum.''.$timercountdown.'
-</table>';
+		<td>'.konversi_detik($detik).'</td>
+	</tr>';
+$admin .= '
+	'.$petunjukumum.'</table>';
+$admin .= '</div><!-- /.box-body -->
+</div><!-- /.box -->';
+$admin .= '<div class="box">
+                <div class="box-header">
+                  <h3 class="box-title">Timer Ujian</h3>
+                </div><!-- /.box-header -->
+                <div class="box-body">';
+$timercountdown = '<tr><td><div id="future_date"></div></td></tr>';
+if($filelistening<>''){
+$listeningaudio .='<tr><td>
+<audio src="mod/ujian/download/'.$filelistening.'" controls="true" loop="false" autoplay="false"></audio></td>
+</tr>';
+}
+$admin .= '<table class="table">'.$timercountdown.''.$listeningaudio.'</table>';		
+$admin .= '</div><!-- /.box-body -->
+</div><!-- /.box -->';	
 $tipejawaban = getjumlahjawaban($idujian);
 $jawaban = explode(",", $tipejawaban);
 $jml_jawaban = count($jawaban);
@@ -325,24 +367,22 @@ $hasil = mysql_query("SELECT * FROM soal where ujian='$idujian' ORDER BY RAND()"
 }else{
 $hasil = mysql_query("SELECT * FROM soal where ujian='$idujian'order by id asc");
 }
-/*****************/
+
 $total         = $koneksi_db->sql_numrows($hasil);
 $tombolsoal=1;
-$admin .='<table class="table">';
-$admin .='<tr><td><div id="buttons">  ';
-for ($j = 1; $j <= $total; $j++) {
-$admin .='
-<a  class="btnsoal" target="'.$j.'">Soal '.$j.'</a>&nbsp;';
-}
-
-$admin .='</div></td></tr>';
-$admin .='</table>';
-/******************/
+$admin .= '<div class="box">
+                <div class="box-header">
+                  <h3 class="box-title">Soal Ujian</h3>
+                </div><!-- /.box-header -->
+                <div class="box-body">';
+$admin .='<div class="row">
+  <div class="col-md-10">';
+/********************* soal ********************/  
 $admin .= '
-<form id="formujian" name="formujian" method="post"action="?pilih=ujian&mod=yes&aksi=hasiltest&id='.$idmapel.'">
+<form  id="formujian" name="formujian" method="post"action="?pilih=ujian&mod=yes&aksi=hasiltest&id='.$idmapel.'">
 <table class="table table-striped table-hover">
 <thead ><tr class="info">
-<th>Soal</th>
+
 </tr></thead><tbody>';
 $admin .= '<tr><td>';
 $nosoal=1;
@@ -358,14 +398,14 @@ $gambar = "<img src='mod/ujian/download/$filesgambar'><br>";
 }else{
 $gambar = '';
 }
-/***************************************/
+
 $admin .='<div id="div'.$nosoal.'" class="targetDiv"style="display:none">
 <b>'.$nosoal.'</b>. 
 '.$gambar.''.$soal.'<br>';
 for ($i = 0; $i < $jml_jawaban; $i++) {
-$admin .="<label class='radio'>
-  <input type='radio' name='jawabantest$nosoal' value='$jawaban[$i]'>
-$jawaban[$i]. $pilihansoal[$i]</label>";
+$admin .="<label>
+<input type='radio' name='jawabantest$nosoal' value='$jawaban[$i]'target='$nosoal'>
+$jawaban[$i]. $pilihansoal[$i]</label><br>";
 }
 $admin.='</div>';
 
@@ -374,7 +414,7 @@ $kuncijawaban.=$kunci."#";
 }
 $admin .= '</td></tr>';
 $admin .= '</tbody></table>';
-/*******************************************/
+
 $admin.="<div align='center'>";
 $admin .="
 <input type='hidden' name='pointbenar' value='$pointbenar' />";
@@ -392,15 +432,43 @@ $admin .="
 <input type='hidden' name='idujian' value='$idujian' />";
 $admin .="
 <input type='hidden' name='tipeujian' value='$tipeujian' />";
-//$admin .="<a href='?pilih=ujian&mod=yes&aksi=listujian&id=$idmapel'><span class='btn btn-primary'>BACK</span></a>&nbsp;";
 $admin .='<input type="submit"class="btn btn-success" value="Selesai" onclick="return confirm(\'Apakah Anda Yakin Ingin Mengakhiri Ujian Ini ?\')">';
 $admin.="</div>";
-$admin.="<br></form>";
+$admin.="<br></form>";  
+/********************* soal ********************/ 
+$admin .='</div>
+  <div class="col-md-2">';
+/********************* tombol soal ********************/ 
+$admin .='<table class="table">';
+$admin .='<tr><td><div id="buttons">  ';
+for ($j = 1; $j <= $total; $j++) {
+	$tombolj=$j;
+	if($j<10){
+	$tombolj='0'.$j;	
+	}
+$admin .='
+<a class="btnsoal" target="'.$j.'">'.$tombolj.'</a>&nbsp;';
+}
+
+$admin .='</div></td></tr>';
+$admin .='</table>';  
+/********************* tombol soal ********************/ 
+$admin .='</div>
+</div>';
+$admin .= '</div><!-- /.box-body -->
+</div><!-- /.box -->';	
+$admin .= '</div><!-- /.box-body -->
+</div><!-- /.box -->';
+/*******************************/
 
 }
 
 if ($_GET['aksi']== 'hasiltest') {
-$admin .='<div class="panel-heading"><b>Hasil Test Latihan Ujian</b></div>';
+	$admin .= '<div class="box">
+                <div class="box-header">
+                  <h3 class="box-title">Hasil Test Latihan Ujian</h3>
+                </div><!-- /.box-header -->
+                <div class="box-body">';
 $kj2 = substr_replace($_POST['kuncijawaban'],"", -1, 1);	
 $kuncijawaban = explode("#", $kj2);
 $idmapel = $_POST['idmapel'];
@@ -431,7 +499,7 @@ $ppil = substr_replace($ppil, "", -1, 1);
 $jawabansalah = $jawabanterisi-$jawabanbenar;
 $score = ($pointbenar*$jawabanbenar)+($pointsalah*$jawabansalah)+($pointkosong*$jawabankosong);
 /*******************/
-simpannilai($idmapel,$user,$score,$tipeujian,$levelakses);
+simpannilai($idmapel,$user,$score,$tipeujian,$levelakses,$jawabanterisi,$jawabanbenar,$jawabansalah);
 /********************/
 $admin.="<table class='table'>";
 $admin.="<tr><td><h2>Total Score : $score </h2></td></tr>";
@@ -443,12 +511,17 @@ $admin.="Jawaban Benar : $jawabanbenar <br>";
 $admin.="Jawaban Salah : $jawabansalah </td></tr>";
 $admin .="<tr><td><a href='?pilih=ujian&mod=yes&aksi=listujian&id=$idmapel'><span class='btn btn-primary'>BACK</span></a>&nbsp;</td></tr>";
 $admin.="</table>";
-
+$admin .= '</div><!-- /.box-body -->
+</div><!-- /.box -->';
 }
 
 /* NILAI UJIAN */
 if($_GET['aksi']=="nilaiujian"){
-$admin .='<div class="panel-heading"><b>Nilai Ujian</b></div>';
+	$admin .= '<div class="box">
+                <div class="box-header">
+                  <h3 class="box-title">Histori Nilai Ujian</h3>
+                </div><!-- /.box-header -->
+                <div class="box-body">';
 $admin .= '
 <form method="post" action=""class="form-inline">
 <table cellspacing="0" cellpadding="0"class="table table-striped table-hover">
@@ -484,36 +557,46 @@ $admin .="<table class='table table-striped table-hover'>";
   </tr>"; 
 $admin .="</table>";
 $hasil = $koneksi_db->sql_query( "SELECT * FROM ujiannilai where mapel = '$idmapel' and user='$user'  order by id desc" );
-$admin .= '<table id="example" class="table table-striped table-hover">
+$admin .= '<table id="example1" class="table table-striped table-hover">
 <thead><tr>
 <th>No</th>
 <th>Tanggal</th>
 <th>Jam</th>
 <th>Nama</th>
+<th>Terisi</th>
+<th>Benar</th>
+<th>Salah</th>
 <th>Nilai</th>
 </tr></thead><tbody>';
 $no = 1;
 while ($data = $koneksi_db->sql_fetchrow($hasil)) {
 $tgl     = $data['tgl'];  
 $nilai     = $data['nilai'];  
+$terisi     = $data['terisi']; 
+$benar     = $data['benar']; 
+$salah     = $data['salah'];  
 $nama     = getnamaguru($data['user']);  
 $admin .='<tr>
 <td><b>'.$no.'</b></td>
 <td>'.datetimes($data['tgl']).'</td>
 <td>'.$data['jam'].'</td>
 <td>'.$nama.'</td>
-<td>'.$data['nilai'].'</td>';
+<td>'.$terisi.'</td>
+<td>'.$benar.'</td>
+<td>'.$salah.'</td>
+<td>'.$nilai.'</td>';
 $admin .='
 </tr>';
 $no++;
 }
 $admin .= '</tbody></table>';
 }
-
+$admin .= '</div><!-- /.box-body -->
+</div><!-- /.box -->';
 
 }
 
-$admin .='</div>';
+$admin .='</section>';
 }
 echo $admin;
 

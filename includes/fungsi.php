@@ -1622,7 +1622,7 @@ function gethariterlambat ($tglAwal,$tglAkhir){
 	}
 	return $selisih;
 }
-function simpannilai($idujian,$user,$score,$tipeujian,$levelakses){
+function simpannilai($idujian,$user,$score,$tipeujian,$levelakses,$jawabanterisi,$jawabanbenar,$jawabansalah){
 	date_default_timezone_set('Asia/Jakarta');
 $tgl=date('Y-m-d');
 $jam=date('H:i:s');
@@ -1632,7 +1632,7 @@ $data=mysql_fetch_array($hasil);
 $ujiannilai = $data["id"];
 $total  = mysql_num_rows($hasil);
 if($total < 1){
-$simpannilai = mysql_query ("INSERT INTO `ujiannilai`VALUES ('','$tgl','$jam','$idujian','$user','$score')");
+$simpannilai = mysql_query ("INSERT INTO `ujiannilai`VALUES ('','$tgl','$jam','$idujian','$user','$score','$jawabanterisi','$jawabanbenar','$jawabansalah')");
 }else{
 if($tipeujian =='latihan' or $levelakses=='Administrator' or $levelakses=='Guru'){
 $simpannilai = mysql_query ("update `ujiannilai` set tgl='$tgl',nilai='$score' where id='$ujiannilai'");

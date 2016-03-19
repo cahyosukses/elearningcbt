@@ -69,7 +69,7 @@ $JS_SCRIPT= <<<js
        dateAndTime : "<?php $_SESSION[waktuakhir] ?>",
        size : "lg",
        regexpMatchFormat: "([0-9]{1,2}):([0-9]{1,2}):([0-9]{1,2}):([0-9]{1,2})",
-       regexpReplaceWith: "<div align='center'><div class='btn btn-danger btn-lg'>$2</div>:<div class='btn btn-danger btn-lg'>$3</div>:<div class='btn btn-danger btn-lg'>$4</div></div>"
+       regexpReplaceWith: "<div align='center'><div class='btn btn-danger btn-lg'>$2</div>&nbsp;<div class='btn btn-danger btn-lg'>$3</div>&nbsp;<div class='btn btn-danger btn-lg'>$4</div></div>"
     });
   });
 </script>
@@ -116,7 +116,7 @@ $admin .='<a class="btn btn-default btn-flat" href="./admin.php?pilih=ujian&mod=
 <i class="fa fa-plus">&nbsp;</i> Setting <span class="badge bg-green"></span></a>&nbsp;';	
 }
 $admin .='<a class="btn btn-default btn-flat" href="./admin.php?pilih=ujian&mod=yes&aksi=nilaihistoryujian" >
-<i class="fa fa-plus">&nbsp;</i> History Nilai <span class="badge bg-green"></span></a>&nbsp;
+<i class="fa fa-bar-chart">&nbsp;</i> History Nilai <span class="badge bg-green"></span></a>&nbsp;
 </section>';					
 $admin .='
 <section class="content">';							
@@ -1126,14 +1126,8 @@ $petunjukumum = "
 <br>$petunjuk
 </td></tr>
 ";
-if($filelistening<>''){
-$listeningaudio .='<tr><td colspan="6">
-<audio src="mod/ujian/download/'.$filelistening.'" controls="true" loop="false" autoplay="false"></audio></td>
-</tr>';
-}
 }
 
-$timercountdown = '<tr><td colspan="6"><div id="future_date"></div></td></tr>';
 $admin .= '
 <table cellspacing="0" cellpadding="0"class="table table-striped table-hover">
 	<tr>
@@ -1161,8 +1155,23 @@ $admin .= '
 		<td>'.konversi_detik($detik).'</td>
 	</tr>';
 $admin .= '
-	'.$petunjukumum.''.$timercountdown.''.$listeningaudio.'
-</table>';
+	'.$petunjukumum.'</table>';
+$admin .= '</div><!-- /.box-body -->
+</div><!-- /.box -->';
+$admin .= '<div class="box">
+                <div class="box-header">
+                  <h3 class="box-title">Timer Ujian</h3>
+                </div><!-- /.box-header -->
+                <div class="box-body">';
+$timercountdown = '<tr><td><div id="future_date"></div></td></tr>';
+if($filelistening<>''){
+$listeningaudio .='<tr><td>
+<audio src="mod/ujian/download/'.$filelistening.'" controls="true" loop="false" autoplay="false"></audio></td>
+</tr>';
+}
+$admin .= '<table class="table">'.$timercountdown.''.$listeningaudio.'</table>';		
+$admin .= '</div><!-- /.box-body -->
+</div><!-- /.box -->';	
 $tipejawaban = getjumlahjawaban($idujian);
 $jawaban = explode(",", $tipejawaban);
 $jml_jawaban = count($jawaban);
@@ -1174,22 +1183,19 @@ $hasil = mysql_query("SELECT * FROM soal where ujian='$idujian'order by id asc")
 
 $total         = $koneksi_db->sql_numrows($hasil);
 $tombolsoal=1;
-$admin .='<table class="table">';
-$admin .='<tr><td><div id="buttons">  ';
-for ($j = 1; $j <= $total; $j++) {
-	
-$admin .='
-<a class="btnsoal" target="'.$j.'">Soal '.$j.'</a>&nbsp;';
-}
-
-$admin .='</div></td></tr>';
-$admin .='</table>';
-
+$admin .= '<div class="box">
+                <div class="box-header">
+                  <h3 class="box-title">Soal Ujian</h3>
+                </div><!-- /.box-header -->
+                <div class="box-body">';
+$admin .='<div class="row">
+  <div class="col-md-10">';
+/********************* soal ********************/  
 $admin .= '
 <form  id="formujian" name="formujian" method="post"action="?pilih=ujian&mod=yes&aksi=hasiltest&id='.$idmapel.'">
 <table class="table table-striped table-hover">
 <thead ><tr class="info">
-<th>Soal</th>
+
 </tr></thead><tbody>';
 $admin .= '<tr><td>';
 $nosoal=1;
@@ -1239,10 +1245,31 @@ $admin .="
 <input type='hidden' name='idujian' value='$idujian' />";
 $admin .="
 <input type='hidden' name='tipeujian' value='$tipeujian' />";
-//$admin .="<a href='?pilih=ujian&mod=yes&aksi=listujian&id=$idmapel'><span class='btn btn-primary'>BACK</span></a>&nbsp;";
 $admin .='<input type="submit"class="btn btn-success" value="Selesai" onclick="return confirm(\'Apakah Anda Yakin Ingin Mengakhiri Ujian Ini ?\')">';
 $admin.="</div>";
-$admin.="<br></form>";
+$admin.="<br></form>";  
+/********************* soal ********************/ 
+$admin .='</div>
+  <div class="col-md-2">';
+/********************* tombol soal ********************/ 
+$admin .='<table class="table">';
+$admin .='<tr><td><div id="buttons">  ';
+for ($j = 1; $j <= $total; $j++) {
+	$tombolj=$j;
+	if($j<10){
+	$tombolj='0'.$j;	
+	}
+$admin .='
+<a class="btnsoal" target="'.$j.'">'.$tombolj.'</a>&nbsp;';
+}
+
+$admin .='</div></td></tr>';
+$admin .='</table>';  
+/********************* tombol soal ********************/ 
+$admin .='</div>
+</div>';
+$admin .= '</div><!-- /.box-body -->
+</div><!-- /.box -->';	
 $admin .= '</div><!-- /.box-body -->
 </div><!-- /.box -->';
 /*******************************/
@@ -1285,7 +1312,7 @@ $ppil = substr_replace($ppil, "", -1, 1);
 $jawabansalah = $jawabanterisi-$jawabanbenar;
 $score = ($pointbenar*$jawabanbenar)+($pointsalah*$jawabansalah)+($pointkosong*$jawabankosong);
 /*******************/
-simpannilai($idmapel,$user,$score,$tipeujian,$levelakses);
+simpannilai($idmapel,$user,$score,$tipeujian,$levelakses,$jawabanterisi,$jawabanbenar,$jawabansalah);
 /********************/
 $admin.="<table class='table'>";
 $admin.="<tr><td><h2>Total Score : $score </h2></td></tr>";
@@ -1481,12 +1508,15 @@ $admin .="<table class='table'>";
   </tr>"; 
 $admin .="</table>";
 $hasil = $koneksi_db->sql_query( "SELECT * FROM ujiannilai where mapel = '$idmapel' and user='$user'  order by id desc" );
-$admin .= '<table id="example" class="table table-striped table-hover">
+$admin .= '<table id="example1" class="table table-striped table-hover">
 <thead><tr>
 <th>No</th>
 <th>Tanggal</th>
 <th>Jam</th>
 <th>Nama</th>
+<th>Terisi</th>
+<th>Benar</th>
+<th>Salah</th>
 <th>Nilai</th>
 <th>Aksi</th>
 </tr></thead><tbody>';
@@ -1496,13 +1526,19 @@ $user = $data['user'];
 $tgl     = $data['tgl'];  
 $jam     = $data['jam'];  
 $nilai     = $data['nilai'];  
+$terisi     = $data['terisi']; 
+$benar     = $data['benar']; 
+$salah     = $data['salah']; 
 $nama     = getnamaguru($data['user']);  
 $admin .='<tr>
 <td><b>'.$no.'</b></td>
 <td>'.datetimes($data['tgl']).'</td>
 <td>'.$data['jam'].'</td>
 <td>'.$nama.'</td>
-<td>'.$data['nilai'].'</td>
+<td>'.$terisi.'</td>
+<td>'.$benar.'</td>
+<td>'.$salah.'</td>
+<td>'.$nilai.'</td>
 <td>
 <a href="?pilih=ujian&amp;mod=yes&amp;aksi=delnilai&amp;id='.$data['id'].'&amp;idmapel='.$idmapel.'" onclick="return confirm(\'Nilai pada ujian tersebut akan ikut terhapus,Apakah Anda Yakin Ingin Menghapus Data Ini ?\')"><span class="btn btn-danger">Hapus</span></a>';
 $admin .='

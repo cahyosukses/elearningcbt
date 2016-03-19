@@ -43,6 +43,9 @@ $data = $koneksi_db->sql_fetchrow($hasil);
 	echo '
                   <!-- Menu Footer-->
                   <li class="user-footer">
+                    <div class="pull-left">
+                      <a href="./admin.php?pilih=ubahpassword&mod=yes" class="btn btn-default btn-flat">Ubah Password</a>
+                    </div>
                     <div class="pull-right">
                       <a href="./admin.php?pilih=logout&mod=yes" class="btn btn-default btn-flat">Sign out</a>
                     </div>
